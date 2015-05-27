@@ -25,8 +25,16 @@
 //----------------------------------------------------------------------------------------------------------------------
 // Hello world sample
 #include <cjson/json.h>
+#include <iostream>
+
+using namespace cjson;
 
 int main(int, const char**)
 {
+	Json bar;
+	bar["Hello"] = "world";
+
+	std::cout << bar.serialize() << std::endl;
+
 	return 0;
 }
