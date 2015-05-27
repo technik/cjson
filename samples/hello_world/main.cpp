@@ -31,10 +31,10 @@ using namespace cjson;
 
 int main(int, const char**)
 {
-	Json bar;
-	bar["Hello"] = "world";
+	Json bar; // Create a json object
+	bar["Hello"] = "world"; // Initialize the json as a dictionary and insert a key:value element.
 
-	std::cout << bar.serialize() << std::endl;
+	std::cout << bar.serialize() << std::endl; // Show result
 
 	return 0;
 }
