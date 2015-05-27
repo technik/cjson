@@ -27,7 +27,7 @@ cmake_minimum_required (VERSION 2.4)
 project(cjson)
 
 # Collect all sources
-file(GLOB_RECURSE JSON_SOURCE_FILES "json/*.cpp" "json/*.h" "json/*.inl")
+file(GLOB_RECURSE JSON_SOURCE_FILES "cjson/*.cpp" "cjson/*.h" "cjson/*.inl")
 
 # Clasify sources according to folder structure.
 # This creates a nice layout for the project in visual studio
@@ -46,7 +46,7 @@ macro(GroupSources curdir)
 	endforeach()
 endmacro()
 
-GroupSources(json)
+GroupSources(cjson)
 
 if(CMAKE_COMPILER_IS_GNUCXX)
     add_definitions(-std=c++11)

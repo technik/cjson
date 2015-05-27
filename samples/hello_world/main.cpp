@@ -24,7 +24,7 @@
 // Simple Json C++ library
 //----------------------------------------------------------------------------------------------------------------------
 // Hello world sample
-#include <json/json.h>
+#include <cjson/json.h>
 
 int main(int, const char**)
 {
