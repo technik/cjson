@@ -23,33 +23,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 ################################################################################
-cmake_minimum_required (VERSION 2.4)
 
-# Collect all sources
-file(GLOB_RECURSE JSON_SOURCE_FILES "*.cpp" "*.h" "*.inl")
-
-# Clasify sources according to folder structure.
-# This creates a nice layout for the project in visual studio
-# This macro is courtesy of http://www.cmake.org/pipermail/cmake/2013-November/056336.html
-macro(GroupSources curdir)
-	file(GLOB children RELATIVE ${PROJECT_SOURCE_DIR}/${curdir}
-		${PROJECT_SOURCE_DIR}/${curdir}/*)
-	foreach(child ${children})
-		if(IS_DIRECTORY ${PROJECT_SOURCE_DIR}/${curdir}/${child})
-			GroupSources(${curdir}/${child})
-		else()
-			string(REPLACE "/" "\\" groupname ${curdir})
-			source_group(${groupname} FILES
-				${PROJECT_SOURCE_DIR}/${curdir}/${child})
-		endif()
-	endforeach()
-endmacro()
-
-GroupSources(src/code)
-
-if(CMAKE_COMPILER_IS_GNUCXX)
-    add_definitions(-std=c++11)
-endif()
-
-# cjson parser
-add_library(cjson STATIC ${JSON_SOURCE_FILES})
+# Sample projects
+add_subdirectory(hello_world) # The simplest sample

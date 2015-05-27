@@ -3,7 +3,7 @@
 ################################################################################
 # The MIT License (MIT)
 # 
-# Copyright (c) 2015 Carmelo J. FernÃ¡ndez-AgÃ¼era Tortosa
+# Copyright (c) 2015 Carmelo J. Fernández-Agüera Tortosa
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -23,9 +23,5 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 ################################################################################
-cmake_minimum_required (VERSION 2.4)
-project(cjson)
-
-# Child projects
-add_subdirectory(src) # The library itself
-add_subdirectory(samples) # The samples
+add_executable(hello_world main.cpp)
+target_link_libraries(hello_world PUBLIC cjson)
