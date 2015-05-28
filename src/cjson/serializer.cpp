@@ -42,20 +42,23 @@ namespace cjson {
 
 	//------------------------------------------------------------------------------------------------------------------
 	bool Serializer::push(const Json& _j, stringstream& _oStream, size_t _tab) {
+		tabify(_oStream, _tab);
 		switch (_j.mType)
 		{
 		case Json::DataType::null:
-			tabify(_oStream, _tab);
 			_oStream << "null";
 			return true;
 		case Json::DataType::boolean:
-			return push(_j.mNumber.b, _oStream, _tab);
+			return push(_j.mNumber.b, _oStream);
 		case Json::DataType::integer:
-			return push(_j.mNumber.i, _oStream, _tab);
+			_oStream << _j.mNumber.i;
+			return true;
 		case Json::DataType::real:
-			return push(_j.mNumber.f, _oStream, _tab);
+			_oStream << _j.mNumber.f;
+			return true;
 		case Json::DataType::text:
-			return push(_j.mText, _oStream, _tab);
+			_oStream << _j.mText;
+			return true;
 		case Json::DataType::array:
 			return push(_j.mArray, _oStream, _tab);
 		case Json::DataType::object:
@@ -66,5 +69,51 @@ namespace cjson {
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
-	bool 
+	bool Serializer::push(bool _b, stringstream& _oStream) {
+		_oStream << _b? "true" : "false";
+		return true;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	bool Serializer::push(const Json::Array& _array, std::stringstream& _oStream, size_t _tab) {
+		_oStream << '['; // Open braces
+		// Push elements
+		for(size_t i = 0; i < _array.size(); ++i) {
+			tabify(_oStream, _tab+1);
+			if(!push(*_array[i], _oStream, _tab+1))
+				return false; // Error processing element
+			if(i != _array.size()-1) // All elements but the last one
+				_oStream << ',';
+		}
+		// Close braces
+		tabify(_oStream, _tab);
+		_oStream << ']';
+		return true;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	bool Serializer::push(const Json::Dictionary& _obj, std::stringstream& _oStream, size_t _tab) {
+		_oStream << '{'; // Open braces
+		// Push elements
+		size_t i = 0;
+		for(const auto& element : _obj) {
+			tabify(_oStream, _tab+1);
+			_oStream << element.first << ':'; // Key
+			if(!push(*element.second, _oStream, _tab+1)) // Value
+				return false; // Error processing element
+			if(i != _obj.size()-1) // All elements but the last one
+				_oStream << ',';
+		}
+		// Close braces
+		tabify(_oStream, _tab);
+		_oStream << '}';
+		return true;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	void Serializer::tabify(stringstream& _oStream, size_t _tab) {
+		for(size_t i = 0; i < _tab; ++i)
+			_oStream << '\t';
+	}
+
 }	// namespace cjson

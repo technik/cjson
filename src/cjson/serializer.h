@@ -38,10 +38,7 @@ namespace cjson {
 
 	private:
 		bool push(const Json&, std::stringstream& _dst, size_t _tab = 0);
-		bool push(bool, std::stringstream& _dst, size_t _tab = 0);
-		bool push(int, std::stringstream& _dst, size_t _tab = 0);
-		bool push(float, std::stringstream& _dst, size_t _tab = 0);
-		bool push(const std::string&, std::stringstream& _dst, size_t _tab = 0);
+		bool push(bool, std::stringstream& _dst);
 		bool push(const Json::Array&, std::stringstream& _dst, size_t _tab = 0);
 		bool push(const Json::Dictionary&, std::stringstream& _dst, size_t _tab = 0);
 
