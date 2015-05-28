@@ -106,6 +106,9 @@ namespace cjson {
 		size_t			size	() const;
 
 	private:
+		typedef std::map<std::string,Json*>	Dictionary;
+		typedef std::vector<Json*>			Array;
+
 		/// Possible types of data
 		enum class DataType {
 			null,
@@ -123,9 +126,11 @@ namespace cjson {
 			float f;
 			bool b;
 		}	mNumber;
-		std::string					mText;
-		std::vector<Json*>			mArray;
-		std::map<std::string,Json*>	mObject;
+		std::string	mText;
+		Array		mArray;
+		Dictionary	mObject;
+
+		friend class Serializer;
 	};
 
 }	// namespace cjson

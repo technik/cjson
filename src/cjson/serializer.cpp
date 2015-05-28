@@ -23,15 +23,19 @@
 //----------------------------------------------------------------------------------------------------------------------
 // Simple Json C++ library
 //----------------------------------------------------------------------------------------------------------------------
+#include "serializer.h"
 #include "json.h"
-#include <sstream>
 
 namespace cjson {
-
 	//------------------------------------------------------------------------------------------------------------------
-	std::string Json::serialize() const {
-		Serializer s;
-		return s.serialize(*this);
+	std::string Serializer::serialize(const Json& _j) {
+		std::stringstream oStream;
+		switch (_j.mType)
+		{
+		case Json::DataType::boolean:
+			push_boolean(_j.mNumber.b, oStream);
+		default:
+			break;
+		}
 	}
-
 }	// namespace cjson
