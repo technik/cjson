@@ -135,7 +135,7 @@ namespace cjson {
 			break;
 		case DataType::object:
 			for(const auto& element : mObject)
-				delete element;
+				delete element.second;
 			break;
 		default:
 			break;
