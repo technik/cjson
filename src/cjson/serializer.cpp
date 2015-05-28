@@ -79,7 +79,6 @@ namespace cjson {
 		_oStream << "[\n"; // Open braces
 		// Push elements
 		for(size_t i = 0; i < _array.size(); ++i) {
-			tabify(_oStream, _tab+1);
 			if(!push(*_array[i], _oStream, _tab+1))
 				return false; // Error processing element
 			if(i != _array.size()-1) // All elements but the last one

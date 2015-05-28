@@ -47,11 +47,17 @@ namespace cjson {
 		case DataType::real:
 			mNumber = _x.mNumber;
 			break;
+		case DataType::text:
+			mText = _x.mText;
+			break;
 		case DataType::array:
-			mArray = _x.mArray;
+			mArray.reserve(_x.mArray.size());
+			for(auto element : _x.mArray)
+				mArray.push_back(new Json(*element));
 			break;
 		case DataType::object:
-			mObject = _x.mObject;
+			for(auto element : _x.mObject)
+				mObject.insert(std::make_pair(element.first, new Json(*element.second)));
 			break;
 		default: // Do nothing for null
 			break;
@@ -68,6 +74,9 @@ namespace cjson {
 		case DataType::real:
 			mNumber = _x.mNumber;
 			break;
+		case DataType::text:
+			mText = std::move(_x.mText);
+			break;
 		case DataType::array:
 			mArray = std::move(_x.mArray);
 			_x.mType = DataType::null;
@@ -79,6 +88,26 @@ namespace cjson {
 		default: // Do nothing for null
 			break;
 		}
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	template<typename T_>
+	Json::Json(std::initializer_list<T_> _list)
+		:mType(DataType::array)
+	{
+		mArray.reserve(_list.size());
+		for(const auto& element : _list)
+			mArray.push_back(new Json(element));
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	template<class T_>
+	Json::Json(const std::vector<T_>& _list)
+		:mType(DataType::array)
+	{
+		mArray.reserve(_list.size());
+		for(const auto& element : _list)
+			mArray.push_back(new Json(element));
 	}
 
 	//------------------------------------------------------------------------------------------------------------------

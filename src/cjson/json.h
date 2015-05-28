@@ -69,13 +69,11 @@ namespace cjson {
 		// Array constructors
 		template<class T_>
 		Json(std::initializer_list<T_>); ///< Construct from an arbitrary initializer list
-		template<typename T_, template<typename> class List_>
-		Json(const List_<T_>&); ///< Construct from any type that can be traversed as a vector
-		Json(std::vector<Json*>&&); ///< Construct from an rvalue vector
+		template<class T_>
+		Json(const std::vector<T_>&); ///< Construct from any type that can be traversed as a vector
 		// Dictionary constructors
-		template<typename Val_, template<typename,typename> class Map_, typename Key_ = std::string>
-		Json(const Map_<Key_,Val_>&); ///< Construct from any type that can be traversed as a map
-		Json(std::map<std::string,Json*>&&); ///< Construct from an rvalue map
+		template<template<class, class> class Map_, class T_>
+		Json(const Map_<std::string,T_>&); ///< Construct from any type that can be traversed as a map
 
 		// ----- Assignment from base types -----
 		Json& operator=(bool);
@@ -87,11 +85,6 @@ namespace cjson {
 		// Array assignments
 		template<class T_>
 		Json& operator=(std::initializer_list<T_>); ///< Assign an arbitrary initializer list
-		template<typename T_, template<typename> class List_>
-		Json& operator=(const List_<T_>& _list); ///< Assign any type that can be traversed as a vector
-		// Map assignments
-		template<typename Val_, template<typename,typename> class Map_, typename Key_ = std::string> ///< Assign any type that can be traversed as a map
-		Json& operator=(const Map_<Key_,Val_>&);
 
 		// ----- Conversion to base types -----
 		/// Cast to boolean

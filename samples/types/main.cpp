@@ -32,14 +32,15 @@ using namespace cjson;
 
 int main(int, const char**)
 {
-	Json vectorJson = std::vector<int>({1, 1, 2, 3, 5, 8});
+	auto v = std::vector<int>({1, 1, 2, 3, 5, 8});
+	Json vectorJson = v;
 	std::cout << "vectorJson:\n" << vectorJson.serialize() << std::endl;
 
 	Json listVector { "yep", "foo", "bar" };
 	std::cout << "vectorJson:\n" << vectorJson.serialize() << std::endl;
 
 	Json complexList {Json{"a", "b", "c"}, Json{"a", "b", "c"}};
-	std::cout << "complex Json:\n" << vectorJson.serialize() << std::endl;
+	std::cout << "complex Json:\n" << complexList.serialize() << std::endl;
 
 	return 0;
 }
