@@ -3,7 +3,7 @@
 ################################################################################
 # The MIT License (MIT)
 # 
-# Copyright (c) 2015 Carmelo J. FernÃ¡ndez-AgÃ¼era Tortosa
+# Copyright (c) 2015 Carmelo J. Fernández-Agüera Tortosa
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,5 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 ################################################################################
-
-# Sample projects
-add_subdirectory(hello_world) # The simplest sample
-add_subdirectory(types) # The simplest sample
+add_executable(types main.cpp)
+target_link_libraries(types PUBLIC cjson)
