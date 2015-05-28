@@ -70,7 +70,7 @@ namespace cjson {
 
 	//------------------------------------------------------------------------------------------------------------------
 	bool Serializer::push(bool _b, stringstream& _oStream) {
-		_oStream << _b? "true" : "false";
+		_oStream << (_b? "true" : "false");
 		return true;
 	}
 
