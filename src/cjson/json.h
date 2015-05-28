@@ -100,6 +100,8 @@ namespace cjson {
 			  Json&		operator[]	(size_t);
 
 		// ----- Map like access -----
+		const Json&		operator[]	(const char*) const;
+			  Json&		operator[]	(const char*);
 		const Json&		operator[]	(const std::string&) const;
 			  Json&		operator[]	(const std::string&);
 		bool			contains	(const std::string&) const;

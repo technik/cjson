@@ -25,8 +25,9 @@
 //----------------------------------------------------------------------------------------------------------------------
 #include "json.h"
 #include "serializer.h"
-#include <sstream>
+#include <cassert>
 #include <new> // Placement new
+#include <sstream>
 
 namespace cjson {
 
@@ -82,6 +83,30 @@ namespace cjson {
 		clear();
 		new(this)Json(std::move(_s));
 		return *this;
+	}
+	
+	//------------------------------------------------------------------------------------------------------------------
+	const Json& Json::operator[](const char* _key) const {
+		assert(mType == DataType::object);
+		return *mObject.find(_key)->second;
+	}
+	
+	//------------------------------------------------------------------------------------------------------------------
+	Json& Json::operator[](const char* _key) {
+		assert(mType == DataType::object);
+		return *mObject[_key];
+	}
+	
+	//------------------------------------------------------------------------------------------------------------------
+	const Json& Json::operator[](const std::string& _key) const {
+		assert(mType == DataType::object);
+		return *mObject.find(_key)->second;
+	}
+	
+	//------------------------------------------------------------------------------------------------------------------
+	Json& Json::operator[](const std::string& _key) {
+		assert(mType == DataType::object);
+		return *mObject[_key];
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
