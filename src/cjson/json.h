@@ -65,9 +65,9 @@ namespace cjson {
 		Json(float);
 		Json(const char*);
 		Json(const std::string&);
-		template<typename T_, template<typename> List_>
-		Json(const List_<T_>& _list); ///< Construct from any type that can be traversed as a vector
-		template<typename Val_, template<typename,typename> Map_, typename Key_ = std::string>
+		template<typename T_, template<typename> class List_>
+		Json(const List_<T_>&); ///< Construct from any type that can be traversed as a vector
+		template<typename Val_, template<typename,typename> class Map_, typename Key_ = std::string>
 		Json(const Map_<Key_,Val_>&); ///< Construct from any type that can be traversed as a map
 
 		// ----- Assignment from base types -----
@@ -76,9 +76,9 @@ namespace cjson {
 		Json& operator=(float);
 		Json& operator=(const char*);
 		Json& operator=(const std::string&);
-		template<typename T_, template<typename> List_>
+		template<typename T_, template<typename> class List_>
 		Json& operator=(const List_<T_>& _list); ///< Assign any type that can be traversed as a vector
-		template<typename Val_, template<typename,typename> Map_, typename Key_ = std::string> ///< Assign any type that can be traversed as a map
+		template<typename Val_, template<typename,typename> class Map_, typename Key_ = std::string> ///< Assign any type that can be traversed as a map
 		Json& operator=(const Map_<Key_,Val_>&);
 
 		// ----- Conversion to base types -----
@@ -89,10 +89,9 @@ namespace cjson {
 		/// A null element will always return \c false.
 		/// An array or object will return \c false if empty, \c true otherwise.
 		/// \return the value of this json as a boolean element.
-
-		operator bool	() const;
-		operator int	() const;
-		operator float	() const;
+		explicit operator bool	() const;
+		explicit operator int	() const;
+		explicit operator float	() const;
 
 		// ----- Vector like access -----
 		const Json&		operator[]	(size_t) const;
@@ -102,6 +101,9 @@ namespace cjson {
 		const Json&		operator[]	(const std::string&) const;
 			  Json&		operator[]	(const std::string&);
 		bool			contains	(const std::string&) const;
+
+		// ----- Common methods for array and object -----
+		size_t			size	() const;
 
 	private:
 		/// Possible types of data
@@ -115,13 +117,18 @@ namespace cjson {
 		} mType;
 
 		/// Internal representation of data
-		int							mInteger;
-		float						mReal;
+		union Number {
+			int i;
+			float f;
+			bool b;
+		}	mNumber;
 		std::string					mText;
 		std::vector<Json*>			mArray;
 		std::map<std::string,Json*>	mObject;
 	};
 
 }	// namespace cjson
+
+#include "json.inl"
 
 #endif // _CJSON_JSON_H_
