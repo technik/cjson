@@ -57,7 +57,7 @@ namespace cjson {
 			_oStream << _j.mNumber.f;
 			return true;
 		case Json::DataType::text:
-			_oStream << _j.mText;
+			_oStream << '\"' << _j.mText << '\"';
 			return true;
 		case Json::DataType::array:
 			return push(_j.mArray, _oStream, _tab);
