@@ -9,7 +9,7 @@ var classcjson_1_1_json =
     [ "Json", "classcjson_1_1_json.html#a53a1adc1a165871cfa84643e256e174a", null ],
     [ "Json", "classcjson_1_1_json.html#a41b6ed56481b7fd280f8a836dce85186", null ],
     [ "Json", "classcjson_1_1_json.html#a9b28044811a5c4949bddf51409b26e22", null ],
-    [ "Json", "classcjson_1_1_json.html#a9bc8f972f0b7ed9f8711080a72b3a9b6", null ],
+    [ "Json", "classcjson_1_1_json.html#a3f42200ca585f405c163cb2d4ab5c34f", null ],
     [ "Json", "classcjson_1_1_json.html#abdc73638dbc36973f6100df9727fd2df", null ],
     [ "contains", "classcjson_1_1_json.html#a9f9a5d4b6d4f9c5eb0f739d5abfa7cfa", null ],
     [ "isArray", "classcjson_1_1_json.html#aa32742599e0f182730d6b0724b30f81d", null ],
@@ -20,8 +20,8 @@ var classcjson_1_1_json =
     [ "operator bool", "classcjson_1_1_json.html#ad662cad9b9cc53aec8bc02c4a978f26a", null ],
     [ "operator float", "classcjson_1_1_json.html#a50c714be3ec6bd60f5993c9f4e8e62e6", null ],
     [ "operator int", "classcjson_1_1_json.html#a5ffa59fd144bb39bc6c274e86c60a131", null ],
-    [ "operator=", "classcjson_1_1_json.html#a4978ed027d05ce8d75b2dacead066051", null ],
-    [ "operator=", "classcjson_1_1_json.html#af69648a05df68b957a4dbe1492c3008b", null ],
+    [ "operator=", "classcjson_1_1_json.html#a350736d72679a9d890b6fd1b13853fb0", null ],
+    [ "operator=", "classcjson_1_1_json.html#a3b63c6666664cd3e5f6a5d51bd5139c3", null ],
     [ "operator=", "classcjson_1_1_json.html#a8b827ef05a9b541ba238653697fc0154", null ],
     [ "operator=", "classcjson_1_1_json.html#a01696d8c72dc771cf09b4110d102af09", null ],
     [ "operator=", "classcjson_1_1_json.html#aaacbf0c89594fd01e760bbf482209c0f", null ],
@@ -35,5 +35,7 @@ var classcjson_1_1_json =
     [ "operator[]", "classcjson_1_1_json.html#a98e521f0f41b786d7d0233b78659e41b", null ],
     [ "parse", "classcjson_1_1_json.html#a81d7395f4026b64b543419668fb028b0", null ],
     [ "serialize", "classcjson_1_1_json.html#a646a66df9925632236eee157dcc63f12", null ],
-    [ "setNull", "classcjson_1_1_json.html#aabe616428c2dd3c72f09a8aa937b9c15", null ]
+    [ "setNull", "classcjson_1_1_json.html#aabe616428c2dd3c72f09a8aa937b9c15", null ],
+    [ "size", "classcjson_1_1_json.html#a063e634aa354fe6e69af3c7c66d3a878", null ],
+    [ "Serializer", "classcjson_1_1_json.html#ad3f5346f31d572dd2ab4fcd658de5bc4", null ]
 ];

@@ -72,6 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li><a href="files.html"><span>File&#160;List</span></a></li>
+      <li><a href="globals.html"><span>File&#160;Members</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -133,13 +134,32 @@ $(document).ready(function(){initNavTree('json_8cpp_source.html','');});
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">//----------------------------------------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">// Simple Json C++ library</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">//----------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="json_8h.html">json.h</a>&quot;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="serializer_8h.html">serializer.h</a>&quot;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="namespacecjson.html">   30</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacecjson.html">cjson</a> {</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a646a66df9925632236eee157dcc63f12">   33</a></span>&#160;    std::string <a class="code" href="classcjson_1_1_json.html#a646a66df9925632236eee157dcc63f12">Json::serialize</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <a class="code" href="classcjson_1_1_serializer.html">Serializer</a> s;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keywordflow">return</span> s.<a class="code" href="classcjson_1_1_serializer.html#a3a6010d22e4b678467299b37b7171b83">serialize</a>(*<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    }</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}   <span class="comment">// namespace cjson</span></div>
+<div class="ttc" id="namespacecjson_html"><div class="ttname"><a href="namespacecjson.html">cjson</a></div><div class="ttdef"><b>Definition:</b> <a href="json_8cpp_source.html#l00030">json.cpp:30</a></div></div>
+<div class="ttc" id="serializer_8h_html"><div class="ttname"><a href="serializer_8h.html">serializer.h</a></div></div>
+<div class="ttc" id="classcjson_1_1_json_html_a646a66df9925632236eee157dcc63f12"><div class="ttname"><a href="classcjson_1_1_json.html#a646a66df9925632236eee157dcc63f12">cjson::Json::serialize</a></div><div class="ttdeci">std::string serialize() const </div><div class="ttdoc">generate a string with the formated content of the json object </div><div class="ttdef"><b>Definition:</b> <a href="json_8cpp_source.html#l00033">json.cpp:33</a></div></div>
+<div class="ttc" id="json_8h_html"><div class="ttname"><a href="json_8h.html">json.h</a></div></div>
+<div class="ttc" id="classcjson_1_1_serializer_html"><div class="ttname"><a href="classcjson_1_1_serializer.html">cjson::Serializer</a></div><div class="ttdef"><b>Definition:</b> <a href="serializer_8h_source.html#l00035">serializer.h:35</a></div></div>
+<div class="ttc" id="classcjson_1_1_serializer_html_a3a6010d22e4b678467299b37b7171b83"><div class="ttname"><a href="classcjson_1_1_serializer.html#a3a6010d22e4b678467299b37b7171b83">cjson::Serializer::serialize</a></div><div class="ttdeci">std::string serialize(const Json &amp;)</div><div class="ttdef"><b>Definition:</b> <a href="serializer_8cpp_source.html#l00035">serializer.cpp:35</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1375aec97e96b5de63a4ef9fc199c3c4.html">cjson</a></li><li class="navelem"><a class="el" href="json_8cpp.html">json.cpp</a></li>
-    <li class="footer">Generated on Thu May 28 2015 11:53:01 for cjson by
+    <li class="footer">Generated on Thu May 28 2015 13:58:04 for cjson by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

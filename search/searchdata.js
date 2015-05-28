@@ -1,11 +1,13 @@
 var indexSectionsWithContent =
 {
-  0: "abcijnopst~",
-  1: "j",
+  0: "_abcijnoprst~",
+  1: "js",
   2: "c",
-  3: "j",
+  3: "js",
   4: "cijops~",
-  5: "abnot"
+  5: "abinort",
+  6: "s",
+  7: "_"
 };
 
 var indexSectionNames =
@@ -15,7 +17,9 @@ var indexSectionNames =
   2: "namespaces",
   3: "files",
   4: "functions",
-  5: "enumvalues"
+  5: "enumvalues",
+  6: "related",
+  7: "defines"
 };
 
 var indexSectionLabels =
@@ -25,6 +29,8 @@ var indexSectionLabels =
   2: "Namespaces",
   3: "Files",
   4: "Functions",
-  5: "Enumerator"
+  5: "Enumerator",
+  6: "Friends",
+  7: "Macros"
 };
 
