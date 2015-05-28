@@ -171,6 +171,36 @@ namespace cjson {
 		}
 	}
 
+	//------------------------------------------------------------------------------------------------------------------
+	inline bool Json::isNull() const {
+		return mType == DataType::null;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	inline bool Json::isBool() const {
+		return mType == DataType::boolean;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	inline bool Json::isNumber() const {
+		return mType == DataType::integer || mType == DataType::real;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	inline bool Json::isString() const {
+		return mType == DataType::text;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	inline bool Json::isArray() const {
+		return mType == DataType::array;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	inline bool Json::isObject() const {
+		return mType == DataType::object;
+	}
+
 } // namespace cjson
 
 #endif // _CJSON_JSON_INL_

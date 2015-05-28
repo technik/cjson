@@ -29,3 +29,4 @@ project(cjson)
 # Child projects
 add_subdirectory(src) # The library itself
 add_subdirectory(samples) # The samples
+add_subdirectory(test) # Unit tests

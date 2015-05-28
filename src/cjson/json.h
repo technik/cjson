@@ -54,6 +54,7 @@ namespace cjson {
 		void setNull	(); ///< Reset object to default construction state
 
 		bool isNull		() const;
+		bool isBool		() const;
 		bool isNumber	() const;
 		bool isString	() const;
 		bool isArray	() const;
@@ -97,6 +98,7 @@ namespace cjson {
 		explicit operator bool	() const;
 		explicit operator int	() const;
 		explicit operator float	() const;
+		explicit operator std::string () const;
 
 		// ----- Vector like access -----
 		const Json&		operator[]	(size_t) const;
