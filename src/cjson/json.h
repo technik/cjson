@@ -110,7 +110,8 @@ namespace cjson {
 		enum class DataType {
 			null,
 			boolean,
-			number,
+			integer,
+			real,
 			text,
 			array,
 			object,
