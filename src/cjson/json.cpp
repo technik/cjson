@@ -93,8 +93,14 @@ namespace cjson {
 	
 	//------------------------------------------------------------------------------------------------------------------
 	Json& Json::operator[](const char* _key) {
-		assert(mType == DataType::object);
-		return *mObject[_key];
+		if(mType != DataType::object) {
+			clear();
+			mType = DataType::object;
+		}
+		Json*& objRef = mObject[_key];
+		if(objRef == nullptr)
+			objRef = new Json();
+		return *objRef;
 	}
 	
 	//------------------------------------------------------------------------------------------------------------------
@@ -105,8 +111,14 @@ namespace cjson {
 	
 	//------------------------------------------------------------------------------------------------------------------
 	Json& Json::operator[](const std::string& _key) {
-		assert(mType == DataType::object);
-		return *mObject[_key];
+		if(mType != DataType::object) {
+			clear();
+			mType = DataType::object;
+		}
+		Json*& objRef = mObject[_key];
+		if(objRef == nullptr)
+			objRef = new Json();
+		return *objRef;
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
