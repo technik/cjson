@@ -46,28 +46,25 @@ namespace cjson {
 		{
 		case Json::DataType::null:
 			tabify(_oStream, _tab);
-			_oStream << "null";	break;
+			_oStream << "null";
+			return true;
 		case Json::DataType::boolean:
-			push(_j.mNumber.b, _oStream, _tab);
-			break;
+			return push(_j.mNumber.b, _oStream, _tab);
 		case Json::DataType::integer:
-			push(_j.mNumber.i, _oStream, _tab);
-			break;
+			return push(_j.mNumber.i, _oStream, _tab);
 		case Json::DataType::real:
-			push(_j.mNumber.f, _oStream, _tab);
-			break;
+			return push(_j.mNumber.f, _oStream, _tab);
 		case Json::DataType::text:
-			push(_j.mText, _oStream, _tab);
-			break;
+			return push(_j.mText, _oStream, _tab);
 		case Json::DataType::array:
-			push(_j.mArray, _oStream, _tab);
-			break;
+			return push(_j.mArray, _oStream, _tab);
 		case Json::DataType::object:
-			push(_j.mObject, _oStream, _tab);
-			break;
+			return push(_j.mObject, _oStream, _tab);
 		default:
-			assert(false);
-			break;
+			return false; // Error data type
 		}
 	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	bool 
 }	// namespace cjson
