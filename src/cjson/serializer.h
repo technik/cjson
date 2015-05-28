@@ -28,24 +28,24 @@
 
 #include <string>
 #include <sstream>
+#include "json.h"
 
 namespace cjson {
-
-	// Forward declaration
-	class Json;
 
 	class Serializer {
 	public:
 		std::string serialize(const Json&);
 
 	private:
-		bool push(const Json&, std::stringstream _dst, size_t _tab = 0);
-		bool push(bool, std::stringstream _dst, size_t _tab = 0);
-		bool push(int, std::stringstream _dst, size_t _tab = 0);
-		bool push(float, std::stringstream _dst, size_t _tab = 0);
-		bool push(const std::string&, std::stringstream _dst, size_t _tab = 0);
-		bool push(const Json::Array&, std::stringstream _dst, size_t _tab = 0);
-		bool push(const Json::Dictionary&, std::stringstream _dst, size_t _tab = 0);
+		bool push(const Json&, std::stringstream& _dst, size_t _tab = 0);
+		bool push(bool, std::stringstream& _dst, size_t _tab = 0);
+		bool push(int, std::stringstream& _dst, size_t _tab = 0);
+		bool push(float, std::stringstream& _dst, size_t _tab = 0);
+		bool push(const std::string&, std::stringstream& _dst, size_t _tab = 0);
+		bool push(const Json::Array&, std::stringstream& _dst, size_t _tab = 0);
+		bool push(const Json::Dictionary&, std::stringstream& _dst, size_t _tab = 0);
+
+		void tabify(std::stringstream& _dst, size_t _tab);
 	};
 
 }	// namespace cjson

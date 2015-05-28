@@ -26,15 +26,47 @@
 #include "serializer.h"
 #include "json.h"
 
+#include <cassert>
+
+using namespace std;
+
 namespace cjson {
 	//------------------------------------------------------------------------------------------------------------------
-	std::string Serializer::serialize(const Json& _j) {
-		std::stringstream oStream;
+	string Serializer::serialize(const Json& _j) {
+		stringstream oStream;
+		if(push(_j, oStream))
+			return oStream.str();
+		else
+			return ""; // Some error occurred
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	bool Serializer::push(const Json& _j, stringstream& _oStream, size_t _tab) {
 		switch (_j.mType)
 		{
+		case Json::DataType::null:
+			tabify(_oStream, _tab);
+			_oStream << "null";	break;
 		case Json::DataType::boolean:
-			push_boolean(_j.mNumber.b, oStream);
+			push(_j.mNumber.b, _oStream, _tab);
+			break;
+		case Json::DataType::integer:
+			push(_j.mNumber.i, _oStream, _tab);
+			break;
+		case Json::DataType::real:
+			push(_j.mNumber.f, _oStream, _tab);
+			break;
+		case Json::DataType::text:
+			push(_j.mText, _oStream, _tab);
+			break;
+		case Json::DataType::array:
+			push(_j.mArray, _oStream, _tab);
+			break;
+		case Json::DataType::object:
+			push(_j.mObject, _oStream, _tab);
+			break;
 		default:
+			assert(false);
 			break;
 		}
 	}

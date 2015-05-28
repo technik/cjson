@@ -24,6 +24,7 @@
 // Simple Json C++ library
 //----------------------------------------------------------------------------------------------------------------------
 #include "json.h"
+#include "serializer.h"
 #include <sstream>
 
 namespace cjson {
