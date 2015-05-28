@@ -76,7 +76,7 @@ namespace cjson {
 
 	//------------------------------------------------------------------------------------------------------------------
 	bool Serializer::push(const Json::Array& _array, std::stringstream& _oStream, size_t _tab) {
-		_oStream << '['; // Open braces
+		_oStream << "[\n"; // Open braces
 		// Push elements
 		for(size_t i = 0; i < _array.size(); ++i) {
 			tabify(_oStream, _tab+1);
@@ -84,6 +84,7 @@ namespace cjson {
 				return false; // Error processing element
 			if(i != _array.size()-1) // All elements but the last one
 				_oStream << ',';
+			_oStream << '\n';
 		}
 		// Close braces
 		tabify(_oStream, _tab);
@@ -93,7 +94,7 @@ namespace cjson {
 
 	//------------------------------------------------------------------------------------------------------------------
 	bool Serializer::push(const Json::Dictionary& _obj, std::stringstream& _oStream, size_t _tab) {
-		_oStream << '{'; // Open braces
+		_oStream << "{\n"; // Open braces
 		// Push elements
 		size_t i = 0;
 		for(const auto& element : _obj) {
@@ -103,6 +104,7 @@ namespace cjson {
 				return false; // Error processing element
 			if(i != _obj.size()-1) // All elements but the last one
 				_oStream << ',';
+			_oStream << '\n';
 		}
 		// Close braces
 		tabify(_oStream, _tab);
