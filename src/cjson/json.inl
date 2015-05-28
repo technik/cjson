@@ -125,6 +125,23 @@ namespace cjson {
 		}
 	}
 
+	//------------------------------------------------------------------------------------------------------------------
+	inline Json::~Json() {
+		switch (mType)
+		{
+		case DataType::array:
+			for(const auto& element : mArray)
+				delete element;
+			break;
+		case DataType::object:
+			for(const auto& element : mObject)
+				delete element;
+			break;
+		default:
+			break;
+		}
+	}
+
 } // namespace cjson
 
 #endif // _CJSON_JSON_INL_
