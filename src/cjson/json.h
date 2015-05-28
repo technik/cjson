@@ -28,7 +28,7 @@
 
 #include <string>
 #include <vector>
-#include <unordered_map>
+#include <map>
 
 namespace cjson {
 
@@ -82,6 +82,11 @@ namespace cjson {
 		Json& operator=(const Map_<Key_,Val_>&);
 
 		// ----- Conversion to base types -----
+		/// Return the value of this json as a boolean element.
+		/// This will produce different results depending on the actual type of data stored in the json.
+		/// A boolean type (true or false), will be retrieved as such.
+		/// A number will return \c false for 0 and \c true otherwise.
+
 		operator bool	() const;
 		operator int	() const;
 		operator float	() const;
@@ -94,6 +99,24 @@ namespace cjson {
 		const Json&		operator[]	(const std::string&) const;
 			  Json&		operator[]	(const std::string&);
 		bool			contains	(const std::string&) const;
+
+	private:
+		/// Possible types of data
+		enum class DataType {
+			null,
+			boolean,
+			number,
+			text,
+			array,
+			object,
+		} mType;
+
+		/// Internal representation of data
+		int							mInteger;
+		float						mReal;
+		std::string					mText;
+		std::vector<Json*>			mArray;
+		std::map<std::string,Json*>	mObject;
 	};
 
 }	// namespace cjson
