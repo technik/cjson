@@ -32,8 +32,8 @@
 
 namespace cjson {
 
-	/// Json object
-	/// Encapsulates all the functionality to operate with json objects.
+	/// \class Json
+	/// \brief Encapsulates all the functionality to operate with json objects.
 	class Json {
 	public:
 		// ----- Basic construction and destruction -----
@@ -67,8 +67,8 @@ namespace cjson {
 		Json(const std::string&);
 		template<typename T_, template<typename> List_>
 		Json(const List_<T_>& _list); ///< Construct from any type that can be traversed as a vector
-		template<typename Val_, template<typename,typename> Map_, typename Key_ = std::string> ///< Construct from any type that can be traversed as a map
-		Json(const Map_<Key_,Val_>&);
+		template<typename Val_, template<typename,typename> Map_, typename Key_ = std::string>
+		Json(const Map_<Key_,Val_>&); ///< Construct from any type that can be traversed as a map
 
 		// ----- Assignment from base types -----
 		Json& operator=(bool);
@@ -82,10 +82,13 @@ namespace cjson {
 		Json& operator=(const Map_<Key_,Val_>&);
 
 		// ----- Conversion to base types -----
-		/// Return the value of this json as a boolean element.
+		/// Cast to boolean
 		/// This will produce different results depending on the actual type of data stored in the json.
 		/// A boolean type (true or false), will be retrieved as such.
 		/// A number will return \c false for 0 and \c true otherwise.
+		/// A null element will always return \c false.
+		/// An array or object will return \c false if empty, \c true otherwise.
+		/// \return the value of this json as a boolean element.
 
 		operator bool	() const;
 		operator int	() const;
