@@ -51,7 +51,7 @@ namespace cjson {
 		std::string serialize() const;
 
 		// ----- Useful methods -----
-		void setNull	() const; ///< Reset object to default construction state
+		void setNull	(); ///< Reset object to default construction state
 
 		bool isNull		() const;
 		bool isNumber	() const;
@@ -65,6 +65,7 @@ namespace cjson {
 		Json(float);
 		Json(const char*);
 		Json(const std::string&);
+		Json(std::string&&);
 		template<typename T_, template<typename> class List_>
 		Json(const List_<T_>&); ///< Construct from any type that can be traversed as a vector
 		template<typename Val_, template<typename,typename> class Map_, typename Key_ = std::string>
@@ -76,6 +77,7 @@ namespace cjson {
 		Json& operator=(float);
 		Json& operator=(const char*);
 		Json& operator=(const std::string&);
+		Json& operator=(std::string&&);
 		template<typename T_, template<typename> class List_>
 		Json& operator=(const List_<T_>& _list); ///< Assign any type that can be traversed as a vector
 		template<typename Val_, template<typename,typename> class Map_, typename Key_ = std::string> ///< Assign any type that can be traversed as a map
@@ -104,6 +106,9 @@ namespace cjson {
 
 		// ----- Common methods for array and object -----
 		size_t			size	() const;
+
+	private:
+		void clear();
 
 	private:
 		typedef std::map<std::string,Json*>	Dictionary;

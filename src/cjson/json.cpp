@@ -26,6 +26,7 @@
 #include "json.h"
 #include "serializer.h"
 #include <sstream>
+#include <new> // Placement new
 
 namespace cjson {
 
@@ -33,6 +34,57 @@ namespace cjson {
 	std::string Json::serialize() const {
 		Serializer s;
 		return s.serialize(*this);
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	void Json::setNull() {
+		clear(); // Clear internal elements if necessary (must be done before changing type)
+		mType = DataType::null; // Reset type
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	Json::Json(const std::string& _s)
+		: mText(_s)
+	{
+		mType = DataType::text;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	Json::Json(std::string&& _s)
+		: mText(std::move(_s))
+	{
+		mType = DataType::text;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	Json& Json::operator=(const std::string& _s) {
+		clear();
+		new(this)Json(_s);
+		return *this;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	Json& Json::operator=(std::string&& _s) {
+		clear();
+		new(this)Json(std::move(_s));
+		return *this;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	void Json::clear() {
+		// Clear internal elements if necessary
+		switch(mType) {
+		case DataType::array:
+			for(const auto& element : mArray)
+				delete element;
+			break;
+		case DataType::object:
+			for(const auto& element : mObject)
+				delete element.second;
+			break;
+		default:
+			break;
+		}
 	}
 
 }	// namespace cjson
