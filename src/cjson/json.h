@@ -103,6 +103,8 @@ namespace cjson {
 		// ----- Vector like access -----
 		const Json&		operator[]	(size_t) const;
 			  Json&		operator[]	(size_t);
+		template<typename T_>
+		void			push_back	(const T_&);
 
 		// ----- Map like access -----
 		const Json&		operator[]	(const char*) const;

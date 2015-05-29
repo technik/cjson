@@ -25,6 +25,8 @@
 //----------------------------------------------------------------------------------------------------------------------
 #include "parser.h"
 #include <cstring>
+#include <string>
+#include "json.h"
 
 namespace cjson {
 
@@ -39,7 +41,7 @@ namespace cjson {
 	//------------------------------------------------------------------------------------------------------------------
 	bool Parser::parseJson(Json& _dst) {
 		skipWhiteSpace();
-		char c = mInput[mCursor];
+		char c = tellCh();
 		switch (c)
 		{
 		case 'n': return parseNull(_dst);
@@ -50,7 +52,7 @@ namespace cjson {
 		case '{': return parseObject(_dst);
 		default:
 			// Is it a number?
-			if(c >= '0' && c <= '9')
+			if(c >= '0' && c <= '9' || c == '+' || c == '-')
 				return parseNumber(_dst);
 			// Unsupported, return parsing error
 			return false;
@@ -82,6 +84,67 @@ namespace cjson {
 			return true;
 		}
 		return false;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	bool Parser::parseNumber(Json& _dst) {
+		size_t lastN = mCursor+1;
+		bool isInt = true;
+		const std::string digits("0123456789");
+		while(digits.find(mInput[lastN]) != std::string::npos)
+			++lastN; // Skip digits
+		if(mInput[lastN] == '.') // Float number
+			return parseFloat(_dst);
+		else
+			return parseInt(_dst);
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	bool Parser::parseArray(Json& _dst) {
+		readCh(); // Skip [
+		skipWhiteSpace();
+		Json element;
+		while(tellCh() != ']') {
+			// Parse element
+			if(!parseJson(element))
+				return false;
+			_dst.push_back(element);
+			// Read upto the next element
+			skipWhiteSpace();
+			if(tellCh() == ',') {
+				readCh();
+				skipWhiteSpace();
+			}
+		}
+		readCh(); // Skip ]
+		return true;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	bool Parser::parseObject(Json& _dst) {
+		readCh(); // Skip {
+		skipWhiteSpace();
+		Json value;
+		std::string key;
+		while(tellCh() != '}') {
+			// Parse element
+			if(!parseObjectEntry(key,value))
+				return false;
+			_dst[key] = value;
+			// Read upto the next element
+			skipWhiteSpace();
+			if(tellCh() == ',') {
+				readCh();
+				skipWhiteSpace();
+			}
+		}
+		readCh(); // Skip }
+		return true;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	bool parseInt(Json& _dst) {
+
 	}
 
 }	// namespace cjson
