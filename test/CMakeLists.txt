@@ -26,3 +26,4 @@
 
 # Sample projects
 add_subdirectory(serialization) # Test serialization of Json objects works as expected
+add_subdirectory(parsing) # Test Parsing of strings into Json objects

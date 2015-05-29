@@ -46,7 +46,7 @@ namespace cjson {
 
 		// ----- Parsing and generation -----
 		/// param _code a string containing a formated json.
-		void parse	(const char* _code);
+		bool parse	(const char* _code);
 		/// generate a string with the formated content of the json object
 		std::string serialize() const;
 
@@ -142,6 +142,7 @@ namespace cjson {
 		Array		mArray;
 		Dictionary	mObject;
 
+		friend class Parser;
 		friend class Serializer;
 	};
 

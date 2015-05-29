@@ -24,12 +24,22 @@
 // Simple Json C++ library
 //----------------------------------------------------------------------------------------------------------------------
 #include "json.h"
+#include "parser.h"
 #include "serializer.h"
 #include <cassert>
 #include <new> // Placement new
 #include <sstream>
 
 namespace cjson {
+
+	//------------------------------------------------------------------------------------------------------------------
+	bool Json::parse(const char* _code) {
+		Parser p;
+		if(p.parse(_code, *this))
+			return true;
+		setNull(); // Something went wrong, reset.
+		return false;
+	}
 
 	//------------------------------------------------------------------------------------------------------------------
 	std::string Json::serialize() const {
