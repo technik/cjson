@@ -100,6 +100,21 @@ namespace cjson {
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
+	bool Parser::parseString(Json& _dst) {
+		size_t size = 0;
+		readCh(); // Skip opening quotes
+		const char* _start = mInput; // Save current position
+		bool escaped = false;
+		char c = readCh();
+		while(escaped || c != '"') {
+			if(c == '\0')
+				return false;
+			if(escaped || c == '\\')
+				escaped ^= 1; // Negace escape state
+		}
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
 	bool Parser::parseArray(Json& _dst) {
 		readCh(); // Skip [
 		skipWhiteSpace();
