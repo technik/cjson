@@ -107,7 +107,7 @@ namespace cjson {
 		char c = readCh();
 		while(escaped || c != '"') {
 			if(c == '\0')
-				return false;
+				return false; // Unterminated string
 			if(escaped || c == '\\')
 				escaped ^= 1; // Negace escape state
 			c = readCh();

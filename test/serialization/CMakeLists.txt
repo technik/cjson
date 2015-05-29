@@ -25,3 +25,4 @@
 ################################################################################
 add_executable(serialization_test test.cpp)
 target_link_libraries(serialization_test PUBLIC cjson)
+add_test(serializationTest1 serialization_test)

@@ -25,6 +25,7 @@
 ################################################################################
 cmake_minimum_required (VERSION 2.4)
 project(cjson)
+enable_testing()
 
 # Child projects
 add_subdirectory(src) # The library itself

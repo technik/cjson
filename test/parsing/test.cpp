@@ -40,16 +40,16 @@ int main(int, const char**)
 	assert(!j.parse("")); // Should give an error. This is no valid Json.
 
 	// ----- Basic types -----
-	j.parse("true");
+	assert(j.parse("true"));
 	assert(j.isBool());
 	assert(bool(j));
-	j.parse("false");
+	assert(j.parse("false"));
 	assert(j.isBool());
 	assert(bool(j) == false);
-	j.parse("3");
+	assert(j.parse("3"));
 	assert(j.isNumber());
 	assert(int(j) == 3);
-	j.parse("\"3\"");
+	assert(j.parse("\"3\""));
 	assert(j.isString());
 	assert(string(j) == "3");
 }
