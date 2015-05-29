@@ -41,14 +41,18 @@ namespace cjson {
 		bool parse(const char* _code, Json& _dst);
 
 	private:
-		bool parseJson(const Json& _dst);
-		bool parseNull(const Json& _dst);
-		bool parseFalse(const Json& _dst);
-		bool parseTrue(const Json& _dst);
-		bool parseNumber(const Json& _dst);
-		bool parseString(const Json& _dst);
-		bool parseArray(const Json& _dst);
-		bool parseObject(const Json& _dst);
+		bool parseJson(Json& _dst);
+		bool parseNull(Json& _dst);
+		bool parseFalse(Json& _dst);
+		bool parseTrue(Json& _dst);
+		bool parseNumber(Json& _dst);
+		bool parseString(Json& _dst);
+		bool parseArray(Json& _dst);
+		bool parseObject(Json& _dst);
+
+		char readCh();
+
+		void skipWhiteSpace();
 
 		size_t mCursor;
 		const char* mInput;

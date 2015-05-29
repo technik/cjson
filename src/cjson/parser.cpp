@@ -24,6 +24,7 @@
 // Simple Json C++ library
 //----------------------------------------------------------------------------------------------------------------------
 #include "parser.h"
+#include <cstring>
 
 namespace cjson {
 
@@ -33,6 +34,54 @@ namespace cjson {
 		mCursor = 0;
 		mInput = _code;
 		return parseJson(_dst);
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	bool Parser::parseJson(Json& _dst) {
+		skipWhiteSpace();
+		char c = mInput[mCursor];
+		switch (c)
+		{
+		case 'n': return parseNull(_dst);
+		case 't': return parseTrue(_dst);
+		case 'f': return parseFalse(_dst);
+		case '\"': return parseString(_dst);
+		case '[': return parseArray(_dst);
+		case '{': return parseObject(_dst);
+		default:
+			// Is it a number?
+			if(c >= '0' && c <= '9')
+				return parseNumber(_dst);
+			// Unsupported, return parsing error
+			return false;
+		}
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	bool Parser::parseNull(Json& _dst) {
+		if(!strncmp("null",mInput,4)) {
+			mCursor += 4;
+			return true;
+		}
+		return false;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	bool Parser::parseTrue(Json& _dst) {
+		if(!strncmp("true",mInput,4)) {
+			mCursor += 4;
+			return true;
+		}
+		return false;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	bool Parser::parseFalse(Json& _dst) {
+		if(!strncmp("false",mInput,5)) {
+			mCursor += 5;
+			return true;
+		}
+		return false;
 	}
 
 }	// namespace cjson
