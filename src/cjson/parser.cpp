@@ -101,9 +101,8 @@ namespace cjson {
 
 	//------------------------------------------------------------------------------------------------------------------
 	bool Parser::parseString(Json& _dst) {
-		size_t size = 0;
 		readCh(); // Skip opening quotes
-		const char* _start = mInput; // Save current position
+		const char* start = mInput; // Save current position
 		bool escaped = false;
 		char c = readCh();
 		while(escaped || c != '"') {
@@ -111,7 +110,10 @@ namespace cjson {
 				return false;
 			if(escaped || c == '\\')
 				escaped ^= 1; // Negace escape state
+			c = readCh();
 		}
+		_dst = std::string(start, mInput-1); // Do not include the quote we just read.
+		return true;
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
@@ -159,7 +161,7 @@ namespace cjson {
 
 	//------------------------------------------------------------------------------------------------------------------
 	bool parseInt(Json& _dst) {
-
+		return false;
 	}
 
 }	// namespace cjson

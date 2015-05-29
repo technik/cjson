@@ -26,6 +26,8 @@
 #ifndef _CJSON_PARSER_H_
 #define _CJSON_PARSER_H_
 
+#include <string>
+
 namespace cjson {
 
 	class Json;
