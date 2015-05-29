@@ -53,4 +53,8 @@ int main(int, const char**)
 	j = "3";
 	assert(j.isString());
 	assert(j.serialize() == "\"3\"");
+	
+	Json j2(""); // Note this is not an empty Json, it is a String Json with an empty string
+	assert(j2.isString());
+	assert(j2.serialize() == "\"\"");
 }

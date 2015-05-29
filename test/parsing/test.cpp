@@ -36,21 +36,20 @@ using namespace std;
 int main(int, const char**)
 {
 	// ----- Empty Json -----
-	Json j;
-	assert(j.isNull());
-	assert(j.serialize() == "null"); // An empty Json is null type
+	Json j; // Init with empty string gives
+	assert(!j.parse("")); // Should give an error. This is no valid Json.
 
 	// ----- Basic types -----
-	j = true;
+	j.parse("true");
 	assert(j.isBool());
-	assert(j.serialize() == "true");
-	j = false;
+	assert(bool(j));
+	j.parse("false");
 	assert(j.isBool());
-	assert(j.serialize() == "false");
-	j = 3;
+	assert(bool(j) == false);
+	j.parse("3");
 	assert(j.isNumber());
-	assert(j.serialize() == "3");
-	j = "3";
+	assert(int(j) == 3);
+	j.parse("\"3\"");
 	assert(j.isString());
-	assert(j.serialize() == "\"3\"");
+	assert(string(j) == "3");
 }
