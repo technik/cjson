@@ -23,37 +23,16 @@
 //----------------------------------------------------------------------------------------------------------------------
 // Simple Json C++ library
 //----------------------------------------------------------------------------------------------------------------------
-#ifndef _CJSON_PARSER_H_
-#define _CJSON_PARSER_H_
+#include "parser.h"
 
 namespace cjson {
 
-	class Json;
-
-	///\ class Parser
-	///\ brief Parse strings of characters into Json objects
-	class Parser {
-	public:
-		/// Process the input string to replace the content a Json object
-		///\ param _code the string to parse. It must contain a well-formed serialized Json.
-		///\ param _dst a Json object into which parse results will be stored
-		///\ return \c true if able to parse the input string, \c false on error
-		bool parse(const char* _code, Json& _dst);
-
-	private:
-		bool parseJson(const Json& _dst);
-		bool parseNull(const Json& _dst);
-		bool parseFalse(const Json& _dst);
-		bool parseTrue(const Json& _dst);
-		bool parseNumber(const Json& _dst);
-		bool parseString(const Json& _dst);
-		bool parseArray(const Json& _dst);
-		bool parseObject(const Json& _dst);
-
-		size_t mCursor;
-		const char* mInput;
-	};
+	//------------------------------------------------------------------------------------------------------------------
+	bool Parser::parse(const char* _code, Json& _dst)
+	{
+		mCursor = 0;
+		mInput = _code;
+		return parseJson(_dst);
+	}
 
 }	// namespace cjson
-
-#endif // _CJSON_PARSER_H_
