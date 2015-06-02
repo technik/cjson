@@ -164,7 +164,7 @@ namespace cjson {
 	bool Parser::parseInt(Json& _dst) {
 		const char* start = mInput;
 		char* end;
-		_dst = strtol(start, &end, 10);
+		_dst = (int)strtol(start, &end, 10);
 		mInput = end;
 		return true;
 	}
