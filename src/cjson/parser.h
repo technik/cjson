@@ -60,7 +60,6 @@ namespace cjson {
 
 		void skipWhiteSpace();
 
-		size_t mCursor;
 		const char* mInput;
 	};
 

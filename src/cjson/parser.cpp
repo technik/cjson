@@ -33,7 +33,6 @@ namespace cjson {
 	//------------------------------------------------------------------------------------------------------------------
 	bool Parser::parse(const char* _code, Json& _dst)
 	{
-		mCursor = 0;
 		mInput = _code;
 		return parseJson(_dst);
 	}
@@ -62,7 +61,7 @@ namespace cjson {
 	//------------------------------------------------------------------------------------------------------------------
 	bool Parser::parseNull(Json& _dst) {
 		if(!strncmp("null",mInput,4)) {
-			mCursor += 4;
+			mInput += 4;
 			return true;
 		}
 		return false;
@@ -72,7 +71,7 @@ namespace cjson {
 	bool Parser::parseTrue(Json& _dst) {
 		if(!strncmp("true",mInput,4)) {
 			_dst = true;
-			mCursor += 4;
+			mInput += 4;
 			return true;
 		}
 		return false;
@@ -82,7 +81,7 @@ namespace cjson {
 	bool Parser::parseFalse(Json& _dst) {
 		if(!strncmp("false",mInput,5)) {
 			_dst = false;
-			mCursor += 5;
+			mInput += 5;
 			return true;
 		}
 		return false;
@@ -90,12 +89,12 @@ namespace cjson {
 
 	//------------------------------------------------------------------------------------------------------------------
 	bool Parser::parseNumber(Json& _dst) {
-		size_t lastN = mCursor+1;
+		const char* lastN = mInput+1;
 		bool isInt = true;
 		const std::string digits("0123456789");
-		while(digits.find(mInput[lastN]) != std::string::npos)
+		while(digits.find(*lastN) != std::string::npos)
 			++lastN; // Skip digits
-		if(mInput[lastN] == '.') // Float number
+		if(*lastN == '.') // Float number
 			return parseFloat(_dst);
 		else
 			return parseInt(_dst);
@@ -163,19 +162,19 @@ namespace cjson {
 
 	//------------------------------------------------------------------------------------------------------------------
 	bool Parser::parseInt(Json& _dst) {
-		const char* start = &mInput[mCursor];
+		const char* start = mInput;
 		char* end;
 		_dst = strtol(start, &end, 10);
-		mCursor += end - start;
+		mInput = end;
 		return true;
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
 	bool Parser::parseFloat(Json& _dst) {
-		const char* start = &mInput[mCursor];
+		const char* start = mInput;
 		char* end;
 		_dst = strtof(start, &end);
-		mCursor += end - start;
+		mInput = end;
 		return true;
 	}
 
@@ -195,12 +194,12 @@ namespace cjson {
 
 	//------------------------------------------------------------------------------------------------------------------
 	char Parser::readCh() {
-		return mInput[mCursor++]; // Advance cursor to the next position
+		return *mInput++; // Advance cursor to the next position
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
 	char Parser::tellCh() {
-		return mInput[mCursor];
+		return *mInput;
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
