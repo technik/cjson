@@ -160,8 +160,35 @@ namespace cjson {
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
-	bool parseInt(Json& _dst) {
-		return false;
+	bool Parser::parseInt(Json& _dst) {
+		const char* start = &mInput[mCursor];
+		char* end;
+		_dst = strtol(start, &end, 10);
+		mCursor += end - start;
+		return true;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	bool Parser::parseFloat(Json& _dst) {
+		const char* start = &mInput[mCursor];
+		char* end;
+		_dst = strtof(start, &end);
+		mCursor += end - start;
+		return true;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	bool Parser::parseObjectEntry(std::string& _oKey, Json& _dst) {
+		skipWhiteSpace();
+		Json key;
+		if(!parseString(key)) // Key 
+			return false;
+		_oKey = std::string(key);
+		skipWhiteSpace();
+		if(readCh() != ':')
+			return false;
+		parseJson(_dst); // Value
+		return true;
 	}
 
 }	// namespace cjson
