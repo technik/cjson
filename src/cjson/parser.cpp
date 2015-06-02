@@ -191,4 +191,21 @@ namespace cjson {
 		return true;
 	}
 
+	//------------------------------------------------------------------------------------------------------------------
+	char Parser::readCh() {
+		return mInput[mCursor++]; // Advance cursor to the next position
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	char Parser::tellCh() {
+		return mInput[mCursor];
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	void Parser::skipWhiteSpace() {
+		const std::string spacers = " \t\n\r";
+		while(spacers.find(tellCh()) != std::string::npos)
+			readCh();
+	}
+
 }	// namespace cjson
