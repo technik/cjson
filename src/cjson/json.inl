@@ -27,6 +27,7 @@
 #define _CJSON_JSON_INL_
 
 #include "json.h" // This will actually be ignored due to guards, but works for intellisense.
+#include <cassert>
 #include <utility> // std::move
 
 namespace cjson {
@@ -200,6 +201,15 @@ namespace cjson {
 	//------------------------------------------------------------------------------------------------------------------
 	inline bool Json::isObject() const {
 		return mType == DataType::object;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	template<typename T_>
+	void Json::push_back(const T_& _element) {
+		if(mType == DataType::null)
+			mType = DataType::array;
+		assert(mType == DataType::array);
+		mArray.push_back(new Json(_element));
 	}
 
 } // namespace cjson

@@ -71,6 +71,7 @@ namespace cjson {
 	//------------------------------------------------------------------------------------------------------------------
 	bool Parser::parseTrue(Json& _dst) {
 		if(!strncmp("true",mInput,4)) {
+			_dst = true;
 			mCursor += 4;
 			return true;
 		}
@@ -80,6 +81,7 @@ namespace cjson {
 	//------------------------------------------------------------------------------------------------------------------
 	bool Parser::parseFalse(Json& _dst) {
 		if(!strncmp("false",mInput,5)) {
+			_dst = false;
 			mCursor += 5;
 			return true;
 		}

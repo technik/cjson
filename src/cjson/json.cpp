@@ -136,6 +136,30 @@ namespace cjson {
 		new(this)Json(std::move(_s));
 		return *this;
 	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	Json::operator bool() const {
+		assert(mType == DataType::boolean || mType == DataType::integer);
+		return mNumber.b;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	Json::operator int() const {
+		assert(mType == DataType::integer);
+		return mNumber.i;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	Json::operator float() const {
+		assert(mType == DataType::real);
+		return mNumber.f;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	Json::operator std::string() const {
+		assert(mType == DataType::text);
+		return mText;
+	}
 	
 	//------------------------------------------------------------------------------------------------------------------
 	const Json& Json::operator[](const char* _key) const {
