@@ -227,6 +227,12 @@ namespace cjson {
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
+	bool Json::contains(const std::string& _key) const {
+		assert(mType == DataType::object);
+		return mObject.find(_key) != mObject.end();
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
 	void Json::clear() {
 		// Clear internal elements if necessary
 		switch(mType) {
