@@ -119,6 +119,7 @@ namespace cjson {
 
 	//------------------------------------------------------------------------------------------------------------------
 	bool Parser::parseArray(Json& _dst) {
+		_dst.mType = Json::DataType::array;
 		readCh(); // Skip [
 		skipWhiteSpace();
 		Json element;
@@ -140,6 +141,7 @@ namespace cjson {
 
 	//------------------------------------------------------------------------------------------------------------------
 	bool Parser::parseObject(Json& _dst) {
+		_dst.mType = Json::DataType::object;
 		readCh(); // Skip {
 		skipWhiteSpace();
 		Json value;
