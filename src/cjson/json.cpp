@@ -233,10 +233,12 @@ namespace cjson {
 		case DataType::array:
 			for(const auto& element : mArray)
 				delete element;
+			mArray.clear();
 			break;
 		case DataType::object:
 			for(const auto& element : mObject)
 				delete element.second;
+			mObject.clear();
 			break;
 		default:
 			break;
