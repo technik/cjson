@@ -27,6 +27,17 @@ cmake_minimum_required (VERSION 2.4)
 project(cjson)
 enable_testing()
 
+
+if(CMAKE_COMPILER_IS_GNUCXX)
+    add_definitions(-std=c++11)
+
+# Test coverage
+set(CXXFLAGS CXXFLAGS -g -O0 -Wall -fprofile-arcs -ftest-coverage)
+set(CFLAGS CFLAGS -g -O0 -Wall -fprofile-arcs -ftest-coverage)
+set(LDFLAGS LDFLAGS -fprofile-arcs -ftest-coverage)
+
+endif() #GNUCXX
+
 # Child projects
 add_subdirectory(src) # The library itself
 add_subdirectory(samples) # The samples
