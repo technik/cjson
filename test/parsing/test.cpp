@@ -72,7 +72,7 @@ int main(int, const char**)
 	j = { 2, 3, 4 };
 	Json parsed;
 	assert(parsed.parse(j.serialize().c_str()));
-	assert(int(j[0u]) == 2);
-	assert(int(j[1]) == 3);
-	assert(int(j[2]) == 4);
+	assert(int(parsed[0u]) == 2);
+	assert(int(parsed[1]) == 3);
+	assert(int(parsed[2]) == 4);
 }
