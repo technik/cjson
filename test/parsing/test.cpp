@@ -38,6 +38,7 @@ int main(int, const char**)
 	// ----- Empty Json -----
 	Json j; // Init with empty string gives
 	assert(!j.parse("")); // Should give an error. This is no valid Json.
+	assert(j.isNull());
 
 	// ----- Basic types -----
 	assert(j.parse("true"));
@@ -52,4 +53,26 @@ int main(int, const char**)
 	assert(j.parse("\"3\""));
 	assert(j.isString());
 	assert(string(j) == "3");
+
+	j.setNull();
+	assert(j.isNull());
+
+	// ---- Array and object types ----
+	assert(j.parse("[]"));
+	assert(j.isArray());
+	assert(j.size() == 0);
+	j.push_back(3);
+	assert(int(j[0u]) == 3);
+	assert(j.size() == 1);
+	std::string serializedData = 
+		"["
+		"	3"
+		"]";
+	assert(j.serialize() == serializedData);
+	j = { 2, 3, 4 };
+	Json parsed;
+	assert(parsed.parse(j.serialize().c_str()));
+	assert(int(j[0u]) == 2);
+	assert(int(j[1]) == 3);
+	assert(int(j[2]) == 4);
 }
