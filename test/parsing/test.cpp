@@ -72,7 +72,19 @@ int main(int, const char**)
 	j = { 2, 3, 4 };
 	Json parsed;
 	assert(parsed.parse(j.serialize().c_str()));
+	assert(parsed.size() == 3);
 	assert(int(parsed[0u]) == 2);
 	assert(int(parsed[1]) == 3);
 	assert(int(parsed[2]) == 4);
+
+	// ---- Object tests ----
+	assert(j.parse("{}"));
+	assert(j.isObject());
+	assert(j.size() == 0);
+	j["key"] = "value";
+	assert(j.size() == 1);
+	assert(j.contains("key"));
+	assert(string(j["key"]) == "value");
+	assert(j.parse(R""(	 {		"foo"	:		"bar \""	 } )"")); // Spaced test
+	assert(!j.parse(R"({ "bar" :")")); // Incomplete test
 }
