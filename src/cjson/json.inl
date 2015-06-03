@@ -174,6 +174,17 @@ namespace cjson {
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
+	template<class T_>
+	Json& Json::operator=(std::initializer_list<T_> _list) {
+		clear();
+		mType = DataType::array;
+		mArray.reserve(_list.size());
+		for(auto element : _list)
+			mArray.push_back(new Json(element));
+		return *this;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
 	inline bool Json::isNull() const {
 		return mType == DataType::null;
 	}

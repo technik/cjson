@@ -160,6 +160,18 @@ namespace cjson {
 		assert(mType == DataType::text);
 		return mText;
 	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	const Json& Json::operator[](size_t _n) const {
+		assert(mType == DataType::array);
+		return *mArray[_n];
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	Json& Json::operator[](size_t _n) {
+		assert(mType == DataType::array);
+		return *mArray[_n];
+	}
 	
 	//------------------------------------------------------------------------------------------------------------------
 	const Json& Json::operator[](const char* _key) const {
@@ -195,6 +207,23 @@ namespace cjson {
 		if(objRef == nullptr)
 			objRef = new Json();
 		return *objRef;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	size_t Json::size() const {
+		assert(mType == DataType::array || mType == DataType::object || mType == DataType::text);
+		switch (mType)
+		{
+		case cjson::Json::DataType::text:
+			return mText.size();
+		case cjson::Json::DataType::array:
+			return mArray.size();
+		case cjson::Json::DataType::object:
+			return mObject.size();
+		default:
+			assert(false);
+			return size_t(-1);
+		}
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
