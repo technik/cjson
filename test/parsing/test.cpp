@@ -65,8 +65,8 @@ int main(int, const char**)
 	assert(int(j[0u]) == 3);
 	assert(j.size() == 1);
 	std::string serializedData = 
-		"["
-		"	3"
+		"[\n"
+		"	3\n"
 		"]";
 	assert(j.serialize() == serializedData);
 	j = { 2, 3, 4 };
