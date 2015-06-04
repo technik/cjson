@@ -99,12 +99,12 @@ namespace cjson {
 		/// \return the value of this json as a boolean element.
 		explicit operator bool	() const;
 				 operator int	() const;
-				 operator float	() const;
+		explicit operator float	() const;
 		explicit operator std::string () const;
 
 		// ----- Vector like access -----
-		const Json&		operator[]	(size_t) const;
-			  Json&		operator[]	(size_t);
+		const Json&		operator()	(size_t) const;
+			  Json&		operator()	(size_t);
 		template<typename T_>
 		void			push_back	(const T_&);
 

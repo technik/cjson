@@ -62,7 +62,7 @@ int main(int, const char**)
 	assert(j.isArray());
 	assert(j.size() == 0);
 	j.push_back(3);
-	assert(int(j[0u]) == 3);
+	assert(j(0) == 3);
 	assert(j.size() == 1);
 	std::string serializedData = 
 		"[\n"
@@ -73,9 +73,9 @@ int main(int, const char**)
 	Json parsed;
 	assert(parsed.parse(j.serialize().c_str()));
 	assert(parsed.size() == 3);
-	assert(int(parsed[0u]) == 2);
-	assert(int(parsed[1]) == 3);
-	assert(int(parsed[2]) == 4);
+	assert(parsed(0) == 2);
+	assert(parsed(1) == 3);
+	assert(parsed(2) == 4);
 
 	// ---- Object tests ----
 	assert(j.parse("{}"));

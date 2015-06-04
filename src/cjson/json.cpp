@@ -174,13 +174,13 @@ namespace cjson {
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
-	const Json& Json::operator[](size_t _n) const {
+	const Json& Json::operator()(size_t _n) const {
 		assert(mType == DataType::array);
 		return *mArray[_n];
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
-	Json& Json::operator[](size_t _n) {
+	Json& Json::operator()(size_t _n) {
 		assert(mType == DataType::array);
 		return *mArray[_n];
 	}
