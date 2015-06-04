@@ -63,6 +63,7 @@ namespace cjson {
 		// ----- Construction from base types -----
 		Json(bool);
 		Json(int);
+		Json(unsigned);
 		Json(float);
 		Json(const char*);
 		Json(const std::string&);
@@ -79,6 +80,7 @@ namespace cjson {
 		// ----- Assignment from base types -----
 		Json& operator=(bool);
 		Json& operator=(int);
+		Json& operator=(unsigned);
 		Json& operator=(float);
 		Json& operator=(const char*);
 		Json& operator=(const std::string&);
