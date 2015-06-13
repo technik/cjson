@@ -63,6 +63,7 @@ namespace cjson {
 		// ----- Construction from base types -----
 		Json(bool);
 		Json(int);
+		Json(unsigned);
 		Json(float);
 		Json(const char*);
 		Json(const std::string&);
@@ -79,6 +80,7 @@ namespace cjson {
 		// ----- Assignment from base types -----
 		Json& operator=(bool);
 		Json& operator=(int);
+		Json& operator=(unsigned);
 		Json& operator=(float);
 		Json& operator=(const char*);
 		Json& operator=(const std::string&);
@@ -86,6 +88,15 @@ namespace cjson {
 		// Array assignments
 		template<class T_>
 		Json& operator=(std::initializer_list<T_>); ///< Assign an arbitrary initializer list
+
+		// ----- Equaliy operators -----
+		bool operator==(const Json&) const;
+		bool operator==(bool _b) const;
+		bool operator==(int _i) const;
+		bool operator==(unsigned) const;
+		bool operator==(float) const;
+		bool operator==(const char*) const;
+		bool operator==(const std::string&) const;
 
 		// ----- Conversion to base types -----
 		/// Cast to boolean
@@ -101,8 +112,8 @@ namespace cjson {
 				 operator std::string	() const;
 
 		// ----- Vector like access -----
-		const Json&		operator[]	(size_t) const;
-			  Json&		operator[]	(size_t);
+		const Json&		operator()	(size_t) const;
+			  Json&		operator()	(size_t);
 		template<typename T_>
 		void			push_back	(const T_&);
 

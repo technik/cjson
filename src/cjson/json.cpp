@@ -68,6 +68,13 @@ namespace cjson {
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
+	Json::Json(unsigned _u)
+		: mType(DataType::integer)
+	{
+		mNumber.i = int(_u);
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
 	Json::Json(float _f)
 		: mType(DataType::real)
 	{
@@ -110,6 +117,11 @@ namespace cjson {
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
+	Json& Json::operator=(unsigned _u) {
+		return this->operator=(int(_u));
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
 	Json& Json::operator=(float _f) {
 		clear();
 		new(this)Json(_f);
@@ -138,6 +150,76 @@ namespace cjson {
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
+	bool Json::operator==(const Json& _x) const {
+		if(mType != _x.mType)
+			return false;
+		switch (mType)
+		{
+		case DataType::null:
+			return true;
+		case DataType::text:
+			return mText == _x.mText;
+		case DataType::array:
+			if(size() != _x.size())
+				return false;
+			for(size_t i = 0; i < size(); ++i) {
+				if(!(*mArray[i] == *_x.mArray[i]))
+					return false;
+			}
+			return true;
+		case DataType::object:
+			if(size() != _x.size())
+				return false;
+			for(const auto& myElement : mObject) {
+				const std::string& key = myElement.first;
+				if(!_x.contains(key))
+					return false;
+				if(!(_x[key] == *myElement.second))
+					return false;
+			}
+			return true;
+		default:
+			return mNumber.i == _x.mNumber.i;
+		}
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	bool Json::operator==(bool _b) const {
+		assert(mType == DataType::boolean || mType == DataType::integer);
+		return mNumber.b == _b;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	bool Json::operator==(int _i) const {
+		assert(mType == DataType::integer);
+		return mNumber.i == _i;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	bool Json::operator==(unsigned _u) const {
+		assert(mType == DataType::integer);
+		return unsigned(mNumber.i) == _u;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	bool Json::operator==(float _f) const {
+		assert(mType == DataType::real);
+		return mNumber.f == _f;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	bool Json::operator==(const char* _s) const {
+		assert(mType == DataType::text);
+		return mText == _s;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	bool Json::operator==(const std::string& _s) const {
+		assert(mType == DataType::text);
+		return mText == _s;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
 	Json::operator bool() const {
 		assert(mType == DataType::boolean || mType == DataType::integer);
 		return mNumber.b;
@@ -162,13 +244,13 @@ namespace cjson {
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
-	const Json& Json::operator[](size_t _n) const {
+	const Json& Json::operator()(size_t _n) const {
 		assert(mType == DataType::array);
 		return *mArray[_n];
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
-	Json& Json::operator[](size_t _n) {
+	Json& Json::operator()(size_t _n) {
 		assert(mType == DataType::array);
 		return *mArray[_n];
 	}
