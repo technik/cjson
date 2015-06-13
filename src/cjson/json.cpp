@@ -315,6 +315,19 @@ namespace cjson {
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
+	Json::Dictionary::iterator Json::begin(){
+		assert(mType == DataType::object);
+		return mObject.begin();
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	Json::Dictionary::iterator Json::end(){
+		assert(mType == DataType::object);
+		return mObject.end();
+	}
+
+
+	//------------------------------------------------------------------------------------------------------------------
 	void Json::clear() {
 		// Clear internal elements if necessary
 		switch(mType) {

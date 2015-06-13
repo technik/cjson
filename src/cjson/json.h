@@ -35,6 +35,10 @@ namespace cjson {
 	/// \class Json
 	/// \brief Encapsulates all the functionality to operate with json objects.
 	class Json {
+	private:
+		typedef std::map<std::string, Json*>	Dictionary;
+		typedef std::vector<Json*>			Array;
+
 	public:
 		// ----- Basic construction and destruction -----
 		Json(); ///< Default constructor. Creates an empty json.
@@ -124,6 +128,9 @@ namespace cjson {
 			  Json&		operator[]	(const std::string&);
 		bool			contains	(const std::string&) const;
 
+		Json::Dictionary::iterator	begin();
+		Json::Dictionary::iterator	end();
+
 		// ----- Common methods for array and object -----
 		size_t			size	() const;
 
@@ -131,9 +138,6 @@ namespace cjson {
 		void clear();
 
 	private:
-		typedef std::map<std::string,Json*>	Dictionary;
-		typedef std::vector<Json*>			Array;
-
 		/// Possible types of data
 		enum class DataType {
 			null,
