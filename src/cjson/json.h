@@ -95,10 +95,10 @@ namespace cjson {
 		/// A null element will always return \c false.
 		/// An array or object will return \c false if empty, \c true otherwise.
 		/// \return the value of this json as a boolean element.
-		explicit operator bool	() const;
-				 operator int	() const;
-				 operator float	() const;
-		explicit operator std::string () const;
+		explicit operator bool			() const;
+				 operator int			() const;
+				 operator float			() const;
+				 operator std::string	() const;
 
 		// ----- Vector like access -----
 		const Json&		operator[]	(size_t) const;
