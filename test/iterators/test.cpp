@@ -43,7 +43,9 @@ int main(int, const char**)
 	JsonIterator iterArray = jArray.begin();
 	JsonIterator iterDict = jDictionary.begin();
 
-	std::cout << (*((iterArray++)++)).serialize() << std::endl;
+	iterArray++;
+
+	std::cout << iterArray->serialize() << std::endl;
 
 	std::cout << iterDict.key() << ", " << jDictionary[iterDict.key()] << std::endl; // 666 TODO here, after operator[], operator int is automatically called.
 	std::cout << iterDict++.key() << ", " << jDictionary[iterDict++.key()] << std::endl;

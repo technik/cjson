@@ -171,6 +171,7 @@ namespace cjson {
 		Json			operator*();
 		JsonIterator&	operator++();
 		JsonIterator	operator+(int);
+		Json*			operator->();
 
 		std::string		key();
 
