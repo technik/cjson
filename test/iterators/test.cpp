@@ -35,9 +35,17 @@ using namespace std;
 
 int main(int, const char**)
 {
-	Json array((R""([elem1, elem2, {"key1", 1}])""));
-	Json dictionary((R""({"key1":"bar", "key2":	"foo"})""));
+	Json jArray;
+	jArray.parse("[1, 2, 3]");
+	Json jDictionary;
+	jDictionary.parse((R""({"key1":"bar", "key2":"foo"})""));
 
+	JsonIterator iterArray = jArray.begin();
+	JsonIterator iterDict = jDictionary.begin();
 
+	std::cout << (*((iterArray++)++)).serialize() << std::endl;
+
+	std::cout << iterDict.key() << ", " << jDictionary[iterDict.key()] << std::endl; // 666 TODO here, after operator[], operator int is automatically called.
+	std::cout << iterDict++.key() << ", " << jDictionary[iterDict++.key()] << std::endl;
 
 }
