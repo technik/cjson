@@ -118,10 +118,13 @@ namespace cjson {
 		bool			contains	(const std::string&) const;
 
 		// ----- Iterators -----
-		const ConstJsonIterator		begin() const;
-		JsonIterator			begin();
-		const ConstJsonIterator		end() const;
-		JsonIterator			end();
+		typedef JsonIterator iterator;
+		typedef ConstJsonIterator const_iterator;
+
+		iterator	begin() const;
+		iterator	begin();
+		iterator	end() const;
+		iterator	end();
 
 		// ----- Common methods for array and object -----
 		size_t			size	() const;
@@ -176,7 +179,6 @@ namespace cjson {
 
 	private:
 		bool mIsArray;
-
 		
 		Json::Dictionary::iterator mIterObject;
 		Json::Array::iterator mIterArray;
@@ -185,16 +187,22 @@ namespace cjson {
 	};
 
 	class ConstJsonIterator{
+		;
 	public:
-		ConstJsonIterator(Json &_json, const int _elem);
+		ConstJsonIterator(Json &_json, int _pos);
 
-		const Json					operator*() const;
-		const ConstJsonIterator&	operator++() const;
-		const ConstJsonIterator		operator+(int) const;
+		const Json					operator*()	const;
+		const ConstJsonIterator&	operator++();
+		const Json*					operator->()const;
+
 		std::string		key();
 
 	private:
-		Json	mJson;
+		bool mIsArray;
+
+
+		Json::Dictionary::iterator mIterObject;
+		Json::Array::iterator mIterArray;
 
 		int		mElem;
 	};

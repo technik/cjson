@@ -264,14 +264,25 @@ namespace cjson {
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
-	JsonIterator Json::begin(){
-		return JsonIterator(*this, 0);
+	Json::iterator Json::begin() const{
+		Json json = *this;
+		return const_iterator(json, 0);
+	}
+	
+	//------------------------------------------------------------------------------------------------------------------
+	Json::iterator Json::begin(){
+		return iterator(*this, 0);
 	}
 
+	//------------------------------------------------------------------------------------------------------------------
+	Json::iterator Json::end() const{
+		Json json = *this;
+		return const_iterator(json, size());
+	}
 
 	//------------------------------------------------------------------------------------------------------------------
-	JsonIterator Json::end(){
-		return JsonIterator(*this, size());
+	Json::iterator Json::end(){
+		return iterator(*this, size());
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
@@ -326,6 +337,62 @@ namespace cjson {
 
 	//------------------------------------------------------------------------------------------------------------------
 	std::string JsonIterator::key(){
+		assert(!mIsArray);
+
+		return mIterObject->first;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	ConstJsonIterator::ConstJsonIterator(Json &_json, int _pos){
+		mIsArray = _json.isArray();
+		if (mIsArray){
+			mIterArray = _json.mArray.begin() + _pos;
+		}
+		else{
+			mIterObject = _json.mObject.begin();
+
+			while (_pos-- < 0){
+				mIterObject--;
+			}
+		}
+	}
+
+
+	//------------------------------------------------------------------------------------------------------------------
+	const Json ConstJsonIterator::operator*() const{
+		if (mIsArray){
+			return *mIterArray;
+		}
+		else{
+			mIterObject->second;
+		}
+
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	const ConstJsonIterator& ConstJsonIterator::operator++(){
+		if (mIsArray){
+			mIterArray++;
+		}
+		else{
+			mIterObject++;
+		}
+
+		return *this;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	const Json* ConstJsonIterator::operator->() const{
+		if (mIsArray){
+			return *mIterArray;
+		}
+		else{
+			return mIterObject->second;
+		}
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	std::string ConstJsonIterator::key(){
 		assert(!mIsArray);
 
 		return mIterObject->first;
