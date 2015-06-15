@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>cjson: src/cjson/serializer.cpp Source File</title>
+<title>cjson: C:/programming/cjlibs/cjson/src/cjson/serializer.cpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">cjson
-   &#160;<span id="projectnumber">0.1.0</span>
+   &#160;<span id="projectnumber">0.1.1</span>
    </div>
    <div id="projectbrief">Simple, reusable, C++ json library.</div>
   </td>
@@ -48,6 +48,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -168,7 +169,7 @@ $(document).ready(function(){initNavTree('serializer_8cpp_source.html','');});
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            _oStream &lt;&lt; _j.mNumber.f;</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordflow">case</span> Json::DataType::text:</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            _oStream &lt;&lt; _j.mText;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            _oStream &lt;&lt; <span class="charliteral">&#39;\&quot;&#39;</span> &lt;&lt; _j.mText &lt;&lt; <span class="charliteral">&#39;\&quot;&#39;</span>;</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keywordflow">case</span> Json::DataType::array:</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            <span class="keywordflow">return</span> push(_j.mArray, _oStream, _tab);</div>
@@ -181,20 +182,20 @@ $(document).ready(function(){initNavTree('serializer_8cpp_source.html','');});
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">bool</span> Serializer::push(<span class="keywordtype">bool</span> _b, stringstream&amp; _oStream) {</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        _oStream &lt;&lt; _b? <span class="stringliteral">&quot;true&quot;</span> : <span class="stringliteral">&quot;false&quot;</span>;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        _oStream &lt;&lt; (_b? <span class="stringliteral">&quot;true&quot;</span> : <span class="stringliteral">&quot;false&quot;</span>);</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    }</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordtype">bool</span> Serializer::push(<span class="keyword">const</span> Json::Array&amp; _array, std::stringstream&amp; _oStream, <span class="keywordtype">size_t</span> _tab) {</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        _oStream &lt;&lt; <span class="charliteral">&#39;[&#39;</span>; <span class="comment">// Open braces</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        _oStream &lt;&lt; <span class="stringliteral">&quot;[\n&quot;</span>; <span class="comment">// Open braces</span></div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <span class="comment">// Push elements</span></div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keywordflow">for</span>(<span class="keywordtype">size_t</span> i = 0; i &lt; _array.size(); ++i) {</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            tabify(_oStream, _tab+1);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            <span class="keywordflow">if</span>(!push(*_array[i], _oStream, _tab+1))</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">false</span>; <span class="comment">// Error processing element</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            <span class="keywordflow">if</span>(i != _array.size()-1) <span class="comment">// All elements but the last one</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;                _oStream &lt;&lt; <span class="charliteral">&#39;,&#39;</span>;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <span class="keywordflow">if</span>(!push(*_array[i], _oStream, _tab+1))</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">false</span>; <span class="comment">// Error processing element</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            <span class="keywordflow">if</span>(i != _array.size()-1) <span class="comment">// All elements but the last one</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;                _oStream &lt;&lt; <span class="charliteral">&#39;,&#39;</span>;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            _oStream &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        }</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <span class="comment">// Close braces</span></div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        tabify(_oStream, _tab);</div>
@@ -204,7 +205,7 @@ $(document).ready(function(){initNavTree('serializer_8cpp_source.html','');});
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordtype">bool</span> Serializer::push(<span class="keyword">const</span> Json::Dictionary&amp; _obj, std::stringstream&amp; _oStream, <span class="keywordtype">size_t</span> _tab) {</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        _oStream &lt;&lt; <span class="charliteral">&#39;{&#39;</span>; <span class="comment">// Open braces</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        _oStream &lt;&lt; <span class="stringliteral">&quot;{\n&quot;</span>; <span class="comment">// Open braces</span></div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="comment">// Push elements</span></div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <span class="keywordtype">size_t</span> i = 0;</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span>&amp; element : _obj) {</div>
@@ -214,21 +215,22 @@ $(document).ready(function(){initNavTree('serializer_8cpp_source.html','');});
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">false</span>; <span class="comment">// Error processing element</span></div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            <span class="keywordflow">if</span>(i != _obj.size()-1) <span class="comment">// All elements but the last one</span></div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;                _oStream &lt;&lt; <span class="charliteral">&#39;,&#39;</span>;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        }</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="comment">// Close braces</span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        tabify(_oStream, _tab);</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        _oStream &lt;&lt; <span class="charliteral">&#39;}&#39;</span>;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    }</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <span class="keywordtype">void</span> Serializer::tabify(stringstream&amp; _oStream, <span class="keywordtype">size_t</span> _tab) {</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        <span class="keywordflow">for</span>(<span class="keywordtype">size_t</span> i = 0; i &lt; _tab; ++i)</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;            _oStream &lt;&lt; <span class="charliteral">&#39;\t&#39;</span>;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    }</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;}   <span class="comment">// namespace cjson</span></div>
-<div class="ttc" id="namespacecjson_html"><div class="ttname"><a href="namespacecjson.html">cjson</a></div><div class="ttdef"><b>Definition:</b> <a href="json_8cpp_source.html#l00030">json.cpp:30</a></div></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;            _oStream &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        }</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="comment">// Close braces</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        tabify(_oStream, _tab);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        _oStream &lt;&lt; <span class="charliteral">&#39;}&#39;</span>;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    }</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keywordtype">void</span> Serializer::tabify(stringstream&amp; _oStream, <span class="keywordtype">size_t</span> _tab) {</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        <span class="keywordflow">for</span>(<span class="keywordtype">size_t</span> i = 0; i &lt; _tab; ++i)</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;            _oStream &lt;&lt; <span class="charliteral">&#39;\t&#39;</span>;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    }</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;}   <span class="comment">// namespace cjson</span></div>
+<div class="ttc" id="namespacecjson_html"><div class="ttname"><a href="namespacecjson.html">cjson</a></div><div class="ttdef"><b>Definition:</b> <a href="json_8cpp_source.html#l00033">json.cpp:33</a></div></div>
 <div class="ttc" id="serializer_8h_html"><div class="ttname"><a href="serializer_8h.html">serializer.h</a></div></div>
 <div class="ttc" id="classcjson_1_1_json_html"><div class="ttname"><a href="classcjson_1_1_json.html">cjson::Json</a></div><div class="ttdoc">Encapsulates all the functionality to operate with json objects. </div><div class="ttdef"><b>Definition:</b> <a href="json_8h_source.html#l00037">json.h:37</a></div></div>
 <div class="ttc" id="namespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div></div>
@@ -238,8 +240,8 @@ $(document).ready(function(){initNavTree('serializer_8cpp_source.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1375aec97e96b5de63a4ef9fc199c3c4.html">cjson</a></li><li class="navelem"><a class="el" href="serializer_8cpp.html">serializer.cpp</a></li>
-    <li class="footer">Generated on Thu May 28 2015 13:58:04 for cjson by
+    <li class="navelem"><a class="el" href="dir_fb5a07b400dbb41763c8aa6f4720bfec.html">src</a></li><li class="navelem"><a class="el" href="dir_58d769a5f440a1560e3cce0a7d010958.html">cjson</a></li><li class="navelem"><a class="el" href="serializer_8cpp.html">serializer.cpp</a></li>
+    <li class="footer">Generated on Mon Jun 15 2015 18:33:49 for cjson by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

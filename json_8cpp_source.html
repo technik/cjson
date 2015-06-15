@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>cjson: src/cjson/json.cpp Source File</title>
+<title>cjson: C:/programming/cjlibs/cjson/src/cjson/json.cpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">cjson
-   &#160;<span id="projectnumber">0.1.0</span>
+   &#160;<span id="projectnumber">0.1.1</span>
    </div>
    <div id="projectbrief">Simple, reusable, C++ json library.</div>
   </td>
@@ -48,6 +48,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -135,31 +136,350 @@ $(document).ready(function(){initNavTree('json_8cpp_source.html','');});
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">// Simple Json C++ library</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">//----------------------------------------------------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="json_8h.html">json.h</a>&quot;</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="serializer_8h.html">serializer.h</a>&quot;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
-<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="namespacecjson.html">   30</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacecjson.html">cjson</a> {</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a646a66df9925632236eee157dcc63f12">   33</a></span>&#160;    std::string <a class="code" href="classcjson_1_1_json.html#a646a66df9925632236eee157dcc63f12">Json::serialize</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <a class="code" href="classcjson_1_1_serializer.html">Serializer</a> s;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keywordflow">return</span> s.<a class="code" href="classcjson_1_1_serializer.html#a3a6010d22e4b678467299b37b7171b83">serialize</a>(*<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    }</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}   <span class="comment">// namespace cjson</span></div>
-<div class="ttc" id="namespacecjson_html"><div class="ttname"><a href="namespacecjson.html">cjson</a></div><div class="ttdef"><b>Definition:</b> <a href="json_8cpp_source.html#l00030">json.cpp:30</a></div></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="parser_8h.html">parser.h</a>&quot;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="serializer_8h.html">serializer.h</a>&quot;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;cassert&gt;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;new&gt;</span> <span class="comment">// Placement new</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="namespacecjson.html">   33</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacecjson.html">cjson</a> {</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a67aeef868ec9dfbe2a1ddd2b6032c559">   36</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classcjson_1_1_json.html#a67aeef868ec9dfbe2a1ddd2b6032c559">Json::parse</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* _code) {</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <a class="code" href="classcjson_1_1_parser.html">Parser</a> p;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keywordflow">if</span>(p.<a class="code" href="classcjson_1_1_parser.html#abb7e3211ee3531f071c0ea18b40557fc">parse</a>(_code, *<span class="keyword">this</span>))</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <a class="code" href="classcjson_1_1_json.html#add0d87852ee4102b37eba565ccb8bddf">setNull</a>(); <span class="comment">// Something went wrong, reset.</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    }</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a646a66df9925632236eee157dcc63f12">   45</a></span>&#160;    std::string <a class="code" href="classcjson_1_1_json.html#a646a66df9925632236eee157dcc63f12">Json::serialize</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <a class="code" href="classcjson_1_1_serializer.html">Serializer</a> s;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keywordflow">return</span> s.<a class="code" href="classcjson_1_1_serializer.html#a3a6010d22e4b678467299b37b7171b83">serialize</a>(*<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    }</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#add0d87852ee4102b37eba565ccb8bddf">   51</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classcjson_1_1_json.html#add0d87852ee4102b37eba565ccb8bddf">Json::setNull</a>() {</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        clear(); <span class="comment">// Clear internal elements if necessary (must be done before changing type)</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        mType = <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747a37a6259cc0c1dae299a7866489dff0bd">DataType::null</a>; <span class="comment">// Reset type</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    }</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a962d8fcb1045619640293a2ae9bae82a">   57</a></span>&#160;    <a class="code" href="classcjson_1_1_json.html#a446447fb6bdbb3298f059c76dc936772">Json::Json</a>(<span class="keywordtype">bool</span> _b)</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        : mType(DataType::boolean)</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    {</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        mNumber.b = _b;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    }</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a354ab7bc9cd1df91b3325764990ecff6">   64</a></span>&#160;    <a class="code" href="classcjson_1_1_json.html#a446447fb6bdbb3298f059c76dc936772">Json::Json</a>(<span class="keywordtype">int</span> _i)</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        : mType(DataType::integer)</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    {</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        mNumber.i = _i;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    }</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a35f1f2a98bfca517aa1350b9bc9a9850">   71</a></span>&#160;    <a class="code" href="classcjson_1_1_json.html#a446447fb6bdbb3298f059c76dc936772">Json::Json</a>(<span class="keywordtype">unsigned</span> _u)</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        : mType(DataType::integer)</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    {</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        mNumber.i = int(_u);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    }</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a53a1adc1a165871cfa84643e256e174a">   78</a></span>&#160;    <a class="code" href="classcjson_1_1_json.html#a446447fb6bdbb3298f059c76dc936772">Json::Json</a>(<span class="keywordtype">float</span> _f)</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        : mType(DataType::real)</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    {</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        mNumber.f = _f;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    }</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a41b6ed56481b7fd280f8a836dce85186">   85</a></span>&#160;    <a class="code" href="classcjson_1_1_json.html#a446447fb6bdbb3298f059c76dc936772">Json::Json</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* _s)</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        : mText(_s)</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        , mType(DataType::text)</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    {</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    }</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a9b28044811a5c4949bddf51409b26e22">   92</a></span>&#160;    <a class="code" href="classcjson_1_1_json.html#a446447fb6bdbb3298f059c76dc936772">Json::Json</a>(<span class="keyword">const</span> std::string&amp; _s)</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        : mText(_s)</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        , mType(DataType::text)</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    {</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    }</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a812d9912bdc677b9052a30d029c6f664">   99</a></span>&#160;    <a class="code" href="classcjson_1_1_json.html#a446447fb6bdbb3298f059c76dc936772">Json::Json</a>(std::string&amp;&amp; _s)</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        : mText(<a class="code" href="namespacestd.html">std</a>::move(_s))</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        , mType(DataType::text)</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    {</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    }</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a9da4bc33222aee775a50e3420fb35f8e">  106</a></span>&#160;    <a class="code" href="classcjson_1_1_json.html">Json</a>&amp; <a class="code" href="classcjson_1_1_json.html#a350736d72679a9d890b6fd1b13853fb0">Json::operator=</a>(<span class="keywordtype">bool</span> _b) {</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        clear();</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keyword">new</span>(<span class="keyword">this</span>)<a class="code" href="classcjson_1_1_json.html#a446447fb6bdbb3298f059c76dc936772">Json</a>(_b);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    }</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a1dfd5ffffd4466f45091ac542292d7bc">  113</a></span>&#160;    <a class="code" href="classcjson_1_1_json.html">Json</a>&amp; <a class="code" href="classcjson_1_1_json.html#a350736d72679a9d890b6fd1b13853fb0">Json::operator=</a>(<span class="keywordtype">int</span> _i) {</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        clear();</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        <span class="keyword">new</span>(<span class="keyword">this</span>)<a class="code" href="classcjson_1_1_json.html#a446447fb6bdbb3298f059c76dc936772">Json</a>(_i);</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    }</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a5ded5fae34735d37595e05991792fcc9">  120</a></span>&#160;    <a class="code" href="classcjson_1_1_json.html">Json</a>&amp; <a class="code" href="classcjson_1_1_json.html#a350736d72679a9d890b6fd1b13853fb0">Json::operator=</a>(<span class="keywordtype">unsigned</span> _u) {</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <span class="keywordflow">return</span> this-&gt;<a class="code" href="classcjson_1_1_json.html#a350736d72679a9d890b6fd1b13853fb0">operator=</a>(<span class="keywordtype">int</span>(_u));</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    }</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00125"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a1e44395f932add8e515f7a2ca1d9119e">  125</a></span>&#160;    <a class="code" href="classcjson_1_1_json.html">Json</a>&amp; <a class="code" href="classcjson_1_1_json.html#a350736d72679a9d890b6fd1b13853fb0">Json::operator=</a>(<span class="keywordtype">float</span> _f) {</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        clear();</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        <span class="keyword">new</span>(<span class="keyword">this</span>)<a class="code" href="classcjson_1_1_json.html#a446447fb6bdbb3298f059c76dc936772">Json</a>(_f);</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    }</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00132"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a18883431b4876391280ab8c361335ec3">  132</a></span>&#160;    <a class="code" href="classcjson_1_1_json.html">Json</a>&amp; <a class="code" href="classcjson_1_1_json.html#a350736d72679a9d890b6fd1b13853fb0">Json::operator=</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* _s) {</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        clear();</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        <span class="keyword">new</span>(<span class="keyword">this</span>)<a class="code" href="classcjson_1_1_json.html#a446447fb6bdbb3298f059c76dc936772">Json</a>(_s);</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    }</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00139"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a8d708687671c4c5f1cfaa57b8ad50100">  139</a></span>&#160;    <a class="code" href="classcjson_1_1_json.html">Json</a>&amp; <a class="code" href="classcjson_1_1_json.html#a350736d72679a9d890b6fd1b13853fb0">Json::operator=</a>(<span class="keyword">const</span> std::string&amp; _s) {</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;        clear();</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        <span class="keyword">new</span>(<span class="keyword">this</span>)<a class="code" href="classcjson_1_1_json.html#a446447fb6bdbb3298f059c76dc936772">Json</a>(_s);</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    }</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00146"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#ae65955fc6716a07ce3412f48d9d027e9">  146</a></span>&#160;    <a class="code" href="classcjson_1_1_json.html">Json</a>&amp; <a class="code" href="classcjson_1_1_json.html#a350736d72679a9d890b6fd1b13853fb0">Json::operator=</a>(std::string&amp;&amp; _s) {</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;        clear();</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        <span class="keyword">new</span>(<span class="keyword">this</span>)<a class="code" href="classcjson_1_1_json.html#a446447fb6bdbb3298f059c76dc936772">Json</a>(std::move(_s));</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    }</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00153"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#af22fb39a45529a2fa611424e87c32f4d">  153</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classcjson_1_1_json.html#af22fb39a45529a2fa611424e87c32f4d">Json::operator==</a>(<span class="keyword">const</span> <a class="code" href="classcjson_1_1_json.html">Json</a>&amp; _x)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        <span class="keywordflow">if</span>(mType != _x.mType)</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;        <span class="keywordflow">switch</span> (mType)</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        {</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;        <span class="keywordflow">case</span> <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747a37a6259cc0c1dae299a7866489dff0bd">DataType::null</a>:</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        <span class="keywordflow">case</span> <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747a1cb251ec0d568de6a929b520c4aed8d1">DataType::text</a>:</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;            <span class="keywordflow">return</span> mText == _x.mText;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        <span class="keywordflow">case</span> <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747af1f713c9e000f5d3f280adbd124df4f5">DataType::array</a>:</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;            <span class="keywordflow">if</span>(<a class="code" href="classcjson_1_1_json.html#a063e634aa354fe6e69af3c7c66d3a878">size</a>() != _x.<a class="code" href="classcjson_1_1_json.html#a063e634aa354fe6e69af3c7c66d3a878">size</a>())</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;            <span class="keywordflow">for</span>(<span class="keywordtype">size_t</span> i = 0; i &lt; <a class="code" href="classcjson_1_1_json.html#a063e634aa354fe6e69af3c7c66d3a878">size</a>(); ++i) {</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;                <span class="keywordflow">if</span>(!(*mArray[i] == *_x.mArray[i]))</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;            }</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        <span class="keywordflow">case</span> <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747aa8cfde6331bd59eb2ac96f8911c4b666">DataType::object</a>:</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;            <span class="keywordflow">if</span>(<a class="code" href="classcjson_1_1_json.html#a063e634aa354fe6e69af3c7c66d3a878">size</a>() != _x.<a class="code" href="classcjson_1_1_json.html#a063e634aa354fe6e69af3c7c66d3a878">size</a>())</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;            <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span>&amp; myElement : mObject) {</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;                <span class="keyword">const</span> std::string&amp; key = myElement.first;</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;                <span class="keywordflow">if</span>(!_x.<a class="code" href="classcjson_1_1_json.html#a9f9a5d4b6d4f9c5eb0f739d5abfa7cfa">contains</a>(key))</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;                <span class="keywordflow">if</span>(!(_x[key] == *myElement.second))</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;            }</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;        <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;            <span class="keywordflow">return</span> mNumber.i == _x.mNumber.i;</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;        }</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    }</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00187"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a202ebffdc1c5f97421d2a8bccea8e6c9">  187</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classcjson_1_1_json.html#af22fb39a45529a2fa611424e87c32f4d">Json::operator==</a>(<span class="keywordtype">bool</span> _b)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;        assert(mType == <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747a84e2c64f38f78ba3ea5c905ab5a2da27">DataType::boolean</a> || mType == <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747a157db7df530023575515d366c9b672e8">DataType::integer</a>);</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;        <span class="keywordflow">return</span> mNumber.b == _b;</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    }</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00193"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#af8ab2327b9e73503a697b1573666c0b8">  193</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classcjson_1_1_json.html#af22fb39a45529a2fa611424e87c32f4d">Json::operator==</a>(<span class="keywordtype">int</span> _i)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;        assert(mType == <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747a157db7df530023575515d366c9b672e8">DataType::integer</a>);</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;        <span class="keywordflow">return</span> mNumber.i == _i;</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    }</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00199"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#abe09e8bced11937399841a32bbe78f08">  199</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classcjson_1_1_json.html#af22fb39a45529a2fa611424e87c32f4d">Json::operator==</a>(<span class="keywordtype">unsigned</span> _u)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;        assert(mType == <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747a157db7df530023575515d366c9b672e8">DataType::integer</a>);</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;        <span class="keywordflow">return</span> unsigned(mNumber.i) == _u;</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    }</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00205"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a2f5d42e532813250d92fc51d241f1b58">  205</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classcjson_1_1_json.html#af22fb39a45529a2fa611424e87c32f4d">Json::operator==</a>(<span class="keywordtype">float</span> _f)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;        assert(mType == <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747a4bca24304861acde5770fdbe3cc2503b">DataType::real</a>);</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;        <span class="keywordflow">return</span> mNumber.f == _f;</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;    }</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00211"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#af4ddb2b1fb475733bbe7b31722291e6c">  211</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classcjson_1_1_json.html#af22fb39a45529a2fa611424e87c32f4d">Json::operator==</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* _s)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;        assert(mType == <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747a1cb251ec0d568de6a929b520c4aed8d1">DataType::text</a>);</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;        <span class="keywordflow">return</span> mText == _s;</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    }</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00217"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a1aac280e9cd3771ae5aebaea76dbfbf8">  217</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classcjson_1_1_json.html#af22fb39a45529a2fa611424e87c32f4d">Json::operator==</a>(<span class="keyword">const</span> std::string&amp; _s)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;        assert(mType == <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747a1cb251ec0d568de6a929b520c4aed8d1">DataType::text</a>);</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;        <span class="keywordflow">return</span> mText == _s;</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    }</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00223"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#ad662cad9b9cc53aec8bc02c4a978f26a">  223</a></span>&#160;    Json::operator bool()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;        assert(mType == DataType::boolean || mType == DataType::integer);</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;        <span class="keywordflow">return</span> mNumber.b;</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    }</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00229"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a5ffa59fd144bb39bc6c274e86c60a131">  229</a></span>&#160;    Json::operator int()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;        assert(mType == DataType::integer);</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;        <span class="keywordflow">return</span> mNumber.i;</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    }</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00235"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a50c714be3ec6bd60f5993c9f4e8e62e6">  235</a></span>&#160;    Json::operator float()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;        assert(mType == DataType::real);</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;        <span class="keywordflow">return</span> mNumber.f;</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    }</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00241"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#ac4baff2b5b983c069c1b413c7059ab10">  241</a></span>&#160;    Json::operator std::string()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;        assert(mType == DataType::text);</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;        <span class="keywordflow">return</span> mText;</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    }</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00247"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#abbb090b38e609a8a4939e35db3aca0a4">  247</a></span>&#160;    <span class="keyword">const</span> <a class="code" href="classcjson_1_1_json.html">Json</a>&amp; <a class="code" href="classcjson_1_1_json.html#abbb090b38e609a8a4939e35db3aca0a4">Json::operator()</a>(<span class="keywordtype">size_t</span> _n)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;        assert(mType == <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747af1f713c9e000f5d3f280adbd124df4f5">DataType::array</a>);</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;        <span class="keywordflow">return</span> *mArray[_n];</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    }</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00253"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a660012b34f8790b5b76549c9a908341e">  253</a></span>&#160;    <a class="code" href="classcjson_1_1_json.html">Json</a>&amp; <a class="code" href="classcjson_1_1_json.html#abbb090b38e609a8a4939e35db3aca0a4">Json::operator()</a>(<span class="keywordtype">size_t</span> _n) {</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;        assert(mType == <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747af1f713c9e000f5d3f280adbd124df4f5">DataType::array</a>);</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;        <span class="keywordflow">return</span> *mArray[_n];</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    }</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    </div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00259"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a9dc3d9df04c9e51fe19184a4c21d9eb1">  259</a></span>&#160;    <span class="keyword">const</span> <a class="code" href="classcjson_1_1_json.html">Json</a>&amp; <a class="code" href="classcjson_1_1_json.html#a9dc3d9df04c9e51fe19184a4c21d9eb1">Json::operator[]</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* _key)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;        assert(mType == <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747aa8cfde6331bd59eb2ac96f8911c4b666">DataType::object</a>);</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;        <span class="keywordflow">return</span> *mObject.find(_key)-&gt;second;</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    }</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    </div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00265"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a5ba0a1e1b3f1690d00c10de7fbc791fd">  265</a></span>&#160;    <a class="code" href="classcjson_1_1_json.html">Json</a>&amp; <a class="code" href="classcjson_1_1_json.html#a9dc3d9df04c9e51fe19184a4c21d9eb1">Json::operator[]</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* _key) {</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;        <span class="keywordflow">if</span>(mType != <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747aa8cfde6331bd59eb2ac96f8911c4b666">DataType::object</a>) {</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;            clear();</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;            mType = <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747aa8cfde6331bd59eb2ac96f8911c4b666">DataType::object</a>;</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        }</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;        <a class="code" href="classcjson_1_1_json.html">Json</a>*&amp; objRef = mObject[_key];</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        <span class="keywordflow">if</span>(objRef == <span class="keyword">nullptr</span>)</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;            objRef = <span class="keyword">new</span> <a class="code" href="classcjson_1_1_json.html#a446447fb6bdbb3298f059c76dc936772">Json</a>();</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;        <span class="keywordflow">return</span> *objRef;</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    }</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    </div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00277"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#ac02a65614bd3068300bb70e5b53dbda7">  277</a></span>&#160;    <span class="keyword">const</span> <a class="code" href="classcjson_1_1_json.html">Json</a>&amp; <a class="code" href="classcjson_1_1_json.html#a9dc3d9df04c9e51fe19184a4c21d9eb1">Json::operator[]</a>(<span class="keyword">const</span> std::string&amp; _key)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;        assert(mType == <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747aa8cfde6331bd59eb2ac96f8911c4b666">DataType::object</a>);</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;        <span class="keywordflow">return</span> *mObject.find(_key)-&gt;second;</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    }</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    </div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00283"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a468dde74db900ea55b250b7a905f68fa">  283</a></span>&#160;    <a class="code" href="classcjson_1_1_json.html">Json</a>&amp; <a class="code" href="classcjson_1_1_json.html#a9dc3d9df04c9e51fe19184a4c21d9eb1">Json::operator[]</a>(<span class="keyword">const</span> std::string&amp; _key) {</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;        <span class="keywordflow">if</span>(mType != <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747aa8cfde6331bd59eb2ac96f8911c4b666">DataType::object</a>) {</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;            clear();</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;            mType = <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747aa8cfde6331bd59eb2ac96f8911c4b666">DataType::object</a>;</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;        }</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;        <a class="code" href="classcjson_1_1_json.html">Json</a>*&amp; objRef = mObject[_key];</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;        <span class="keywordflow">if</span>(objRef == <span class="keyword">nullptr</span>)</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;            objRef = <span class="keyword">new</span> <a class="code" href="classcjson_1_1_json.html#a446447fb6bdbb3298f059c76dc936772">Json</a>();</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;        <span class="keywordflow">return</span> *objRef;</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;    }</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00295"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a063e634aa354fe6e69af3c7c66d3a878">  295</a></span>&#160;    <span class="keywordtype">size_t</span> <a class="code" href="classcjson_1_1_json.html#a063e634aa354fe6e69af3c7c66d3a878">Json::size</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;        assert(mType == <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747af1f713c9e000f5d3f280adbd124df4f5">DataType::array</a> || mType == <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747aa8cfde6331bd59eb2ac96f8911c4b666">DataType::object</a> || mType == <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747a1cb251ec0d568de6a929b520c4aed8d1">DataType::text</a>);</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;        <span class="keywordflow">switch</span> (mType)</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;        {</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;        <span class="keywordflow">case</span> <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747a1cb251ec0d568de6a929b520c4aed8d1">cjson::Json::DataType::text</a>:</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;            <span class="keywordflow">return</span> mText.size();</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;        <span class="keywordflow">case</span> <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747af1f713c9e000f5d3f280adbd124df4f5">cjson::Json::DataType::array</a>:</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;            <span class="keywordflow">return</span> mArray.size();</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;        <span class="keywordflow">case</span> <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747aa8cfde6331bd59eb2ac96f8911c4b666">cjson::Json::DataType::object</a>:</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;            <span class="keywordflow">return</span> mObject.size();</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;        <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;            assert(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;            <span class="keywordflow">return</span> size_t(-1);</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;        }</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    }</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00312"></a><span class="lineno"><a class="line" href="classcjson_1_1_json.html#a9f9a5d4b6d4f9c5eb0f739d5abfa7cfa">  312</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classcjson_1_1_json.html#a9f9a5d4b6d4f9c5eb0f739d5abfa7cfa">Json::contains</a>(<span class="keyword">const</span> std::string&amp; _key)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;        assert(mType == <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747aa8cfde6331bd59eb2ac96f8911c4b666">DataType::object</a>);</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;        <span class="keywordflow">return</span> mObject.find(_key) != mObject.end();</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    }</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    <span class="comment">//------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    <span class="keywordtype">void</span> Json::clear() {</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;        <span class="comment">// Clear internal elements if necessary</span></div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;        <span class="keywordflow">switch</span>(mType) {</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;        <span class="keywordflow">case</span> <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747af1f713c9e000f5d3f280adbd124df4f5">DataType::array</a>:</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;            <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span>&amp; element : mArray)</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;                <span class="keyword">delete</span> element;</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;            mArray.clear();</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;        <span class="keywordflow">case</span> <a class="code" href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747aa8cfde6331bd59eb2ac96f8911c4b666">DataType::object</a>:</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;            <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span>&amp; element : mObject)</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;                <span class="keyword">delete</span> element.second;</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;            mObject.clear();</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;        <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;        }</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    }</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;}   <span class="comment">// namespace cjson</span></div>
+<div class="ttc" id="classcjson_1_1_json_html_ac16e230952b746492fb30d158ab0c747aa8cfde6331bd59eb2ac96f8911c4b666"><div class="ttname"><a href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747aa8cfde6331bd59eb2ac96f8911c4b666">cjson::Json::DataType::object</a></div></div>
+<div class="ttc" id="classcjson_1_1_json_html_add0d87852ee4102b37eba565ccb8bddf"><div class="ttname"><a href="classcjson_1_1_json.html#add0d87852ee4102b37eba565ccb8bddf">cjson::Json::setNull</a></div><div class="ttdeci">void setNull()</div><div class="ttdoc">Reset object to default construction state. </div><div class="ttdef"><b>Definition:</b> <a href="json_8cpp_source.html#l00051">json.cpp:51</a></div></div>
+<div class="ttc" id="classcjson_1_1_parser_html_abb7e3211ee3531f071c0ea18b40557fc"><div class="ttname"><a href="classcjson_1_1_parser.html#abb7e3211ee3531f071c0ea18b40557fc">cjson::Parser::parse</a></div><div class="ttdeci">bool parse(const char *_code, Json &amp;_dst)</div><div class="ttdef"><b>Definition:</b> <a href="parser_8cpp_source.html#l00034">parser.cpp:34</a></div></div>
+<div class="ttc" id="namespacecjson_html"><div class="ttname"><a href="namespacecjson.html">cjson</a></div><div class="ttdef"><b>Definition:</b> <a href="json_8cpp_source.html#l00033">json.cpp:33</a></div></div>
+<div class="ttc" id="classcjson_1_1_json_html_ac16e230952b746492fb30d158ab0c747a157db7df530023575515d366c9b672e8"><div class="ttname"><a href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747a157db7df530023575515d366c9b672e8">cjson::Json::DataType::integer</a></div></div>
+<div class="ttc" id="classcjson_1_1_json_html_abbb090b38e609a8a4939e35db3aca0a4"><div class="ttname"><a href="classcjson_1_1_json.html#abbb090b38e609a8a4939e35db3aca0a4">cjson::Json::operator()</a></div><div class="ttdeci">const Json &amp; operator()(size_t) const </div><div class="ttdef"><b>Definition:</b> <a href="json_8cpp_source.html#l00247">json.cpp:247</a></div></div>
 <div class="ttc" id="serializer_8h_html"><div class="ttname"><a href="serializer_8h.html">serializer.h</a></div></div>
-<div class="ttc" id="classcjson_1_1_json_html_a646a66df9925632236eee157dcc63f12"><div class="ttname"><a href="classcjson_1_1_json.html#a646a66df9925632236eee157dcc63f12">cjson::Json::serialize</a></div><div class="ttdeci">std::string serialize() const </div><div class="ttdoc">generate a string with the formated content of the json object </div><div class="ttdef"><b>Definition:</b> <a href="json_8cpp_source.html#l00033">json.cpp:33</a></div></div>
+<div class="ttc" id="classcjson_1_1_json_html_a350736d72679a9d890b6fd1b13853fb0"><div class="ttname"><a href="classcjson_1_1_json.html#a350736d72679a9d890b6fd1b13853fb0">cjson::Json::operator=</a></div><div class="ttdeci">Json &amp; operator=(const Json &amp;)</div><div class="ttdoc">Deep copy assignment. </div><div class="ttdef"><b>Definition:</b> <a href="json_8inl_source.html#l00115">json.inl:115</a></div></div>
+<div class="ttc" id="classcjson_1_1_json_html"><div class="ttname"><a href="classcjson_1_1_json.html">cjson::Json</a></div><div class="ttdoc">Encapsulates all the functionality to operate with json objects. </div><div class="ttdef"><b>Definition:</b> <a href="json_8h_source.html#l00037">json.h:37</a></div></div>
+<div class="ttc" id="namespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div></div>
+<div class="ttc" id="classcjson_1_1_json_html_ac16e230952b746492fb30d158ab0c747a84e2c64f38f78ba3ea5c905ab5a2da27"><div class="ttname"><a href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747a84e2c64f38f78ba3ea5c905ab5a2da27">cjson::Json::DataType::boolean</a></div></div>
+<div class="ttc" id="classcjson_1_1_json_html_ac16e230952b746492fb30d158ab0c747a4bca24304861acde5770fdbe3cc2503b"><div class="ttname"><a href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747a4bca24304861acde5770fdbe3cc2503b">cjson::Json::DataType::real</a></div></div>
+<div class="ttc" id="classcjson_1_1_json_html_a646a66df9925632236eee157dcc63f12"><div class="ttname"><a href="classcjson_1_1_json.html#a646a66df9925632236eee157dcc63f12">cjson::Json::serialize</a></div><div class="ttdeci">std::string serialize() const </div><div class="ttdoc">generate a string with the formated content of the json object </div><div class="ttdef"><b>Definition:</b> <a href="json_8cpp_source.html#l00045">json.cpp:45</a></div></div>
+<div class="ttc" id="classcjson_1_1_json_html_af22fb39a45529a2fa611424e87c32f4d"><div class="ttname"><a href="classcjson_1_1_json.html#af22fb39a45529a2fa611424e87c32f4d">cjson::Json::operator==</a></div><div class="ttdeci">bool operator==(const Json &amp;) const </div><div class="ttdef"><b>Definition:</b> <a href="json_8cpp_source.html#l00153">json.cpp:153</a></div></div>
+<div class="ttc" id="parser_8h_html"><div class="ttname"><a href="parser_8h.html">parser.h</a></div></div>
+<div class="ttc" id="classcjson_1_1_json_html_ac16e230952b746492fb30d158ab0c747a37a6259cc0c1dae299a7866489dff0bd"><div class="ttname"><a href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747a37a6259cc0c1dae299a7866489dff0bd">cjson::Json::DataType::null</a></div></div>
+<div class="ttc" id="classcjson_1_1_json_html_ac16e230952b746492fb30d158ab0c747af1f713c9e000f5d3f280adbd124df4f5"><div class="ttname"><a href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747af1f713c9e000f5d3f280adbd124df4f5">cjson::Json::DataType::array</a></div></div>
 <div class="ttc" id="json_8h_html"><div class="ttname"><a href="json_8h.html">json.h</a></div></div>
+<div class="ttc" id="classcjson_1_1_json_html_a063e634aa354fe6e69af3c7c66d3a878"><div class="ttname"><a href="classcjson_1_1_json.html#a063e634aa354fe6e69af3c7c66d3a878">cjson::Json::size</a></div><div class="ttdeci">size_t size() const </div><div class="ttdef"><b>Definition:</b> <a href="json_8cpp_source.html#l00295">json.cpp:295</a></div></div>
+<div class="ttc" id="classcjson_1_1_json_html_a9f9a5d4b6d4f9c5eb0f739d5abfa7cfa"><div class="ttname"><a href="classcjson_1_1_json.html#a9f9a5d4b6d4f9c5eb0f739d5abfa7cfa">cjson::Json::contains</a></div><div class="ttdeci">bool contains(const std::string &amp;) const </div><div class="ttdef"><b>Definition:</b> <a href="json_8cpp_source.html#l00312">json.cpp:312</a></div></div>
+<div class="ttc" id="classcjson_1_1_parser_html"><div class="ttname"><a href="classcjson_1_1_parser.html">cjson::Parser</a></div><div class="ttdef"><b>Definition:</b> <a href="parser_8h_source.html#l00037">parser.h:37</a></div></div>
 <div class="ttc" id="classcjson_1_1_serializer_html"><div class="ttname"><a href="classcjson_1_1_serializer.html">cjson::Serializer</a></div><div class="ttdef"><b>Definition:</b> <a href="serializer_8h_source.html#l00035">serializer.h:35</a></div></div>
+<div class="ttc" id="classcjson_1_1_json_html_a9dc3d9df04c9e51fe19184a4c21d9eb1"><div class="ttname"><a href="classcjson_1_1_json.html#a9dc3d9df04c9e51fe19184a4c21d9eb1">cjson::Json::operator[]</a></div><div class="ttdeci">const Json &amp; operator[](const char *) const </div><div class="ttdef"><b>Definition:</b> <a href="json_8cpp_source.html#l00259">json.cpp:259</a></div></div>
+<div class="ttc" id="classcjson_1_1_json_html_ac16e230952b746492fb30d158ab0c747a1cb251ec0d568de6a929b520c4aed8d1"><div class="ttname"><a href="classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747a1cb251ec0d568de6a929b520c4aed8d1">cjson::Json::DataType::text</a></div></div>
+<div class="ttc" id="classcjson_1_1_json_html_a67aeef868ec9dfbe2a1ddd2b6032c559"><div class="ttname"><a href="classcjson_1_1_json.html#a67aeef868ec9dfbe2a1ddd2b6032c559">cjson::Json::parse</a></div><div class="ttdeci">bool parse(const char *_code)</div><div class="ttdoc">param _code a string containing a formated json. </div><div class="ttdef"><b>Definition:</b> <a href="json_8cpp_source.html#l00036">json.cpp:36</a></div></div>
 <div class="ttc" id="classcjson_1_1_serializer_html_a3a6010d22e4b678467299b37b7171b83"><div class="ttname"><a href="classcjson_1_1_serializer.html#a3a6010d22e4b678467299b37b7171b83">cjson::Serializer::serialize</a></div><div class="ttdeci">std::string serialize(const Json &amp;)</div><div class="ttdef"><b>Definition:</b> <a href="serializer_8cpp_source.html#l00035">serializer.cpp:35</a></div></div>
+<div class="ttc" id="classcjson_1_1_json_html_a446447fb6bdbb3298f059c76dc936772"><div class="ttname"><a href="classcjson_1_1_json.html#a446447fb6bdbb3298f059c76dc936772">cjson::Json::Json</a></div><div class="ttdeci">Json()</div><div class="ttdoc">Default constructor. Creates an empty json. </div><div class="ttdef"><b>Definition:</b> <a href="json_8inl_source.html#l00036">json.inl:36</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1375aec97e96b5de63a4ef9fc199c3c4.html">cjson</a></li><li class="navelem"><a class="el" href="json_8cpp.html">json.cpp</a></li>
-    <li class="footer">Generated on Thu May 28 2015 13:58:04 for cjson by
+    <li class="navelem"><a class="el" href="dir_fb5a07b400dbb41763c8aa6f4720bfec.html">src</a></li><li class="navelem"><a class="el" href="dir_58d769a5f440a1560e3cce0a7d010958.html">cjson</a></li><li class="navelem"><a class="el" href="json_8cpp.html">json.cpp</a></li>
+    <li class="footer">Generated on Mon Jun 15 2015 18:33:49 for cjson by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>
