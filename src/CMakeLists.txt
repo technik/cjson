@@ -24,6 +24,9 @@
 # SOFTWARE.
 ################################################################################
 cmake_minimum_required (VERSION 2.4)
+if(POLICY CMP0048)
+cmake_policy(SET CMP0048 OLD)
+endif()
 project(cjson)
 
 # Collect all sources
