@@ -47,7 +47,7 @@ int main(int, const char**)
 
 	std::cout << iterArray->serialize() << std::endl;
 
-	std::cout << iterDict.key() << ", " << jDictionary[iterDict.key()] << std::endl; // 666 TODO here, after operator[], operator int is automatically called.
+	std::cout << iterDict.key() << ", " << jDictionary[iterDict.key()] << std::endl;
 	++iterDict;
 	std::cout << iterDict.key() << ", " << jDictionary[iterDict.key()] << std::endl;
 
