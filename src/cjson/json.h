@@ -31,6 +31,7 @@
 #include <map>
 
 namespace cjson {
+	class JsonIterator;	//	 Forward declaration
 
 	/// \class Json
 	/// \brief Encapsulates all the functionality to operate with json objects.
@@ -115,6 +116,10 @@ namespace cjson {
 			  Json&		operator[]	(const std::string&);
 		bool			contains	(const std::string&) const;
 
+		// ----- Iterators -----
+		JsonIterator		begin();
+		JsonIterator		end();
+
 		// ----- Common methods for array and object -----
 		size_t			size	() const;
 
@@ -148,6 +153,26 @@ namespace cjson {
 
 		friend class Parser;
 		friend class Serializer;
+		friend class JsonIterator;
+	};
+
+	/// Json Iterator class
+	class JsonIterator{
+	public:
+		JsonIterator(Json &_json, const int _elem);
+
+		Json			operator*();
+		JsonIterator&	operator++();
+
+		std::string		key();
+
+	private:
+		Json	mJson;
+		
+		Json::Array::iterator mIterArray;
+		Json::Dictionary::iterator mIterDict;
+
+		int		mElem;
 	};
 
 }	// namespace cjson
