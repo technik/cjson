@@ -121,9 +121,9 @@ namespace cjson {
 		typedef JsonIterator iterator;
 		typedef ConstJsonIterator const_iterator;
 
-		iterator	begin() const;
+		const_iterator	begin() const;
 		iterator	begin();
-		iterator	end() const;
+		const_iterator	end() const;
 		iterator	end();
 
 		// ----- Common methods for array and object -----

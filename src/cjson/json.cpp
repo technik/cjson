@@ -264,7 +264,7 @@ namespace cjson {
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
-	Json::iterator Json::begin() const{
+	Json::const_iterator Json::begin() const{
 		Json json = *this;
 		return const_iterator(json, 0);
 	}
@@ -275,7 +275,7 @@ namespace cjson {
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
-	Json::iterator Json::end() const{
+	Json::const_iterator Json::end() const{
 		Json json = *this;
 		return const_iterator(json, size());
 	}
