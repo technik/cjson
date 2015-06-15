@@ -38,16 +38,17 @@ int main(int, const char**)
 	Json jArray;
 	jArray.parse("[1, 2, 3]");
 	Json jDictionary;
-	jDictionary.parse((R""({"key1":"bar", "key2":"foo"})""));
+	jDictionary.parse((R""({"key1":56, "key2":658})""));
 
 	JsonIterator iterArray = jArray.begin();
 	JsonIterator iterDict = jDictionary.begin();
 
-	iterArray++;
+	++iterArray;
 
 	std::cout << iterArray->serialize() << std::endl;
 
 	std::cout << iterDict.key() << ", " << jDictionary[iterDict.key()] << std::endl; // 666 TODO here, after operator[], operator int is automatically called.
-	std::cout << iterDict++.key() << ", " << jDictionary[iterDict++.key()] << std::endl;
+	++iterDict;
+	std::cout << iterDict.key() << ", " << jDictionary[iterDict.key()] << std::endl;
 
 }

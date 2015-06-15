@@ -271,59 +271,64 @@ namespace cjson {
 
 	//------------------------------------------------------------------------------------------------------------------
 	JsonIterator Json::end(){
-		int size = isArray() ? mArray.size() : mObject.size();
-		return JsonIterator(*this, size);
+		return JsonIterator(*this, size());
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
 	// Iterator class definition
-	JsonIterator::JsonIterator(Json &_json, const int _elem) : mJson(_json), mElem(_elem) { }
+	JsonIterator::JsonIterator(Json &_json, int _pos){
+		mIsArray = _json.isArray();
+		if (mIsArray){
+			mIterArray =  _json.mArray.begin() + _pos;
+		}
+		else{
+			mIterObject = _json.mObject.begin() ;
+
+			while (_pos-- < 0){
+				mIterObject--;
+			}
+		}
+	}
 
 
 	//------------------------------------------------------------------------------------------------------------------
 	Json JsonIterator::operator*(){
-		if (mJson.isArray()){	// Is an array?
-			//	Json json = mJson.mArray[mElem]; 777 CHECK, why new json is assigned as bool?.
-			return mJson.mArray[mElem];
+		if (mIsArray){
+			return *mIterArray;
 		}
-		else{	// Is a dictionary?
-			Json::Dictionary::iterator iterator = mJson.mObject.begin();
-			while (mElem-- < 0){
-				iterator++;
-			}
-			return iterator->second;
+		else{
+			mIterObject->second;
 		}
+		
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
 	JsonIterator& JsonIterator::operator++(){
-		mElem++;
-		return *this;
-	}
+		if (mIsArray){
+			mIterArray++;
+		}
+		else{
+			mIterObject++;
+		}
 
-	//------------------------------------------------------------------------------------------------------------------
-	JsonIterator JsonIterator::operator+(int _inc){
-		assert(mJson.isArray());	//	 Check if json is an array.
-		mElem += _inc;
 		return *this;
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
 	Json* JsonIterator::operator->(){
-		return &**this;
+		if (mIsArray){
+			return *mIterArray;
+		}
+		else{
+			return mIterObject->second;
+		}
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
 	std::string JsonIterator::key(){
-		assert(mJson.isObject());
-		
-		Json::Dictionary::iterator iterator =  mJson.mObject.begin();
-		int counter = 0;
-		while (counter++ < mElem){
-			iterator++;
-		}
+		assert(!mIsArray);
 
-		return iterator->first;
+		return mIterObject->first;
 	}
 
 	//------------------------------------------------------------------------------------------------------------------

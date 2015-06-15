@@ -166,17 +166,20 @@ namespace cjson {
 	/// Json Iterator class
 	class JsonIterator{
 	public:
-		JsonIterator(Json &_json, const int _elem);
+		JsonIterator(Json &_json, int _pos);
 
 		Json			operator*();
 		JsonIterator&	operator++();
-		JsonIterator	operator+(int);
 		Json*			operator->();
 
 		std::string		key();
 
 	private:
-		Json	mJson;
+		bool mIsArray;
+
+		
+		Json::Dictionary::iterator mIterObject;
+		Json::Array::iterator mIterArray;
 		
 		int		mElem;
 	};
