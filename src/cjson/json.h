@@ -31,8 +31,6 @@
 #include <map>
 
 namespace cjson {
-	class JsonIterator;	//	 Forward declaration
-	class ConstJsonIterator;
 
 	/// \class Json
 	/// \brief Encapsulates all the functionality to operate with json objects.
