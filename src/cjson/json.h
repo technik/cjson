@@ -117,15 +117,6 @@ namespace cjson {
 			  Json&		operator[]	(const std::string&);
 		bool			contains	(const std::string&) const;
 
-		// ----- Iterators -----
-		typedef JsonIterator iterator;
-		typedef ConstJsonIterator const_iterator;
-
-		const_iterator	begin() const;
-		iterator	begin();
-		const_iterator	end() const;
-		iterator	end();
-
 		// ----- Common methods for array and object -----
 		size_t			size	() const;
 
@@ -160,52 +151,53 @@ namespace cjson {
 		friend class Parser;
 		friend class Serializer;
 
-
-
-		friend class JsonIterator;
-		friend class ConstJsonIterator;
-	};
-
-	/// Json Iterator class
-	class JsonIterator{
+	// ----- Iterators -----
 	public:
-		JsonIterator(Json &_json, int _pos);
+		class iterator{
+		public:
+			iterator(Json &_json, int _pos);
 
-		Json			operator*();
-		JsonIterator&	operator++();
-		Json*			operator->();
+			Json			operator*();
+			iterator&	operator++();
+			Json*			operator->();
 
-		std::string		key();
+			std::string		key();
 
-	private:
-		bool mIsArray;
-		
-		Json::Dictionary::iterator mIterObject;
-		Json::Array::iterator mIterArray;
-		
-		int		mElem;
+		private:
+			bool mIsArray;
+
+			Json::Dictionary::iterator mIterObject;
+			Json::Array::iterator mIterArray;
+
+			int		mElem;
+		};
+
+		class const_iterator{
+		public:
+			const_iterator(Json &_json, int _pos);
+
+			const Json					operator*()	const;
+			const const_iterator&	operator++();
+			const Json*					operator->()const;
+
+			std::string		key();
+
+		private:
+			bool mIsArray;
+
+
+			Json::Dictionary::iterator mIterObject;
+			Json::Array::iterator mIterArray;
+
+			int		mElem;
+		};
+
+		const_iterator	begin() const;
+		iterator	begin();
+		const_iterator	end() const;
+		iterator	end();
 	};
 
-	class ConstJsonIterator{
-		;
-	public:
-		ConstJsonIterator(Json &_json, int _pos);
-
-		const Json					operator*()	const;
-		const ConstJsonIterator&	operator++();
-		const Json*					operator->()const;
-
-		std::string		key();
-
-	private:
-		bool mIsArray;
-
-
-		Json::Dictionary::iterator mIterObject;
-		Json::Array::iterator mIterArray;
-
-		int		mElem;
-	};
 
 }	// namespace cjson
 

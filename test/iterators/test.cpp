@@ -40,8 +40,8 @@ int main(int, const char**)
 	Json jDictionary;
 	jDictionary.parse((R""({"key1":56, "key2":658})""));
 
-	JsonIterator iterArray = jArray.begin();
-	JsonIterator iterDict = jDictionary.begin();
+	Json::iterator iterArray = jArray.begin();
+	Json::iterator iterDict = jDictionary.begin();
 
 	++iterArray;
 
