@@ -266,11 +266,17 @@ namespace cjson {
 	template<class Type_>
 	Type_* Json::iterator_<Type_>::operator->(){
 		if (mIsArray){
-			return *(*(static_cast<Json::Array::iterator*>(mIter)));
+			return **static_cast<Json::Array::iterator*>(mIter);
 		}
 		else{
-			return (**(static_cast<Json::Dictionary::iterator*>(mIter))).second;
+			return (**static_cast<Json::Dictionary::iterator*>(mIter)).second;
 		}
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	template<class Type_>
+	bool Json::iterator_<Type_>::operator==(Json::iterator_<Type_> _iter){
+		return mIter == _iter.mIter ? true : false;
 	}
 
 	//------------------------------------------------------------------------------------------------------------------

@@ -29,6 +29,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <vector>
 
 using namespace cjson;
 using namespace std;
@@ -43,12 +44,18 @@ int main(int, const char**)
 	Json::iterator iterArray = jArray.begin();
 	Json::iterator iterDict = jDictionary.begin();
 
+	// Testing Array iterators
+	assert(iterArray->serialize() == "1");
 	++iterArray;
-
-	std::cout << iterArray->serialize() << std::endl;
-
-	std::cout << iterDict.key() << ", " << jDictionary[iterDict.key()] << std::endl;
+	assert(iterArray->serialize() == "2");
+	++iterArray;
+	assert(iterArray == jArray.end());
+	
+	// Testing Dictionary iterator
+	assert(iterDict.key() == "key1");
+	assert(jDictionary[iterDict.key()] == 56);
 	++iterDict;
-	std::cout << iterDict.key() << ", " << jDictionary[iterDict.key()] << std::endl;
+	assert(iterDict.key() == "key1");
+	assert(jDictionary[iterDict.key()] == 56);
 
 }
