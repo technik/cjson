@@ -230,14 +230,10 @@ namespace cjson {
 	Json::iterator_<Type_>::iterator_(Type_ &_json, int _pos){
 		mIsArray = _json.isArray();
 		if (mIsArray){
-			mIterArray = _json.mArray.begin() + _pos;
+			mIter = &(_json.mArray.begin()) + _pos;
 		}
 		else{
-			mIterObject = _json.mObject.begin();
-
-			while (_pos-- < 0){
-				mIterObject--;
-			}
+			mIter = &(_json.mObject.begin()) + _pos;
 		}
 	}
 
@@ -246,10 +242,10 @@ namespace cjson {
 	template<class Type_>
 	Type_& Json::iterator_<Type_>::operator*(){
 		if (mIsArray){
-			return *mIterArray;
+			return *static_cast<Json::Array::iterator*>(mIter);
 		}
 		else{
-S			mIterObject->second;
+			return *static_cast<Json::Dictionary::iterator*>(mIter);
 		}
 
 	}
@@ -258,12 +254,11 @@ S			mIterObject->second;
 	template<class Type_>
 	Json::iterator_<Type_>& Json::iterator_<Type_>::operator++(){
 		if (mIsArray){
-			mIterArray++;
+			mIter = static_cast<Json::Array::iterator*>(mIter) + 1;
 		}
 		else{
-			mIterObject++;
+			mIter = static_cast<Json::Dictionary::iterator*>(mIter) + 1;
 		}
-
 		return *this;
 	}
 
@@ -271,10 +266,10 @@ S			mIterObject->second;
 	template<class Type_>
 	Type_* Json::iterator_<Type_>::operator->(){
 		if (mIsArray){
-			return *mIterArray;
+			return *(*(static_cast<Json::Array::iterator*>(mIter)));
 		}
 		else{
-			return mIterObject->second;
+			return (**(static_cast<Json::Dictionary::iterator*>(mIter))).second;
 		}
 	}
 
@@ -283,7 +278,7 @@ S			mIterObject->second;
 	const std::string& Json::iterator_<Type_>::key(){
 		assert(!mIsArray);
 
-		return mIterObject->first;
+		return (*static_cast<Json::Dictionary::iterator*>(mIter))->first;
 	}
 
 

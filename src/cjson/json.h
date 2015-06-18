@@ -149,29 +149,27 @@ namespace cjson {
 		friend class Parser;
 		friend class Serializer;
 
-	// ----- Iterators -----
-	public:
-
+		// ----- Iterators -----
 		template<class Type_>
 		class iterator_{
 		public:
 			iterator_(Type_ &_json, int _pos);
 
-			Type_&				operator*();
-			iterator_<Type_>&	operator++();
-			Type_*				operator->();
+			Type_&	operator*() const;
+			Type_&	operator*();
+
+			iterator_<Type_>&						operator++();
+			Type_*									operator->();
 
 			const std::string&		key();
 
 		private:
 			bool mIsArray;
 
-			Json::Dictionary::iterator mIterObject;
-			Json::Array::iterator mIterArray;
-
-			int		mElem;
+			void *mIter;
 		};
-
+	
+	public:
 		typedef iterator_<Json>			iterator;
 		typedef iterator_<const Json>	const_iterator;
 
