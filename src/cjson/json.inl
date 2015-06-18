@@ -280,7 +280,7 @@ S			mIterObject->second;
 
 	//------------------------------------------------------------------------------------------------------------------
 	template<class Type_>
-	std::string& Json::iterator_<Type_>::key(){
+	const std::string& Json::iterator_<Type_>::key(){
 		assert(!mIsArray);
 
 		return mIterObject->first;

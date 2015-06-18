@@ -161,7 +161,7 @@ namespace cjson {
 			iterator_<Type_>&	operator++();
 			Type_*				operator->();
 
-			std::string&		key();
+			const std::string&		key();
 
 		private:
 			bool mIsArray;
