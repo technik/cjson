@@ -151,15 +151,17 @@ namespace cjson {
 
 	// ----- Iterators -----
 	public:
-		class iterator{
+
+		template<class Type_>
+		class iterator_{
 		public:
-			iterator(Json &_json, int _pos);
+			iterator_(Type_ &_json, int _pos);
 
-			Json			operator*();
-			iterator&	operator++();
-			Json*			operator->();
+			Type_&				operator*();
+			iterator_<Type_>&	operator++();
+			Type_*				operator->();
 
-			std::string		key();
+			std::string&		key();
 
 		private:
 			bool mIsArray;
@@ -170,30 +172,13 @@ namespace cjson {
 			int		mElem;
 		};
 
-		class const_iterator{
-		public:
-			const_iterator(Json &_json, int _pos);
-
-			const Json					operator*()	const;
-			const const_iterator&	operator++();
-			const Json*					operator->()const;
-
-			std::string		key();
-
-		private:
-			bool mIsArray;
-
-
-			Json::Dictionary::iterator mIterObject;
-			Json::Array::iterator mIterArray;
-
-			int		mElem;
-		};
+		typedef iterator_<Json>			iterator;
+		typedef iterator_<const Json>	const_iterator;
 
 		const_iterator	begin() const;
-		iterator	begin();
+		iterator		begin();
 		const_iterator	end() const;
-		iterator	end();
+		iterator		end();
 	};
 
 

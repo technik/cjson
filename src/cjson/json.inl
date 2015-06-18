@@ -224,6 +224,69 @@ namespace cjson {
 		mArray.push_back(new Json(_element));
 	}
 
+	//------------------------------------------------------------------------------------------------------------------
+	// Iterator template definition
+	template<class Type_>
+	Json::iterator_<Type_>::iterator_(Type_ &_json, int _pos){
+		mIsArray = _json.isArray();
+		if (mIsArray){
+			mIterArray = _json.mArray.begin() + _pos;
+		}
+		else{
+			mIterObject = _json.mObject.begin();
+
+			while (_pos-- < 0){
+				mIterObject--;
+			}
+		}
+	}
+
+
+	//------------------------------------------------------------------------------------------------------------------
+	template<class Type_>
+	Type_& Json::iterator_<Type_>::operator*(){
+		if (mIsArray){
+			return *mIterArray;
+		}
+		else{
+S			mIterObject->second;
+		}
+
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	template<class Type_>
+	Json::iterator_<Type_>& Json::iterator_<Type_>::operator++(){
+		if (mIsArray){
+			mIterArray++;
+		}
+		else{
+			mIterObject++;
+		}
+
+		return *this;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	template<class Type_>
+	Type_* Json::iterator_<Type_>::operator->(){
+		if (mIsArray){
+			return *mIterArray;
+		}
+		else{
+			return mIterObject->second;
+		}
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	template<class Type_>
+	std::string& Json::iterator_<Type_>::key(){
+		assert(!mIsArray);
+
+		return mIterObject->first;
+	}
+
+
 } // namespace cjson
 
 #endif // _CJSON_JSON_INL_
