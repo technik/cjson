@@ -45,6 +45,8 @@ int main(int, const char**)
 	Json::iterator iterDict = jDictionary.begin();
 
 	// Testing Array iterators
+	assert(*iterArray == 1);
+
 	assert(iterArray->serialize() == "1");
 	++iterArray;
 	assert(iterArray->serialize() == "2");
@@ -54,6 +56,8 @@ int main(int, const char**)
 	assert(iterArray == jArray.end());
 	
 	// Testing Dictionary iterator
+	assert(*iterDict == 56);
+
 	assert(iterDict.key() == "key1");
 	assert(jDictionary[iterDict.key()] == 56);
 	++iterDict;
