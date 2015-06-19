@@ -150,30 +150,54 @@ namespace cjson {
 		friend class Serializer;
 
 		// ----- Iterators -----
+		// Traits
 		template<class Type_>
+		struct IteratorTrait_{
+			typedef Type_ mType;
+		};
+
+		template<> struct IteratorTrait_<Json>{
+			typedef Json mType;
+			typedef Array::iterator mArrayIteratorType;
+			typedef Dictionary::iterator mObjIteratorType;
+		};
+
+		template<> struct IteratorTrait_<const Json>{
+			typedef const Json mType;
+			typedef Array::const_iterator mArrayIteratorType;
+			typedef Dictionary::const_iterator mObjIteratorType;
+		};
+
+		typedef IteratorTrait_<Json>		IteratorTrait;
+		typedef IteratorTrait_<const Json>	ConstIteratorTrait;
+
+		// Template
+		template<typename Trait_>
 		class iterator_{
 		public:
-			iterator_(Type_ &_json, int _pos);
+			iterator_(typename Trait_::mType &_json, int _pos);
 
-			Type_&	operator*() const;
-			Type_&	operator*();
+			typename Trait_::mType&		operator*() const;
+			typename Trait_::mType&		operator*();
 
-			iterator_<Type_>&						operator++();
-			Type_*									operator->();
+			iterator_<Trait_>&			operator++();
+			typename Trait_::mType*		operator->();
 
-			bool	operator==(Json::iterator_<Type_> _iter);
+			bool	operator==(iterator_<Trait_> _iter);
 
 			const std::string&		key();
 
 		private:
 			bool mIsArray;
 
-			void *mIter;
+			typename Trait_::mArrayIteratorType	mArrayIterator;
+			typename Trait_::mObjIteratorType	mObjectIterator;
 		};
-	
+
+		// Iterators public interface
 	public:
-		typedef iterator_<Json>			iterator;
-		typedef iterator_<const Json>	const_iterator;
+		typedef iterator_<IteratorTrait>		iterator;
+		typedef iterator_<ConstIteratorTrait>	const_iterator;
 
 		const_iterator	begin() const;
 		iterator		begin();

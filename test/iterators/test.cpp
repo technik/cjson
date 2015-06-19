@@ -49,13 +49,15 @@ int main(int, const char**)
 	++iterArray;
 	assert(iterArray->serialize() == "2");
 	++iterArray;
+	assert(iterArray->serialize() == "3");
+	++iterArray;
 	assert(iterArray == jArray.end());
 	
 	// Testing Dictionary iterator
 	assert(iterDict.key() == "key1");
 	assert(jDictionary[iterDict.key()] == 56);
 	++iterDict;
-	assert(iterDict.key() == "key1");
-	assert(jDictionary[iterDict.key()] == 56);
+	assert(iterDict.key() == "key2");
+	assert(jDictionary[iterDict.key()] == 658);
 
 }

@@ -226,65 +226,76 @@ namespace cjson {
 
 	//------------------------------------------------------------------------------------------------------------------
 	// Iterator template definition
-	template<class Type_>
-	Json::iterator_<Type_>::iterator_(Type_ &_json, int _pos){
+	template<class Trait_>
+	Json::iterator_<Trait_>::iterator_(typename Trait_::mType &_json, int _pos){
 		mIsArray = _json.isArray();
 		if (mIsArray){
-			mIter = &(_json.mArray.begin()) + _pos;
+			auto iter = _json.mArray.begin();
+			while (_pos-- > 0){ 
+				iter++; 
+			}
+			mArrayIterator =  iter;
 		}
 		else{
-			mIter = &(_json.mObject.begin()) + _pos;
+			auto iter = _json.mObject.begin();
+			while (_pos-- > 0){ iter++; }
+			mObjectIterator = iter;
 		}
 	}
 
 
 	//------------------------------------------------------------------------------------------------------------------
-	template<class Type_>
-	Type_& Json::iterator_<Type_>::operator*(){
+	template<class Trait_>
+	typename Trait_::mType& Json::iterator_<Trait_>::operator*(){
 		if (mIsArray){
-			return *static_cast<Json::Array::iterator*>(mIter);
+			return **mArrayIterator;
 		}
 		else{
-			return *static_cast<Json::Dictionary::iterator*>(mIter);
+			return *((*mObjectIterator).second);
 		}
 
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
-	template<class Type_>
-	Json::iterator_<Type_>& Json::iterator_<Type_>::operator++(){
+	template<class Trait_>
+	Json::iterator_<Trait_>& Json::iterator_<Trait_>::operator++(){
 		if (mIsArray){
-			mIter = static_cast<Json::Array::iterator*>(mIter) + 1;
+			mArrayIterator++;
 		}
 		else{
-			mIter = static_cast<Json::Dictionary::iterator*>(mIter) + 1;
+			mObjectIterator++;
 		}
 		return *this;
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
-	template<class Type_>
-	Type_* Json::iterator_<Type_>::operator->(){
+	template<class Trait_>
+	typename Trait_::mType* Json::iterator_<Trait_>::operator->(){
 		if (mIsArray){
-			return **static_cast<Json::Array::iterator*>(mIter);
+			return *mArrayIterator;
 		}
 		else{
-			return (**static_cast<Json::Dictionary::iterator*>(mIter)).second;
+			return (*mObjectIterator).second;
 		}
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
-	template<class Type_>
-	bool Json::iterator_<Type_>::operator==(Json::iterator_<Type_> _iter){
-		return mIter == _iter.mIter ? true : false;
+	template<class Trait_>
+	bool Json::iterator_<Trait_>::operator==(Json::iterator_<Trait_> _iter){
+		if (mIsArray){
+			return mArrayIterator == _iter.mArrayIterator ? true : false;
+		}
+		else{
+			return mObjectIterator == _iter.mObjectIterator ? true : false;
+		}
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
-	template<class Type_>
-	const std::string& Json::iterator_<Type_>::key(){
+	template<class Trait_>
+	const std::string& Json::iterator_<Trait_>::key(){
 		assert(!mIsArray);
 
-		return (*static_cast<Json::Dictionary::iterator*>(mIter))->first;
+		return (*mObjectIterator).first;
 	}
 
 
