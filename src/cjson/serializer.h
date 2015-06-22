@@ -34,7 +34,7 @@ namespace cjson {
 
 	class Serializer {
 	public:
-		std::string serialize(const Json&);
+		void serialize(const Json&, std::ostream&);
 
 	private:
 		bool push(const Json&, std::stringstream& _dst, size_t _tab = 0);
