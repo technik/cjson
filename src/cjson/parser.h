@@ -36,12 +36,23 @@ namespace cjson {
 	///\ brief Parse strings of characters into Json objects
 	class Parser {
 	public:
-		/// Process the input string to replace the content a Json object
-		///\ param _code the string to parse. It must contain a well-formed serialized Json.
+		///\param _s The parser will read from this stream every time it is requested to parse a Json
+		/// It must provide valid, well formed, serialized Jsons.
+		Parser(std::istream& _s);
+		///\param _s The parser will read from this stream every time it is requested to parse a Json
+		/// It must provide valid, well formed, serialized Jsons.
+		Parser(const char* _s);
+		~Parser();
+		/// Fill in the Json with content from the parser's stream.
 		///\ param _dst a Json object into which parse results will be stored
-		///\ return \c true if able to parse the input string, \c false on error
-		bool parse(const char* _code, Json& _dst);
-		bool parse(std::istream&, Json& _dst);
+		///\ return \c true if able to retrieve content from the current stream and parse from it, \c false on error
+		bool parse(Json& _dst);
+
+		/// Replace the internal stream used to parse Jsons from.
+		///\param _new The new stream to read from.
+		///\return a reference to the old stream.
+		std::istream& setStream(std::istream& _new);
+		std::istream& getStream() const;
 
 	private:
 		bool parseJson(Json& _dst);
@@ -61,7 +72,8 @@ namespace cjson {
 
 		void skipWhiteSpace();
 
-		const char* mInput;
+		std::istream* mIn;
+		bool mOwnStream; ///< Wether we have strong ownership of the input stream.
 	};
 
 }	// namespace cjson
