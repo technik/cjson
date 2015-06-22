@@ -139,39 +139,39 @@ $(document).ready(function(){initNavTree('serializer_8h_source.html','');});
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#define _CJSON_SERIALIZER_H_</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="json_8h.html">json.h</a>&quot;</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacecjson.html">cjson</a> {</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
 <div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classcjson_1_1_serializer.html">   35</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classcjson_1_1_serializer.html">Serializer</a> {</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        std::string <a class="code" href="classcjson_1_1_serializer.html#a3a6010d22e4b678467299b37b7171b83">serialize</a>(<span class="keyword">const</span> <a class="code" href="classcjson_1_1_json.html">Json</a>&amp;);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keywordtype">bool</span> push(<span class="keyword">const</span> <a class="code" href="classcjson_1_1_json.html">Json</a>&amp;, std::stringstream&amp; _dst, <span class="keywordtype">size_t</span> _tab = 0);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keywordtype">bool</span> push(<span class="keywordtype">bool</span>, std::stringstream&amp; _dst);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordtype">bool</span> push(<span class="keyword">const</span> Json::Array&amp;, std::stringstream&amp; _dst, <span class="keywordtype">size_t</span> _tab = 0);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keywordtype">bool</span> push(<span class="keyword">const</span> Json::Dictionary&amp;, std::stringstream&amp; _dst, <span class="keywordtype">size_t</span> _tab = 0);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keywordtype">void</span> tabify(std::stringstream&amp; _dst, <span class="keywordtype">size_t</span> _tab);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    };</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classcjson_1_1_serializer.html#a7c9afda872bf36f6d379a5a3186f8fab">serialize</a>(<span class="keyword">const</span> <a class="code" href="classcjson_1_1_json.html">Json</a>&amp; _j, std::ostream&amp; _dst);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keywordtype">bool</span> push(<span class="keyword">const</span> <a class="code" href="classcjson_1_1_json.html">Json</a>&amp;, std::ostream&amp; _dst, <span class="keywordtype">size_t</span> _tab = 0);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keywordtype">bool</span> push(<span class="keywordtype">bool</span>, std::ostream&amp; _dst);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keywordtype">bool</span> push(<span class="keyword">const</span> Json::Array&amp;, std::ostream&amp; _dst, <span class="keywordtype">size_t</span> _tab = 0);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordtype">bool</span> push(<span class="keyword">const</span> Json::Dictionary&amp;, std::ostream&amp; _dst, <span class="keywordtype">size_t</span> _tab = 0);</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;}   <span class="comment">// namespace cjson</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#endif // _CJSON_SERIALIZER_H_</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keywordtype">void</span> tabify(std::ostream&amp; _dst, <span class="keywordtype">size_t</span> _tab);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    };</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;}   <span class="comment">// namespace cjson</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#endif // _CJSON_SERIALIZER_H_</span></div>
 <div class="ttc" id="namespacecjson_html"><div class="ttname"><a href="namespacecjson.html">cjson</a></div><div class="ttdef"><b>Definition:</b> <a href="json_8cpp_source.html#l00033">json.cpp:33</a></div></div>
 <div class="ttc" id="classcjson_1_1_json_html"><div class="ttname"><a href="classcjson_1_1_json.html">cjson::Json</a></div><div class="ttdoc">Encapsulates all the functionality to operate with json objects. </div><div class="ttdef"><b>Definition:</b> <a href="json_8h_source.html#l00037">json.h:37</a></div></div>
 <div class="ttc" id="json_8h_html"><div class="ttname"><a href="json_8h.html">json.h</a></div></div>
 <div class="ttc" id="classcjson_1_1_serializer_html"><div class="ttname"><a href="classcjson_1_1_serializer.html">cjson::Serializer</a></div><div class="ttdef"><b>Definition:</b> <a href="serializer_8h_source.html#l00035">serializer.h:35</a></div></div>
-<div class="ttc" id="classcjson_1_1_serializer_html_a3a6010d22e4b678467299b37b7171b83"><div class="ttname"><a href="classcjson_1_1_serializer.html#a3a6010d22e4b678467299b37b7171b83">cjson::Serializer::serialize</a></div><div class="ttdeci">std::string serialize(const Json &amp;)</div><div class="ttdef"><b>Definition:</b> <a href="serializer_8cpp_source.html#l00035">serializer.cpp:35</a></div></div>
+<div class="ttc" id="classcjson_1_1_serializer_html_a7c9afda872bf36f6d379a5a3186f8fab"><div class="ttname"><a href="classcjson_1_1_serializer.html#a7c9afda872bf36f6d379a5a3186f8fab">cjson::Serializer::serialize</a></div><div class="ttdeci">bool serialize(const Json &amp;_j, std::ostream &amp;_dst)</div><div class="ttdef"><b>Definition:</b> <a href="serializer_8cpp_source.html#l00035">serializer.cpp:35</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_fb5a07b400dbb41763c8aa6f4720bfec.html">src</a></li><li class="navelem"><a class="el" href="dir_58d769a5f440a1560e3cce0a7d010958.html">cjson</a></li><li class="navelem"><a class="el" href="serializer_8h.html">serializer.h</a></li>
-    <li class="footer">Generated on Mon Jun 15 2015 18:33:49 for cjson by
+    <li class="footer">Generated on Mon Jun 22 2015 23:43:28 for cjson by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>
