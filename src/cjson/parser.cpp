@@ -84,15 +84,19 @@ namespace cjson {
 
 	//------------------------------------------------------------------------------------------------------------------
 	bool Parser::parseTrue(Json& _dst) {
+		_dst.mType = Json::DataType::boolean;
 		char buff[4];
 		mIn->read(buff,4);
+		_dst = true;
 		return 0 == strncmp("true",buff,4);
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
 	bool Parser::parseFalse(Json& _dst) {
+		_dst.mType = Json::DataType::boolean;
 		char buff[5];
 		mIn->read(buff,5);
+		_dst = false;
 		return 0 == strncmp("false",buff,5);
 	}
 
@@ -119,13 +123,13 @@ namespace cjson {
 		bool escaped = false;
 		std::ostringstream oss;
 		// Read until the first unescaped quote
-		for(int c = mIn->get(); c != '"' || escaped; c = mIn->get()) {
+		for(int c = mIn->get(); (c != '"') || escaped; c = mIn->get()) {
 			if(mIn->eof())
 				return false; // Unterminated string
 			if(escaped || c == '\\')
 				escaped ^= 1; // Negate escape state
 			else
-				oss << c;
+				oss << (char)c;
 		}
 		_dst = oss.str(); // Do not include the quote we just read.
 		return true;
@@ -178,6 +182,7 @@ namespace cjson {
 
 	//------------------------------------------------------------------------------------------------------------------
 	bool Parser::parseInt(Json& _dst) {
+		_dst.mType = Json::DataType::integer;
 		int i;
 		*mIn >> i;
 		_dst = i;
@@ -186,6 +191,7 @@ namespace cjson {
 
 	//------------------------------------------------------------------------------------------------------------------
 	bool Parser::parseFloat(Json& _dst) {
+		_dst.mType = Json::DataType::real;
 		float f;
 		*mIn >> f;
 		_dst = f;
