@@ -43,8 +43,17 @@ namespace cjson {
 
 	//------------------------------------------------------------------------------------------------------------------
 	std::string Json::serialize() const {
+		std::stringstream sstream;
+		if(serialize(sstream))
+			return sstream.str();
+		else // Serialization went wrong.
+			return "";
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	bool Json::serialize(std::ostream& _dst) const {
 		Serializer s;
-		return s.serialize(*this);
+		return s.serialize(*this, _dst);
 	}
 
 	//------------------------------------------------------------------------------------------------------------------

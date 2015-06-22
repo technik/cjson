@@ -49,7 +49,7 @@ namespace cjson {
 		bool parse	(const char* _code);
 		/// generate a string with the formated content of the json object
 		std::string serialize() const;
-		void		serialize(std::ostream&); ///< Serialize Json content into an output stream.
+		bool		serialize(std::ostream&) const; ///< Serialize Json content into an output stream.
 
 		// ----- Useful methods -----
 		void setNull	(); ///< Reset object to default construction state
