@@ -41,6 +41,7 @@ namespace cjson {
 		///\ param _dst a Json object into which parse results will be stored
 		///\ return \c true if able to parse the input string, \c false on error
 		bool parse(const char* _code, Json& _dst);
+		bool parse(std::istream&, Json& _dst);
 
 	private:
 		bool parseJson(Json& _dst);
