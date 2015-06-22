@@ -34,11 +34,24 @@ namespace cjson {
 
 	//------------------------------------------------------------------------------------------------------------------
 	bool Json::parse(const char* _code) {
-		Parser p;
-		if(p.parse(_code, *this))
-			return true;
-		setNull(); // Something went wrong, reset.
-		return false;
+		setNull();
+		Parser p(_code);
+		if(!p.parse(*this)) {
+			setNull();
+			return false;
+		}
+		return true;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	bool Json::parse(std::istream& _is) {
+		setNull();
+		Parser p(_is);
+		if(!p.parse(*this)) {
+			setNull();
+			return false;
+		}
+		return true;
 	}
 
 	//------------------------------------------------------------------------------------------------------------------

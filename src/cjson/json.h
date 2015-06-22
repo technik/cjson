@@ -47,6 +47,7 @@ namespace cjson {
 		// ----- Parsing and generation -----
 		/// param _code a string containing a formated json.
 		bool parse	(const char* _code);
+		bool parse	(std::istream&);
 		/// generate a string with the formated content of the json object
 		std::string serialize() const;
 		bool		serialize(std::ostream&) const; ///< Serialize Json content into an output stream.
