@@ -84,32 +84,30 @@ namespace cjson {
 
 	//------------------------------------------------------------------------------------------------------------------
 	bool Parser::parseTrue(Json& _dst) {
-		if(!strncmp("true",mInput,4)) {
-			_dst = true;
-			mInput += 4;
-			return true;
-		}
-		return false;
+		char buff[4];
+		mIn->read(buff,4);
+		return 0 == strncmp("true",buff,4);
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
 	bool Parser::parseFalse(Json& _dst) {
-		if(!strncmp("false",mInput,5)) {
-			_dst = false;
-			mInput += 5;
-			return true;
-		}
-		return false;
+		char buff[5];
+		mIn->read(buff,5);
+		return 0 == strncmp("false",buff,5);
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
 	bool Parser::parseNumber(Json& _dst) {
-		const char* lastN = mInput+1;
-		bool isInt = true;
+		std::istream::pos_type start = mIn->tellg(); // So we can reset later;
+		// Skip all digits
 		const std::string digits("0123456789");
-		while(digits.find(*lastN) != std::string::npos)
-			++lastN; // Skip digits
-		if(*lastN == '.') // Float number
+		int c;
+		while(digits.find(mIn->peek()) != std::string::npos)
+			c = mIn->get();
+		// Return the stream to the start of the number
+		mIn->seekg(start);
+		// Either parse as a float or an int
+		if(c == '.')
 			return parseFloat(_dst);
 		else
 			return parseInt(_dst);
@@ -117,81 +115,80 @@ namespace cjson {
 
 	//------------------------------------------------------------------------------------------------------------------
 	bool Parser::parseString(Json& _dst) {
-		readCh(); // Skip opening quotes
-		const char* start = mInput; // Save current position
+		mIn->ignore(1); // Skip opening quotes
 		bool escaped = false;
-		char c = readCh();
-		while(escaped || c != '"') {
-			if(c == '\0')
+		std::ostringstream oss;
+		// Read until the first unescaped quote
+		for(int c = mIn->get(); c != '"' || escaped; c = mIn->get()) {
+			if(mIn->eof())
 				return false; // Unterminated string
 			if(escaped || c == '\\')
-				escaped ^= 1; // Negace escape state
-			c = readCh();
+				escaped ^= 1; // Negate escape state
+			else
+				oss << c;
 		}
-		_dst = std::string(start, mInput-1); // Do not include the quote we just read.
+		_dst = oss.str(); // Do not include the quote we just read.
 		return true;
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
 	bool Parser::parseArray(Json& _dst) {
 		_dst.mType = Json::DataType::array;
-		readCh(); // Skip [
+		mIn->ignore(); // Skip [
 		skipWhiteSpace();
 		Json element;
-		while(tellCh() != ']') {
+		while(mIn->peek() != ']') {
 			// Parse element
-			if(!parseJson(element))
+			if(!parse(element))
 				return false;
 			_dst.push_back(element);
 			// Read upto the next element
 			skipWhiteSpace();
-			if(tellCh() == ',') {
-				readCh();
+			if(mIn->peek() == ',') {
+				mIn->ignore();
 				skipWhiteSpace();
 			}
 		}
-		readCh(); // Skip ]
+		mIn->ignore(); // Skip ]
 		return true;
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
 	bool Parser::parseObject(Json& _dst) {
 		_dst.mType = Json::DataType::object;
-		readCh(); // Skip {
+		mIn->ignore(); // Skip {
 		skipWhiteSpace();
 		Json value;
 		std::string key;
-		while(tellCh() != '}') {
+		while(mIn->peek() != '}') {
 			// Parse element
 			if(!parseObjectEntry(key,value))
 				return false;
 			_dst[key] = value;
 			// Read upto the next element
 			skipWhiteSpace();
-			if(tellCh() == ',') {
-				readCh();
+			if(mIn->peek() == ',') {
+				mIn->ignore();
 				skipWhiteSpace();
 			}
 		}
-		readCh(); // Skip }
+		mIn->ignore(); // Skip }
 		return true;
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
 	bool Parser::parseInt(Json& _dst) {
-		const char* start = mInput;
-		char* end;
-		_dst = (int)strtol(start, &end, 10);
-		mInput = end;
+		int i;
+		*mIn >> i;
+		_dst = i;
 		return true;
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
 	bool Parser::parseFloat(Json& _dst) {
-		const char* start = mInput;
-		char* end;
-		_dst = strtof(start, &end);
-		mInput = end;
+		float f;
+		*mIn >> f;
+		_dst = f;
 		return true;
 	}
 
@@ -203,27 +200,17 @@ namespace cjson {
 			return false;
 		_oKey = std::string(key);
 		skipWhiteSpace();
-		if(readCh() != ':')
+		if(mIn->get() != ':')
 			return false;
-		parseJson(_dst); // Value
+		parse(_dst); // Value
 		return true;
-	}
-
-	//------------------------------------------------------------------------------------------------------------------
-	char Parser::readCh() {
-		return *mInput++; // Advance cursor to the next position
-	}
-
-	//------------------------------------------------------------------------------------------------------------------
-	char Parser::tellCh() {
-		return *mInput;
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
 	void Parser::skipWhiteSpace() {
 		const std::string spacers = " \t\n\r";
-		while(spacers.find(tellCh()) != std::string::npos)
-			readCh();
+		while(spacers.find(mIn->peek()) != std::string::npos)
+			mIn->ignore();
 	}
 
 }	// namespace cjson
