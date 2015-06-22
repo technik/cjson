@@ -55,7 +55,6 @@ namespace cjson {
 		std::istream& getStream() const;
 
 	private:
-		bool parseJson(Json& _dst);
 		bool parseNull(Json& _dst);
 		bool parseFalse(Json& _dst);
 		bool parseTrue(Json& _dst);
@@ -66,9 +65,6 @@ namespace cjson {
 		bool parseInt(Json& _dst);
 		bool parseFloat(Json& _dst);
 		bool parseObjectEntry(std::string& _key, Json& _value);
-
-		char readCh(); ///< Returns the next character in the input stream, and advances the reading cursor
-		char tellCh(); ///< Returns the next character in the input stream, but do not advance the reading cursor
 
 		void skipWhiteSpace();
 

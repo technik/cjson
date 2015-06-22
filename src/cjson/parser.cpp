@@ -25,22 +25,39 @@
 //----------------------------------------------------------------------------------------------------------------------
 #include "parser.h"
 #include <cstring>
+#include <sstream>
 #include <string>
 #include "json.h"
 
 namespace cjson {
 
 	//------------------------------------------------------------------------------------------------------------------
-	bool Parser::parse(const char* _code, Json& _dst)
+	Parser::Parser(std::istream& _s)
+		:mIn(&_s)
+		,mOwnStream(false)
 	{
-		mInput = _code;
-		return parseJson(_dst);
+		// Intentionally blank
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
-	bool Parser::parseJson(Json& _dst) {
+	Parser::Parser(const char* _s)
+		:mOwnStream(true)
+	{
+		mIn = new std::stringstream(std::string(_s));
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	Parser::~Parser()
+	{
+		if(mOwnStream)
+			delete mIn;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	bool Parser::parse(Json& _dst)
+	{
 		skipWhiteSpace();
-		char c = tellCh();
+		char c = mIn->peek();
 		switch (c)
 		{
 		case 'n': return parseNull(_dst);
