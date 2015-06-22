@@ -224,6 +224,81 @@ namespace cjson {
 		mArray.push_back(new Json(_element));
 	}
 
+	//------------------------------------------------------------------------------------------------------------------
+	// Iterator template definition
+	template<class Trait_>
+	Json::iterator_<Trait_>::iterator_(typename Trait_::mType &_json, int _pos){
+		mIsArray = _json.isArray();
+		if (mIsArray){
+			auto iter = _json.mArray.begin();
+			while (_pos-- > 0){ 
+				iter++; 
+			}
+			mArrayIterator =  iter;
+		}
+		else{
+			auto iter = _json.mObject.begin();
+			while (_pos-- > 0){ iter++; }
+			mObjectIterator = iter;
+		}
+	}
+
+
+	//------------------------------------------------------------------------------------------------------------------
+	template<class Trait_>
+	typename Trait_::mType& Json::iterator_<Trait_>::operator*(){
+		if (mIsArray){
+			return **mArrayIterator;
+		}
+		else{
+			return *((*mObjectIterator).second);
+		}
+
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	template<class Trait_>
+	Json::iterator_<Trait_>& Json::iterator_<Trait_>::operator++(){
+		if (mIsArray){
+			mArrayIterator++;
+		}
+		else{
+			mObjectIterator++;
+		}
+		return *this;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	template<class Trait_>
+	typename Trait_::mType* Json::iterator_<Trait_>::operator->(){
+		if (mIsArray){
+			return *mArrayIterator;
+		}
+		else{
+			return (*mObjectIterator).second;
+		}
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	template<class Trait_>
+	bool Json::iterator_<Trait_>::operator==(Json::iterator_<Trait_> _iter){
+		if (mIsArray){
+			return mArrayIterator == _iter.mArrayIterator ? true : false;
+		}
+		else{
+			return mObjectIterator == _iter.mObjectIterator ? true : false;
+		}
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	template<class Trait_>
+	const std::string& Json::iterator_<Trait_>::key(){
+		assert(!mIsArray);
+
+		return (*mObjectIterator).first;
+	}
+
+
 } // namespace cjson
 
 #endif // _CJSON_JSON_INL_
