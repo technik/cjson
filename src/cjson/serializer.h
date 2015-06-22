@@ -27,22 +27,25 @@
 #define _CJSON_SERIALIZER_H_
 
 #include <string>
-#include <sstream>
+#include <iostream>
 #include "json.h"
 
 namespace cjson {
 
 	class Serializer {
 	public:
-		void serialize(const Json&, std::ostream&);
+		/// Serialize the contents of a json into a std::ostream
+		/// It translates the binary Json _j into standard text format.
+		///\return true on success, 0 on serialization error.
+		bool serialize(const Json& _j, std::ostream& _dst);
 
 	private:
-		bool push(const Json&, std::stringstream& _dst, size_t _tab = 0);
-		bool push(bool, std::stringstream& _dst);
-		bool push(const Json::Array&, std::stringstream& _dst, size_t _tab = 0);
-		bool push(const Json::Dictionary&, std::stringstream& _dst, size_t _tab = 0);
+		bool push(const Json&, std::ostream& _dst, size_t _tab = 0);
+		bool push(bool, std::ostream& _dst);
+		bool push(const Json::Array&, std::ostream& _dst, size_t _tab = 0);
+		bool push(const Json::Dictionary&, std::ostream& _dst, size_t _tab = 0);
 
-		void tabify(std::stringstream& _dst, size_t _tab);
+		void tabify(std::ostream& _dst, size_t _tab);
 	};
 
 }	// namespace cjson

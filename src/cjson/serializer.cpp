@@ -32,16 +32,12 @@ using namespace std;
 
 namespace cjson {
 	//------------------------------------------------------------------------------------------------------------------
-	string Serializer::serialize(const Json& _j) {
-		stringstream oStream;
-		if(push(_j, oStream))
-			return oStream.str();
-		else
-			return ""; // Some error occurred
+	bool Serializer::serialize(const Json& _j, ostream& _dst) {
+		return push(_j, _dst);
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
-	bool Serializer::push(const Json& _j, stringstream& _oStream, size_t _tab) {
+	bool Serializer::push(const Json& _j, ostream& _oStream, size_t _tab) {
 		tabify(_oStream, _tab);
 		switch (_j.mType)
 		{
@@ -69,13 +65,13 @@ namespace cjson {
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
-	bool Serializer::push(bool _b, stringstream& _oStream) {
+	bool Serializer::push(bool _b, ostream& _oStream) {
 		_oStream << (_b? "true" : "false");
 		return true;
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
-	bool Serializer::push(const Json::Array& _array, std::stringstream& _oStream, size_t _tab) {
+	bool Serializer::push(const Json::Array& _array, ostream& _oStream, size_t _tab) {
 		_oStream << "[\n"; // Open braces
 		// Push elements
 		for(size_t i = 0; i < _array.size(); ++i) {
@@ -92,7 +88,7 @@ namespace cjson {
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
-	bool Serializer::push(const Json::Dictionary& _obj, std::stringstream& _oStream, size_t _tab) {
+	bool Serializer::push(const Json::Dictionary& _obj, ostream& _oStream, size_t _tab) {
 		_oStream << "{\n"; // Open braces
 		// Push elements
 		size_t i = 0;
@@ -112,7 +108,7 @@ namespace cjson {
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
-	void Serializer::tabify(stringstream& _oStream, size_t _tab) {
+	void Serializer::tabify(ostream& _oStream, size_t _tab) {
 		for(size_t i = 0; i < _tab; ++i)
 			_oStream << '\t';
 	}
