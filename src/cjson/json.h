@@ -168,36 +168,36 @@ namespace cjson {
 			typedef Dictionary::const_iterator mObjIteratorType;
 		};
 
-		typedef IteratorTrait_<Json>		IteratorTrait;
-		typedef IteratorTrait_<const Json>	ConstIteratorTrait;
-
 		// Template
-		template<typename Trait_>
+		template<class Type_>
 		class iterator_{
 		public:
-			iterator_(typename Trait_::mType &_json, int _pos);
+			typedef IteratorTrait_<Type_>	Trait;
+			typedef Trait::mType			Type;
 
-			typename Trait_::mType&		operator*() const;
-			typename Trait_::mType&		operator*();
+			iterator_(typename Type &_json, int _pos);
+
+			typename Type&		operator*() const;
+			typename Type&		operator*();
 
 			iterator_<Trait_>&			operator++();
-			typename Trait_::mType*		operator->();
+			typename Type*		operator->();
 
-			bool	operator==(iterator_<Trait_> _iter);
+			bool	operator==(iterator_<Type_> _iter);
 
 			const std::string&		key();
 
 		private:
 			bool mIsArray;
 
-			typename Trait_::mArrayIteratorType	mArrayIterator;
-			typename Trait_::mObjIteratorType	mObjectIterator;
+			typename Trait::mArrayIteratorType	mArrayIterator;
+			typename Trait::mObjIteratorType	mObjectIterator;
 		};
 
 		// Iterators public interface
 	public:
-		typedef iterator_<IteratorTrait>		iterator;
-		typedef iterator_<ConstIteratorTrait>	const_iterator;
+		typedef iterator_<Json>			iterator;
+		typedef iterator_<const Json>	const_iterator;
 
 		const_iterator	begin() const;
 		iterator		begin();
