@@ -30,6 +30,8 @@
 #include <vector>
 #include <map>
 
+#include "JsonIterator.h"
+
 namespace cjson {
 
 	/// \class Json
@@ -150,51 +152,10 @@ namespace cjson {
 		friend class Serializer;
 
 		// ----- Iterators -----
-		// Traits
-		template<class Type_>
-		struct IteratorTrait_{
-			typedef Type_ mType;
-		};
-
-		template<> struct IteratorTrait_<Json>{
-			typedef Json mType;
-			typedef Array::iterator mArrayIteratorType;
-			typedef Dictionary::iterator mObjIteratorType;
-		};
-
-		template<> struct IteratorTrait_<const Json>{
-			typedef const Json mType;
-			typedef Array::const_iterator mArrayIteratorType;
-			typedef Dictionary::const_iterator mObjIteratorType;
-		};
-
-		// Template
-		template<class Type_>
-		class iterator_{
-		public:
-			typedef IteratorTrait_<Type_>	Trait;
-			typedef Trait::mType			Type;
-
-			iterator_(typename Type &_json, int _pos);
-
-			typename Type&		operator*() const;
-			typename Type&		operator*();
-
-			iterator_<Trait_>&			operator++();
-			typename Type*		operator->();
-
-			bool	operator==(iterator_<Type_> _iter);
-
-			const std::string&		key();
-
-		private:
-			bool mIsArray;
-
-			typename Trait::mArrayIteratorType	mArrayIterator;
-			typename Trait::mObjIteratorType	mObjectIterator;
-		};
-
-		// Iterators public interface
+		friend struct IteratorTrait_<Json>;
+		friend struct IteratorTrait_<const Json>;
+		friend class iterator_<Json>;
+		friend class iterator_<const Json>;
 	public:
 		typedef iterator_<Json>			iterator;
 		typedef iterator_<const Json>	const_iterator;
