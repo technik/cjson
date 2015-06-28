@@ -31,7 +31,6 @@
 #include <utility> // std::move
 
 namespace cjson {
-
 	//------------------------------------------------------------------------------------------------------------------
 	inline Json::Json() 
 		: mType (DataType::null)
