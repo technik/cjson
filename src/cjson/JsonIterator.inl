@@ -26,23 +26,19 @@
 
 
 namespace cjson{
+	//------------------------------------------------------------------------------------------------------------------
 	template<class Type_>
-	iterator_<Type_>::iterator_(typename Type_ &_parent, int _pos){
-		mIsArray = _parent.isArray();
-		if (mIsArray){
-			auto iter = _parent.mArray.begin();
-			while (_pos-- > 0){
-				iter++;
-			}
-			mArrayIterator = iter;
-		}
-		else{
-			auto iter = _parent.mObject.begin();
-			while (_pos-- > 0){ iter++; }
-			mObjectIterator = iter;
-		}
+	iterator_<Type_>::iterator_(typename Trait::mArrayIteratorType &_iterator){
+		mArrayIterator = _iterator;
+		mIsArray = true;
 	}
 
+	//------------------------------------------------------------------------------------------------------------------
+	template<class Type_>
+	iterator_<Type_>::iterator_(typename Trait::mObjIteratorType &_iterator){
+		mObjectIterator = _iterator;
+		mIsArray = false;
+	}
 
 	//------------------------------------------------------------------------------------------------------------------
 	template<class Type_>

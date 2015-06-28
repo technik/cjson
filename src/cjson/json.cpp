@@ -265,22 +265,34 @@ namespace cjson {
 
 	//------------------------------------------------------------------------------------------------------------------
 	Json::const_iterator Json::begin() const{
-		return const_iterator(*this, 0);
+		if (isArray())
+			return const_iterator(mArray.begin());
+		else
+			return const_iterator(mObject.begin());
 	}
 	
 	//------------------------------------------------------------------------------------------------------------------
 	Json::iterator Json::begin(){
-		return iterator(*this, 0);
+		if (isArray())
+			return iterator(mArray.begin());
+		else
+			return iterator(mObject.begin());
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
 	Json::const_iterator Json::end() const{
-		return const_iterator(*this, size());
+		if (isArray())
+			return const_iterator(mArray.end());
+		else
+			return const_iterator(mObject.end());
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
 	Json::iterator Json::end(){
-		return iterator(*this, size());
+		if (isArray())
+			return iterator(mArray.end());
+		else
+			return iterator(mObject.end());
 	}
 	
 	//------------------------------------------------------------------------------------------------------------------
