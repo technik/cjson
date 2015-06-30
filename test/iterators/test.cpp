@@ -36,16 +36,11 @@ using namespace std;
 
 int main(int, const char**)
 {
+	// Testing Array iterators
 	Json jArray;
 	jArray.parse("[1, 2, 3]");
-	Json jDictionary;
-	jDictionary.parse((R""({"key1":56, "key2":658})""));
-
 	Json::iterator iterArray = jArray.begin();
-	Json::iterator iterDict = jDictionary.begin();
-
-
-	// Foreach test
+	
 	double testArray[3] = { 1, 2, 3 };
 	int index = 0;
 	for (Json json : jArray){
@@ -53,7 +48,6 @@ int main(int, const char**)
 		index++;
 	}
 
-	// Testing Array iterators
 	assert(*iterArray == 1);
 
 	assert(iterArray->serialize() == "1");
@@ -65,6 +59,10 @@ int main(int, const char**)
 	assert(iterArray == jArray.end());
 	
 	// Testing Dictionary iterator
+	Json jDictionary;
+	jDictionary.parse((R""({"key1":56, "key2":658})""));
+	Json::iterator iterDict = jDictionary.begin();
+
 	assert(*iterDict == 56);
 
 	assert(iterDict.key() == "key1");
