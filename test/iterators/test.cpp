@@ -44,6 +44,15 @@ int main(int, const char**)
 	Json::iterator iterArray = jArray.begin();
 	Json::iterator iterDict = jDictionary.begin();
 
+
+	// Foreach test
+	double testArray[3] = { 1, 2, 3 };
+	int index = 0;
+	for (Json json : jArray){
+		assert(json.operator int() == testArray[index]);
+		index++;
+	}
+
 	// Testing Array iterators
 	assert(*iterArray == 1);
 
