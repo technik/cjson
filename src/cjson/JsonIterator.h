@@ -59,6 +59,7 @@ namespace cjson{
 		typename Type_*		operator->();
 
 		bool	operator==(iterator_<Type_> _iter);
+		bool	operator!=(iterator_<Type_> _iter);
 
 		const std::string&		key();
 

@@ -85,6 +85,17 @@ namespace cjson{
 			return mObjectIterator == _iter.mObjectIterator ? true : false;
 		}
 	}
+	
+	//------------------------------------------------------------------------------------------------------------------
+	template<class Type_>
+	bool iterator_<Type_>::operator!=(iterator_<Type_> _iter){
+		if (mIsArray){
+			return mArrayIterator != _iter.mArrayIterator ? true : false;
+		}
+		else{
+			return mObjectIterator != _iter.mObjectIterator ? true : false;
+		}
+	}
 
 	//------------------------------------------------------------------------------------------------------------------
 	template<class Type_>
