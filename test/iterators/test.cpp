@@ -49,7 +49,7 @@ int main(int, const char**)
 	double testArray[3] = { 1, 2, 3 };
 	int index = 0;
 	for (Json json : jArray){
-		assert(json.operator int() == testArray[index]);
+		assert(int(json)== testArray[index]);
 		index++;
 	}
 
