@@ -32,34 +32,34 @@
 namespace cjson{
 	// Traits
 	template<class Type_>
-	struct IteratorTrait_{
+	struct IteratorTrait{
 		typedef typename Type_::Array::iterator mArrayIteratorType;
 		typedef typename Type_::Dictionary::iterator mObjIteratorType;
 	};
 
 	template<class Type_> 
-	struct IteratorTrait_<const Type_>{
+	struct IteratorTrait<const Type_>{
 		typedef typename Type_::Array::const_iterator mArrayIteratorType;
 		typedef typename Type_::Dictionary::const_iterator mObjIteratorType;
 	};
 
 	// Template
 	template<class Type_>
-	class iterator_{
+	class Iterator{
 	public:
-		typedef IteratorTrait_<Type_>	Trait;
+		typedef IteratorTrait<Type_>	Trait;
 
-		iterator_(typename Trait::mArrayIteratorType &_iterator);
-		iterator_(typename Trait::mObjIteratorType &_iterator);
+		Iterator(typename Trait::mArrayIteratorType &_iterator);
+		Iterator(typename Trait::mObjIteratorType &_iterator);
 
 		typename Type_&		operator*() const;
 		typename Type_&		operator*();
 
-		iterator_<Type_>&			operator++();
+		Iterator<Type_>&			operator++();
 		typename Type_*		operator->();
 
-		bool	operator==(iterator_<Type_> _iter);
-		bool	operator!=(iterator_<Type_> _iter);
+		bool	operator==(Iterator<Type_> _iter);
+		bool	operator!=(Iterator<Type_> _iter);
 
 		const std::string&		key();
 

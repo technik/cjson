@@ -28,21 +28,21 @@
 namespace cjson{
 	//------------------------------------------------------------------------------------------------------------------
 	template<class Type_>
-	iterator_<Type_>::iterator_(typename Trait::mArrayIteratorType &_iterator){
+	Iterator<Type_>::Iterator(typename Trait::mArrayIteratorType &_iterator){
 		mArrayIterator = _iterator;
 		mIsArray = true;
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
 	template<class Type_>
-	iterator_<Type_>::iterator_(typename Trait::mObjIteratorType &_iterator){
+	Iterator<Type_>::Iterator(typename Trait::mObjIteratorType &_iterator){
 		mObjectIterator = _iterator;
 		mIsArray = false;
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
 	template<class Type_>
-	typename Type_& iterator_<Type_>::operator*(){
+	typename Type_& Iterator<Type_>::operator*(){
 		if (mIsArray){
 			return **mArrayIterator;
 		}
@@ -54,7 +54,7 @@ namespace cjson{
 
 	//------------------------------------------------------------------------------------------------------------------
 	template<class Type_>
-	iterator_<Type_>& iterator_<Type_>::operator++(){
+	Iterator<Type_>& Iterator<Type_>::operator++(){
 		if (mIsArray){
 			mArrayIterator++;
 		}
@@ -66,7 +66,7 @@ namespace cjson{
 
 	//------------------------------------------------------------------------------------------------------------------
 	template<class Type_>
-	typename Type_* iterator_<Type_>::operator->(){
+	typename Type_* Iterator<Type_>::operator->(){
 		if (mIsArray){
 			return *mArrayIterator;
 		}
@@ -77,7 +77,7 @@ namespace cjson{
 
 	//------------------------------------------------------------------------------------------------------------------
 	template<class Type_>
-	bool iterator_<Type_>::operator==(iterator_<Type_> _iter){
+	bool Iterator<Type_>::operator==(Iterator<Type_> _iter){
 		if (mIsArray){
 			return mArrayIterator == _iter.mArrayIterator ? true : false;
 		}
@@ -88,7 +88,7 @@ namespace cjson{
 	
 	//------------------------------------------------------------------------------------------------------------------
 	template<class Type_>
-	bool iterator_<Type_>::operator!=(iterator_<Type_> _iter){
+	bool Iterator<Type_>::operator!=(Iterator<Type_> _iter){
 		if (mIsArray){
 			return mArrayIterator != _iter.mArrayIterator ? true : false;
 		}
@@ -99,7 +99,7 @@ namespace cjson{
 
 	//------------------------------------------------------------------------------------------------------------------
 	template<class Type_>
-	const std::string& iterator_<Type_>::key(){
+	const std::string& Iterator<Type_>::key(){
 		assert(!mIsArray);
 
 		return (*mObjectIterator).first;

@@ -163,13 +163,13 @@ namespace cjson {
 		friend class Serializer;
 
 		// ----- Iterators -----
-		friend struct IteratorTrait_<Json>;
-		friend struct IteratorTrait_<const Json>;
-		friend class iterator_<Json>;
-		friend class iterator_<const Json>;
+		friend struct IteratorTrait<Json>;
+		friend struct IteratorTrait<const Json>;
+		friend class Iterator<Json>;
+		friend class Iterator<const Json>;
 	public:
-		typedef iterator_<Json>			iterator;
-		typedef iterator_<const Json>	const_iterator;
+		typedef Iterator<Json>			iterator;
+		typedef Iterator<const Json>	const_iterator;
 
 		const_iterator	begin() const;
 		iterator		begin();
