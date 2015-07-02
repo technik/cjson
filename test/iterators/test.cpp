@@ -34,9 +34,9 @@
 using namespace cjson;
 using namespace std;
 
-void forwardIteratorSpecsTest();
+void forwardIteratorSpecsTest(std::string _raw);
 
-void foreachTest(Json _json, std::vector<int> _vals);
+void foreachTest(std::string _raw, std::vector<int> _vals);
 
 void specificArrayTest();
 void specificDictTest();
@@ -44,11 +44,12 @@ void specificDictTest();
 int main(int, const char**)
 {
 	// Test if iterators accomplish cpp forward iterator specs.
-	forwardIteratorSpecsTest();
+	forwardIteratorSpecsTest("[1, 2, 3, 4]" );
+	forwardIteratorSpecsTest("{\"key1\":1, \"key2\":2, \"key3\":3, \"key4\":4}" );
 
 	// Generic usage.
-	foreachTest({ "[3, 65, 98]" }, { 3, 65, 98 });
-	foreachTest({ "{\"key1\":77, \"key2\":125}" }, { 77, 125 });
+	foreachTest("[3, 65, 98]", { 3, 65, 98 });
+	foreachTest("{\"key1\":77, \"key2\":125}", { 77, 125 });
 
 	// Test Array iterators
 	specificArrayTest();
@@ -58,44 +59,46 @@ int main(int, const char**)
 }
 
 //---------------------------------------------------------------------------------------------------------------------
-void forwardIteratorSpecsTest(){
+void forwardIteratorSpecsTest(std::string _raw){
+	Json json;
+	json.parse(_raw.c_str());
+
 	// Test if iterators accomplish cpp specs. http://www.cplusplus.com/reference/iterator/ForwardIterator/
 	// Is default-constructible, copy-constructible, copy-assignable and destructible.
 	Json::iterator a;
-	Json::iterator b(a);
-	b = a;
-
+	Json::iterator b(json.begin());
+	a = b;
 
 	// Can be compared.
 	assert(a == b);
 	assert(!(a != b));
 
 	// Can be derreferenced as rvalue.
-	Json j("[2,3,4]");
-	auto c = j.begin();
-	assert(*c == 2);
-	assert(c->isArray());
+	auto c = json.begin();
+	assert(int(*c) == 1);
+	assert(c->isNumber());
 
 	// Can be dereferenced as lvalue
 	Json::iterator d;
-	*d = c;
+	*d = 3;
 
 	//Can be incremented.
 	++c;
 	c++;
 	*c++;
 
-	assert(c == j.end());
-
 	// LValues are swappable.
 	swap(c, d);
 }
 
 //---------------------------------------------------------------------------------------------------------------------
-void foreachTest(Json _json, std::vector<int> _vals){
+void foreachTest(std::string _raw, std::vector<int> _vals){
+	Json json;
+	json.parse(_raw.c_str());
+
 	int index = 0;
-	for (auto json : _json){
-		assert(int(json) == _vals[index]);
+	for (auto elem : json){
+		assert(int(elem) == _vals[index]);
 		index++;
 	}
 }
