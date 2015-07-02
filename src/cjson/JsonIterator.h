@@ -49,6 +49,8 @@ namespace cjson{
 	public:
 		typedef IteratorTrait<Type_>	Trait;
 
+		Iterator();
+
 		Iterator(typename Trait::mArrayIteratorType &_iterator);
 		Iterator(typename Trait::mObjIteratorType &_iterator);
 

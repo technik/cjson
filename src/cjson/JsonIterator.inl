@@ -28,6 +28,11 @@
 namespace cjson{
 	//------------------------------------------------------------------------------------------------------------------
 	template<class Type_>
+	Iterator<Type_>::Iterator(){
+
+	}
+	//------------------------------------------------------------------------------------------------------------------
+	template<class Type_>
 	Iterator<Type_>::Iterator(typename Trait::mArrayIteratorType &_iterator){
 		mArrayIterator = _iterator;
 		mIsArray = true;
