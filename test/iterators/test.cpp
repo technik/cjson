@@ -34,6 +34,8 @@
 using namespace cjson;
 using namespace std;
 
+void forwardIteratorSpecsTest();
+
 void foreachTest(Json _json, std::vector<int> _vals);
 
 void specificArrayTest();
@@ -41,6 +43,8 @@ void specificDictTest();
 
 int main(int, const char**)
 {
+	// Test if iterators accomplish cpp forward iterator specs.
+	forwardIteratorSpecsTest();
 
 	// Generic usage.
 	foreachTest({ "[3, 65, 98]" }, { 3, 65, 98 });
@@ -51,7 +55,40 @@ int main(int, const char**)
 	
 	// Test Dictionary iterator
 	specificDictTest();
+}
 
+//---------------------------------------------------------------------------------------------------------------------
+void forwardIteratorSpecsTest(){
+	// Test if iterators accomplish cpp specs. http://www.cplusplus.com/reference/iterator/ForwardIterator/
+	// Is default-constructible, copy-constructible, copy-assignable and destructible.
+	Json::iterator a;
+	Json::iterator b(a);
+	b = a;
+
+
+	// Can be compared.
+	assert(a == b);
+	assert(!(a != b));
+
+	// Can be derreferenced as rvalue.
+	Json j("[2,3,4]");
+	auto c = j.begin();
+	assert(*c == 2);
+	assert(c->isArray());
+
+	// Can be dereferenced as lvalue
+	Json::iterator d;
+	*d = c;
+
+	//Can be incremented.
+	++c;
+	c++;
+	*c++;
+
+	assert(c == j.end());
+
+	// LValues are swappable.
+	swap(c, d);
 }
 
 //---------------------------------------------------------------------------------------------------------------------
