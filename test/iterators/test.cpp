@@ -75,20 +75,23 @@ void forwardIteratorSpecsTest(std::string _raw){
 
 	// Can be derreferenced as rvalue.
 	auto c = json.begin();
-	assert(int(*c) == 1);
+	assert(*c == 1);
 	assert(c->isNumber());
 
 	// Can be dereferenced as lvalue
 	Json::iterator d;
-	*d = 3;
-
+	*c = 3;
+	assert(*json.begin() == 3);
+	
 	//Can be incremented.
 	++c;
 	c++;
 	*c++;
+	assert(*c == 4);
 
 	// LValues are swappable.
 	swap(c, d);
+	assert(*d == 4);
 }
 
 //---------------------------------------------------------------------------------------------------------------------
