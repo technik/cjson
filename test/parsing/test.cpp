@@ -87,4 +87,6 @@ int main(int, const char**)
 	assert(string(j["key"]) == "value");
 	assert(j.parse(R""(	 {		"foo"	:		"bar \""	 } )"")); // Spaced test
 	assert(!j.parse(R"({ "bar" :")")); // Incomplete test
+	j["key"] = Json("value");	// Assignation of Json of of type Text.
+	assert(string(j["key"]) == "value");
 }

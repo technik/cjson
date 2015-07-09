@@ -118,6 +118,8 @@ namespace cjson {
 		switch(mType) {
 		case DataType::boolean:
 		case DataType::integer:
+		case DataType::text:
+			mText = _x.mText;
 		case DataType::real:
 			mNumber = _x.mNumber;
 			break;
@@ -140,6 +142,9 @@ namespace cjson {
 		switch(mType) {
 		case DataType::boolean:
 		case DataType::integer:
+		case DataType::text:
+			mText = _x.mText;
+			break;
 		case DataType::real:
 			mNumber = _x.mNumber;
 			break;
