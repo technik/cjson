@@ -125,7 +125,7 @@ namespace cjson {
 			mArray = _x.mArray;
 			break;
 		case DataType::object:
-			mObject = _x.mObject;
+			mObject = mapDeepCopy(_x.mObject);
 			break;
 		case DataType::text:
 			mText = _x.mText;

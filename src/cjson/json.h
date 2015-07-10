@@ -136,6 +136,8 @@ namespace cjson {
 		typedef std::map<std::string,Json*>	Dictionary;
 		typedef std::vector<Json*>			Array;
 
+		Dictionary mapDeepCopy(const Dictionary &_map);
+
 		/// Possible types of data
 		enum class DataType {
 			null,

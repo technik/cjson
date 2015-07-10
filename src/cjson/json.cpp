@@ -355,4 +355,15 @@ namespace cjson {
 		}
 	}
 
+	//----------------------------------------------------------------------------------------------------------------------
+	Json::Dictionary Json::mapDeepCopy(const Json::Dictionary &_map) {
+		Dictionary copy;
+		assert(isObject());
+
+		for (auto element : _map) {
+			copy[element.first] = new Json(*element.second);
+		}
+		return copy;
+	}
+
 }	// namespace cjson

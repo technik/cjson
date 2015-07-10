@@ -89,4 +89,17 @@ int main(int, const char**)
 	assert(!j.parse(R"({ "bar" :")")); // Incomplete test
 	j["key"] = Json("value");	// Assignation of Json of of type Text.
 	assert(string(j["key"]) == "value");
+
+	Json js;
+	js.parse(R"({"type":"dummy", "data":{"state":true}})");
+	assert(js.isObject());
+	assert(js.size() == 2);
+	assert(js.contains("type"));
+	assert(js["type"].isString());
+	assert(js["type"] == "dummy");
+	assert(js.contains("data"));
+	assert(js["data"].isObject());
+	assert(js["data"].size() == 1);
+	assert(js["data"].contains("state"));
+	assert(bool(js["data"]["state"]) == true);
 }
