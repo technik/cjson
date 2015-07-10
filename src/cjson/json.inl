@@ -118,8 +118,6 @@ namespace cjson {
 		switch(mType) {
 		case DataType::boolean:
 		case DataType::integer:
-		case DataType::text:
-			mText = _x.mText;
 		case DataType::real:
 			mNumber = _x.mNumber;
 			break;
@@ -128,6 +126,9 @@ namespace cjson {
 			break;
 		case DataType::object:
 			mObject = _x.mObject;
+			break;
+		case DataType::text:
+			mText = _x.mText;
 			break;
 		default: // Do nothing for null
 			break;
@@ -142,9 +143,6 @@ namespace cjson {
 		switch(mType) {
 		case DataType::boolean:
 		case DataType::integer:
-		case DataType::text:
-			mText = _x.mText;
-			break;
 		case DataType::real:
 			mNumber = _x.mNumber;
 			break;
@@ -155,6 +153,9 @@ namespace cjson {
 		case DataType::object:
 			mObject = std::move(_x.mObject);
 			_x.mType = DataType::null;
+			break;
+		case DataType::text:
+			mText = _x.mText;
 			break;
 		default: // Do nothing for null
 			break;
