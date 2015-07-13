@@ -60,4 +60,11 @@ int main(int, const char**)
 	Json j2(""); // Note this is not an empty Json, it is a String Json with an empty string
 	assert(j2.isString());
 	assert(j2.serialize() == "\"\"");
+
+	Json twoLevel;
+	twoLevel["on"] = true;
+	assert(twoLevel.serialize() == 
+R"({
+	"on": true
+})");
 }
