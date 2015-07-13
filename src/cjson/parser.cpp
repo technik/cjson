@@ -108,6 +108,7 @@ namespace cjson {
 		int c;
 		while(digits.find(mIn->peek()) != std::string::npos)
 			c = mIn->get();
+		c = mIn->get();
 		// Return the stream to the start of the number
 		mIn->seekg(start);
 		// Either parse as a float or an int
