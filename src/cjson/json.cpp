@@ -289,7 +289,7 @@ namespace cjson {
 			clear();
 			mType = DataType::object;
 		}
-		Json*& objRef = mObject[_key];
+		Json*& objRef = mObject[_key]; // Pointer reference so we can point it to a new object
 		if(objRef == nullptr)
 			objRef = new Json();
 		return *objRef;
