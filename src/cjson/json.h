@@ -30,6 +30,8 @@
 #include <vector>
 #include <map>
 
+#include "JsonIterator.h"
+
 namespace cjson {
 
 	/// \class Json
@@ -161,7 +163,22 @@ namespace cjson {
 
 		friend class Parser;
 		friend class Serializer;
+
+		// ----- Iterators -----
+		friend struct IteratorTrait<Json>;
+		friend struct IteratorTrait<const Json>;
+		friend class Iterator<Json>;
+		friend class Iterator<const Json>;
+	public:
+		typedef Iterator<Json>			iterator;
+		typedef Iterator<const Json>	const_iterator;
+
+		const_iterator	begin() const;
+		iterator		begin();
+		const_iterator	end() const;
+		iterator		end();
 	};
+
 
 }	// namespace cjson
 

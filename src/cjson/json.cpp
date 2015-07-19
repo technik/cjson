@@ -366,4 +366,37 @@ namespace cjson {
 		return copy;
 	}
 
+	//------------------------------------------------------------------------------------------------------------------
+	Json::const_iterator Json::begin() const{
+		if (isArray())
+			return const_iterator(mArray.begin());
+		else
+			return const_iterator(mObject.begin());
+	}
+	
+	//------------------------------------------------------------------------------------------------------------------
+	Json::iterator Json::begin(){
+		if (isArray())
+			return iterator(mArray.begin());
+		else
+			return iterator(mObject.begin());
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	Json::const_iterator Json::end() const{
+		if (isArray())
+			return const_iterator(mArray.end());
+		else
+			return const_iterator(mObject.end());
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	Json::iterator Json::end(){
+		if (isArray())
+			return iterator(mArray.end());
+		else
+			return iterator(mObject.end());
+	}
+	
+	//------------------------------------------------------------------------------------------------------------------
 }	// namespace cjson
