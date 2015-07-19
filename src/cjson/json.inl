@@ -122,6 +122,10 @@ namespace cjson {
 			break;
 		case DataType::array:
 			mArray = _x.mArray;
+			// Deep copy
+			for (size_t i = 0; i < mArray.size(); ++i) {
+				mArray[i] = new Json(*mArray[i]);
+			}
 			break;
 		case DataType::object:
 			mObject = mapDeepCopy(_x.mObject);
