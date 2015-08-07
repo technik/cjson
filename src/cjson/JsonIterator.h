@@ -54,11 +54,11 @@ namespace cjson{
 		Iterator(typename Trait::mArrayIteratorType &_iterator);
 		Iterator(typename Trait::mObjIteratorType &_iterator);
 
-		typename Type_&		operator*() const;
-		typename Type_&		operator*();
+		Type_&		operator*() const;
+		Type_&		operator*();
 
 		Iterator<Type_>&			operator++();
-		typename Type_*		operator->();
+		Type_*		operator->();
 
 		bool	operator==(Iterator<Type_> _iter);
 		bool	operator!=(Iterator<Type_> _iter);

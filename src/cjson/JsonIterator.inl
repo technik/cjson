@@ -47,7 +47,7 @@ namespace cjson{
 
 	//------------------------------------------------------------------------------------------------------------------
 	template<class Type_>
-	typename Type_& Iterator<Type_>::operator*(){
+	Type_& Iterator<Type_>::operator*(){
 		if (mIsArray){
 			return **mArrayIterator;
 		}
@@ -71,7 +71,7 @@ namespace cjson{
 
 	//------------------------------------------------------------------------------------------------------------------
 	template<class Type_>
-	typename Type_* Iterator<Type_>::operator->(){
+	Type_* Iterator<Type_>::operator->(){
 		if (mIsArray){
 			return *mArrayIterator;
 		}
