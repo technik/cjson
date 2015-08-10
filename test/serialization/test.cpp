@@ -63,8 +63,5 @@ int main(int, const char**)
 
 	Json twoLevel;
 	twoLevel["on"] = true;
-	assert(twoLevel.serialize() == 
-R"({
-	"on": true
-})");
+	assert(twoLevel.serialize() == R"({	"on": true })");
 }

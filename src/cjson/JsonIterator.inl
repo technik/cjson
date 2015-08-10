@@ -33,14 +33,14 @@ namespace cjson{
 	}
 	//------------------------------------------------------------------------------------------------------------------
 	template<class Type_>
-	Iterator<Type_>::Iterator(typename Trait::mArrayIteratorType &_iterator){
+	Iterator<Type_>::Iterator(typename Trait::mArrayIteratorType _iterator){
 		mArrayIterator = _iterator;
 		mIsArray = true;
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
 	template<class Type_>
-	Iterator<Type_>::Iterator(typename Trait::mObjIteratorType &_iterator){
+	Iterator<Type_>::Iterator(typename Trait::mObjIteratorType _iterator){
 		mObjectIterator = _iterator;
 		mIsArray = false;
 	}
@@ -67,6 +67,14 @@ namespace cjson{
 			mObjectIterator++;
 		}
 		return *this;
+	}
+
+	//------------------------------------------------------------------------------------------------------------------
+	template<class Type_>
+	Iterator<Type_> Iterator<Type_>::operator++(int){
+		Iterator<Type_> res;
+		++(*this);
+		return res;
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
