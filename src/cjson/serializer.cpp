@@ -38,7 +38,7 @@ namespace cjson {
 
 	//------------------------------------------------------------------------------------------------------------------
 	bool Serializer::push(const Json& _j, ostream& _oStream, size_t _tab) {
-		//tabify(_oStream, _tab);
+		tabify(_oStream, _tab);
 		switch (_j.mType)
 		{
 		case Json::DataType::null:
@@ -97,9 +97,10 @@ namespace cjson {
 			_oStream << "\"" << element.first << "\": "; // Key
 			if(!push(*element.second, _oStream, _tab+1)) // Value
 				return false; // Error processing element
-			if(i != _obj.size()-1) // All elements but the last one
+			if(i < _obj.size()-1) // All elements but the last one
 				_oStream << ',';
 			_oStream << '\n';
+			++i;
 		}
 		// Close braces
 		tabify(_oStream, _tab);
