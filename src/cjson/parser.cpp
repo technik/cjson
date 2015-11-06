@@ -163,9 +163,9 @@ namespace cjson {
 		_dst.mType = Json::DataType::object;
 		mIn->ignore(); // Skip {
 		skipWhiteSpace();
-		Json value;
 		std::string key;
 		while(mIn->peek() != '}') {
+			Json value;
 			// Parse element
 			if(!parseObjectEntry(key,value))
 				return false;
