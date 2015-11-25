@@ -63,5 +63,8 @@ int main(int, const char**)
 
 	Json twoLevel;
 	twoLevel["on"] = true;
-	assert(twoLevel.serialize() == R"({	"on": true })");
+	std::string serial = twoLevel.serialize();
+	assert(serial == R"({
+	"on": true
+})");
 }

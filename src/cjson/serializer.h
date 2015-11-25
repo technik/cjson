@@ -40,7 +40,7 @@ namespace cjson {
 		bool serialize(const Json& _j, std::ostream& _dst);
 
 	private:
-		bool push(const Json&, std::ostream& _dst, size_t _tab = 0);
+		bool push(const Json&, std::ostream& _dst, size_t _tab = 0, bool _skipFirstRowTab = false);
 		bool push(bool, std::ostream& _dst);
 		bool push(const Json::Array&, std::ostream& _dst, size_t _tab = 0);
 		bool push(const Json::Dictionary&, std::ostream& _dst, size_t _tab = 0);
