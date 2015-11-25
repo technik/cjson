@@ -72,7 +72,7 @@ namespace cjson{
 	//------------------------------------------------------------------------------------------------------------------
 	template<class Type_>
 	Iterator<Type_> Iterator<Type_>::operator++(int){
-		Iterator<Type_> res;
+		Iterator<Type_> res(*this);
 		++(*this);
 		return res;
 	}
