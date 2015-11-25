@@ -102,4 +102,11 @@ int main(int, const char**)
 	assert(js["data"].size() == 1);
 	assert(js["data"].contains("state"));
 	assert(bool(js["data"]["state"]) == true);
+
+	// --- Cumulative dictionary testing
+	Json cumulative;
+	cumulative.parse(R"({"x":{"x1":1, "x2":2}, "y":{"y1":4, "y2":5}})");
+	assert(cumulative.size() == 2);
+	assert(cumulative["x"].size() == 2);
+	assert(cumulative["y"].size() == 2);
 }

@@ -102,20 +102,28 @@ namespace cjson {
 
 	//------------------------------------------------------------------------------------------------------------------
 	bool Parser::parseNumber(Json& _dst) {
-		std::istream::pos_type start = mIn->tellg(); // So we can reset later;
 		// Skip all digits
 		const std::string digits("0123456789");
-		int c;
-		while(digits.find(mIn->peek()) != std::string::npos)
-			c = mIn->get();
-		c = mIn->get();
-		// Return the stream to the start of the number
-		mIn->seekg(start);
+		std::string num;
+		while(digits.find(mIn->peek()) != std::string::npos) {
+			num += char(mIn->get());
+		}
+		int c = mIn->peek();
 		// Either parse as a float or an int
-		if(c == '.')
-			return parseFloat(_dst);
+		if(c == '.') {
+			num += c;
+			// Parse the rest of the number
+			while(digits.find(mIn->peek()) != std::string::npos) {
+				num += char(mIn->get());
+			}
+			if (mIn->peek() == 'f') {
+				mIn->ignore();
+			}
+			
+			return parseFloat(num, _dst);
+		}
 		else
-			return parseInt(_dst);
+			return parseInt(num, _dst);
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
@@ -182,19 +190,19 @@ namespace cjson {
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
-	bool Parser::parseInt(Json& _dst) {
+	bool Parser::parseInt(const std::string& _num, Json& _dst) {
 		_dst.mType = Json::DataType::integer;
 		int i;
-		*mIn >> i;
+		std::stringstream(_num) >> i;
 		_dst = i;
 		return true;
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
-	bool Parser::parseFloat(Json& _dst) {
+	bool Parser::parseFloat(const std::string& _num, Json& _dst) {
 		_dst.mType = Json::DataType::real;
 		float f;
-		*mIn >> f;
+		std::stringstream(_num) >> f;
 		_dst = f;
 		return true;
 	}

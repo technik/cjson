@@ -62,8 +62,8 @@ namespace cjson {
 		bool parseString(Json& _dst);
 		bool parseArray(Json& _dst);
 		bool parseObject(Json& _dst);
-		bool parseInt(Json& _dst);
-		bool parseFloat(Json& _dst);
+		bool parseInt(const std::string& _num, Json& _dst);
+		bool parseFloat(const std::string& _num, Json& _dst);
 		bool parseObjectEntry(std::string& _key, Json& _value);
 
 		void skipWhiteSpace();
