@@ -50,6 +50,12 @@ int main(int, const char**)
 	assert(j.parse("3"));
 	assert(j.isNumber());
 	assert(int(j) == 3);
+	assert(j.parse("-3"));
+	assert(j.isNumber());
+	assert(int(j) == -3);
+	assert(j.parse("-3.0"));
+	assert(j.isNumber());
+	assert(float(j) == -3.f);
 	assert(j.parse("\"3\""));
 	assert(j.isString());
 	assert(string(j) == "3");

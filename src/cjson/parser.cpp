@@ -105,6 +105,10 @@ namespace cjson {
 		// Skip all digits
 		const std::string digits("0123456789");
 		std::string num;
+		if(mIn->peek() == '+')
+			mIn->ignore();
+		if(mIn->peek() == '-')
+			num += mIn->get();
 		while(digits.find(mIn->peek()) != std::string::npos) {
 			num += char(mIn->get());
 		}
