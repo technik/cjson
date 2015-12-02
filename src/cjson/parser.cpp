@@ -115,7 +115,7 @@ namespace cjson {
 		int c = mIn->peek();
 		// Either parse as a float or an int
 		if(c == '.') {
-			num += c;
+			num += mIn->get();
 			// Parse the rest of the number
 			while(digits.find(mIn->peek()) != std::string::npos) {
 				num += char(mIn->get());
