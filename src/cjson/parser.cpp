@@ -214,10 +214,19 @@ namespace cjson {
 	//------------------------------------------------------------------------------------------------------------------
 	bool Parser::parseObjectEntry(std::string& _oKey, Json& _dst) {
 		skipWhiteSpace();
-		Json key;
-		if(!parseString(key)) // Key 
-			return false;
-		_oKey = std::string(key);
+		if(mIn->peek() == '"'){
+			Json key;
+			if(!parseString(key)) // Key 
+				return false;
+			_oKey = std::string(key);
+		}
+		else { // Unquoted key
+			_oKey = "";
+			while (mIn->peek() != ':') {
+				_oKey = _oKey + char(mIn->get());
+				skipWhiteSpace();
+			}
+		}
 		skipWhiteSpace();
 		if(mIn->get() != ':')
 			return false;
