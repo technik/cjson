@@ -223,6 +223,8 @@ namespace cjson {
 		else { // Unquoted key
 			_oKey = "";
 			while (mIn->peek() != ':') {
+				if(mIn->eof())
+					return false;
 				_oKey = _oKey + char(mIn->get());
 				skipWhiteSpace();
 			}
