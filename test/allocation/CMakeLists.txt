@@ -3,7 +3,7 @@
 ################################################################################
 # The MIT License (MIT)
 # 
-# Copyright (c) 2015 Carmelo J. FernÃ¡ndez-AgÃ¼era Tortosa
+# Copyright (c) 2016 Carmelo J. Fernández-Agüera Tortosa
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -23,10 +23,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 ################################################################################
-
-# Sample projects
-# Include google test framework
-add_subdirectory(serialization) # Test serialization of Json objects works as expected
-add_subdirectory(parsing) # Test Parsing of strings into Json objects
-add_subdirectory(iterators) # Test iterators usage
-add_subdirectory(allocation) # Test memory allocation (prevent leaks)
+add_executable(allocation_test test.cpp)
+target_link_libraries(allocation_test PUBLIC cjson)
+add_test(allocationTest1 allocation_test)
