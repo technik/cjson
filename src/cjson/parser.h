@@ -70,6 +70,10 @@ namespace cjson {
 
 		std::istream* mIn;
 		bool mOwnStream; ///< Wether we have strong ownership of the input stream.
+
+	private:
+		const std::string cSpacers = " \t\n\r";
+		const std::string cDigits = "0123456789";
 	};
 
 }	// namespace cjson

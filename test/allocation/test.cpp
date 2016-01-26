@@ -32,12 +32,49 @@
 using namespace cjson;
 using namespace std;
 
+//----------------------------------------------------------------------------------------------------------------------
+// Manage global news and deletes
+size_t gNewCount = 0;
+size_t gDeleteCount = 0;
 void* operator new(size_t _count){
+	++gNewCount;
 	return malloc(_count);
 }
 
+void* operator new[](size_t _count){
+	gNewCount;
+	return malloc(_count);
+}
+
+void operator delete(void* _ptr) {
+	--gDeleteCount;
+	return free(_ptr);
+}
+
+void operator delete[](void* _ptr) {
+	--gDeleteCount;
+	return free(_ptr);
+}
+
+bool isMemoryBalanced() {
+	return gNewCount == gDeleteCount;
+}
+//----------------------------------------------------------------------------------------------------------------------
+
 int main(int, const char**)
 {
-	// ----- Empty Json -----
-	Json j; // Init with empty string gives
+	// Force creation and destruction by making a local scope
+	{
+		Json j;
+		j.parse(R"({
+					"NVDA": {
+						"c63": "-0.04",
+						"g53": "28.35",
+						"h53": "28.76",
+						"l84": "28.41",
+						"v53": "6,383,264"
+					}
+				})");
+	}
+	assert(isMemoryBalanced());
 }

@@ -103,13 +103,12 @@ namespace cjson {
 	//------------------------------------------------------------------------------------------------------------------
 	bool Parser::parseNumber(Json& _dst) {
 		// Skip all digits
-		const std::string digits("0123456789");
 		std::string num;
 		if(mIn->peek() == '+')
 			mIn->ignore();
 		if(mIn->peek() == '-')
 			num += mIn->get();
-		while(digits.find(mIn->peek()) != std::string::npos) {
+		while(cDigits.find(mIn->peek()) != std::string::npos) {
 			num += char(mIn->get());
 		}
 		int c = mIn->peek();
@@ -117,7 +116,7 @@ namespace cjson {
 		if(c == '.') {
 			num += mIn->get();
 			// Parse the rest of the number
-			while(digits.find(mIn->peek()) != std::string::npos) {
+			while(cDigits.find(mIn->peek()) != std::string::npos) {
 				num += char(mIn->get());
 			}
 			if (mIn->peek() == 'f') {
@@ -238,8 +237,7 @@ namespace cjson {
 
 	//------------------------------------------------------------------------------------------------------------------
 	void Parser::skipWhiteSpace() {
-		const std::string spacers = " \t\n\r";
-		while(spacers.find(mIn->peek()) != std::string::npos)
+		while(cSpacers.find(mIn->peek()) != std::string::npos)
 			mIn->ignore();
 	}
 
