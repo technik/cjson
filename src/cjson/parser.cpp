@@ -29,6 +29,17 @@
 #include <string>
 #include "json.h"
 
+#if defined(_WIN32) && defined(_DEBUG) // Trace memory leaks
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+#endif
+
+#if defined(_WIN32) && defined(_DEBUG) // Trace memory leaks
+#define DEBUG_CLIENTBLOCK new( _CLIENT_BLOCK, __FILE__, __LINE__)
+#define new DEBUG_CLIENTBLOCK
+#endif
+
 namespace cjson {
 
 	//------------------------------------------------------------------------------------------------------------------

@@ -29,12 +29,18 @@
 #include <sstream>
 #include <string>
 
+#if defined(_WIN32) && defined(_DEBUG) // Trace memory leaks
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+#endif
+
 using namespace cjson;
 using namespace std;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Manage global news and deletes
-size_t gNewCount = 0;
+/*size_t gNewCount = 0;
 size_t gDeleteCount = 0;
 void* operator new(size_t _count){
 	++gNewCount;
@@ -58,23 +64,27 @@ void operator delete[](void* _ptr) {
 
 bool isMemoryBalanced() {
 	return gNewCount == gDeleteCount;
-}
+}*/
 //----------------------------------------------------------------------------------------------------------------------
+void testMemoryLeaks() {
+	Json j;
+	j.parse(R"({
+				"NVDA": {
+					"c63": "-0.04",
+					"g53": "28.35",
+				}
+			})");
+}
 
 int main(int, const char**)
 {
 	// Force creation and destruction by making a local scope
-	{
-		Json j;
-		j.parse(R"({
-					"NVDA": {
-						"c63": "-0.04",
-						"g53": "28.35",
-						"h53": "28.76",
-						"l84": "28.41",
-						"v53": "6,383,264"
-					}
-				})");
-	}
-	assert(isMemoryBalanced());
+	#if defined( _DEBUG ) && defined(_WIN32)
+	_CrtDumpMemoryLeaks();
+	#endif // _DEBUG && _WIN32
+	testMemoryLeaks();
+	#if defined( _DEBUG ) && defined(_WIN32)
+	_CrtDumpMemoryLeaks();
+	#endif // _DEBUG && _WIN32
+
 }
