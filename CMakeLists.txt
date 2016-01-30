@@ -29,7 +29,13 @@ if(POLICY CMP0048)
 endif()
 project(cjson)
 set(PROJECT_VERSION 0.1.1)
-enable_testing()
+
+option(CJSON_BUILD_TESTS "Enable building cjson test projects" OFF)
+option(CJSON_BUILD_SAMPLES "Build sample projects that illusteate how to use cjson" OFF)
+
+if(CJSON_BUILD_TESTS)
+	enable_testing()
+endif()
 
 
 if(CMAKE_COMPILER_IS_GNUCXX)
@@ -52,5 +58,9 @@ endif(DOXYGEN_FOUND)
 
 # Child projects
 add_subdirectory(src) # The library itself
-add_subdirectory(samples) # The samples
-add_subdirectory(test) # Unit tests
+if(CJSON_BUILD_SAMPLES)
+	add_subdirectory(samples) # The samples
+endif()
+if(CJSON_BUILD_TESTS)
+	add_subdirectory(test) # Unit tests
+endif()
