@@ -127,6 +127,7 @@ namespace cjson {
 	//------------------------------------------------------------------------------------------------------------------
 	Json& Json::operator=(bool _b) {
 		clear();
+		this->~Json();
 		new(this)Json(_b);
 		return *this;
 	}
@@ -134,6 +135,7 @@ namespace cjson {
 	//------------------------------------------------------------------------------------------------------------------
 	Json& Json::operator=(int _i) {
 		clear();
+		this->~Json();
 		new(this)Json(_i);
 		return *this;
 	}
@@ -146,6 +148,7 @@ namespace cjson {
 	//------------------------------------------------------------------------------------------------------------------
 	Json& Json::operator=(float _f) {
 		clear();
+		this->~Json();
 		new(this)Json(_f);
 		return *this;
 	}
@@ -153,6 +156,7 @@ namespace cjson {
 	//------------------------------------------------------------------------------------------------------------------
 	Json& Json::operator=(const char* _s) {
 		clear();
+		this->~Json();
 		new(this)Json(_s);
 		return *this;
 	}
@@ -160,6 +164,7 @@ namespace cjson {
 	//------------------------------------------------------------------------------------------------------------------
 	Json& Json::operator=(const std::string& _s) {
 		clear();
+		this->~Json();
 		new(this)Json(_s);
 		return *this;
 	}
@@ -167,6 +172,7 @@ namespace cjson {
 	//------------------------------------------------------------------------------------------------------------------
 	Json& Json::operator=(std::string&& _s) {
 		clear();
+		this->~Json();
 		new(this)Json(std::move(_s));
 		return *this;
 	}
