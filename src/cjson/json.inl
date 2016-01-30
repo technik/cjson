@@ -30,17 +30,21 @@
 #include <cassert>
 #include <utility> // std::move
 
+#include <iostream>
+
 namespace cjson {
 	//------------------------------------------------------------------------------------------------------------------
 	inline Json::Json() 
 		: mType (DataType::null)
 	{
+		//std::cout << "Json::Json " << this << "\n";
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
 	inline Json::Json(const Json& _x)
 		: mType (_x.mType)
 	{
+		//std::cout << "Json::Json(const &) " << this << "\n";
 		switch(mType) {
 		case DataType::boolean:
 		case DataType::integer:
@@ -68,6 +72,7 @@ namespace cjson {
 	inline Json::Json(Json&& _x)
 		: mType(_x.mType)
 	{
+		//std::cout << "Json::Json(&&) " << this << "\n";
 		switch(mType) {
 		case DataType::boolean:
 		case DataType::integer:
@@ -95,6 +100,7 @@ namespace cjson {
 	Json::Json(std::initializer_list<T_> _list)
 		:mType(DataType::array)
 	{
+		//std::cout << "Json::Json(list) " << this << "\n";
 		mArray.reserve(_list.size());
 		for(const auto& element : _list)
 			mArray.push_back(new Json(element));
@@ -105,6 +111,7 @@ namespace cjson {
 	Json::Json(const std::vector<T_>& _list)
 		:mType(DataType::array)
 	{
+		//std::cout << "Json::Json (vector)" << this << "\n";
 		mArray.reserve(_list.size());
 		for(const auto& element : _list)
 			mArray.push_back(new Json(element));
@@ -113,6 +120,7 @@ namespace cjson {
 	//------------------------------------------------------------------------------------------------------------------
 	inline Json& Json::operator=(const Json& _x)
 	{
+		clear();
 		mType = _x.mType;
 		switch(mType) {
 		case DataType::boolean:
@@ -142,6 +150,7 @@ namespace cjson {
 	//------------------------------------------------------------------------------------------------------------------
 	inline Json& Json::operator=(Json&& _x)
 	{
+		clear();
 		mType = _x.mType;
 		switch(mType) {
 		case DataType::boolean:
