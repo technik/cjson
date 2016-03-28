@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['boolean',['boolean',['../classcjson_1_1_json.html#ac16e230952b746492fb30d158ab0c747a84e2c64f38f78ba3ea5c905ab5a2da27',1,'cjson::Json']]]
+  ['begin',['begin',['../classcjson_1_1_json.html#af97a5c842da8179f6dec0487ae2724d1',1,'cjson::Json::begin() const '],['../classcjson_1_1_json.html#a4d13ec8458c3e26314870430aff4e093',1,'cjson::Json::begin()']]]
 ];

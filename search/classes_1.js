@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['parser',['Parser',['../classcjson_1_1_parser.html',1,'cjson']]]
+  ['json',['Json',['../classcjson_1_1_json.html',1,'cjson']]]
 ];
