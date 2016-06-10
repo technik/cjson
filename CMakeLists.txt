@@ -29,6 +29,7 @@ if(POLICY CMP0048)
 endif()
 project(cjson)
 set(PROJECT_VERSION 0.1.1)
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 option(CJSON_BUILD_TESTS "Enable building cjson test projects" OFF)
 option(CJSON_BUILD_SAMPLES "Build sample projects that illusteate how to use cjson" OFF)
@@ -36,7 +37,6 @@ option(CJSON_BUILD_SAMPLES "Build sample projects that illusteate how to use cjs
 if(CJSON_BUILD_TESTS)
 	enable_testing()
 endif()
-
 
 if(CMAKE_COMPILER_IS_GNUCXX)
     add_definitions(-std=c++11)

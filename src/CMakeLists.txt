@@ -58,3 +58,25 @@ endif()
 # cjson parser
 add_library(cjson STATIC ${JSON_SOURCE_FILES})
 target_include_directories(cjson PUBLIC ${PROJECT_SOURCE_DIR})
+
+if( CMAKE_SIZEOF_VOID_P EQUAL 8 )
+    set( PLATFORM_DIR "x64/" )
+else( CMAKE_SIZEOF_VOID_P EQUAL 8 )
+    set( PLATFORM_DIR "x86/" )
+endif( CMAKE_SIZEOF_VOID_P EQUAL 8 )
+
+if(MSVC10)
+	set(VC_VERSION "vc10")
+endif()
+if(MSVC12)
+	set(VC_VERSION "vc12")
+endif()
+if(MSVC14)
+	set(VC_VERSION "vc14")
+endif()
+	
+
+install(TARGETS cjson ARCHIVE DESTINATION lib/${VC_VERSION}/${PLATFORM_DIR})
+
+file(GLOB_RECURSE JSON_HEADER_FILES "cjson/*.h" "cjson/*.inl")
+install(FILES ${JSON_HEADER_FILES} DESTINATION "include/json")
