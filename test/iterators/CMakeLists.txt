@@ -26,3 +26,5 @@
 add_executable(iterators_test test.cpp)
 target_link_libraries(iterators_test PUBLIC cjson)
 add_test(iteratorTest1 iterators_test)
+
+set_target_properties(iterators_test PROPERTIES FOLDER "test")

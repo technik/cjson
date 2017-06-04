@@ -26,3 +26,5 @@
 add_executable(parsing_test test.cpp)
 target_link_libraries(parsing_test PUBLIC cjson)
 add_test(parsingTest1 parsing_test)
+
+set_target_properties(parsing_test PROPERTIES FOLDER "test")

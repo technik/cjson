@@ -74,9 +74,12 @@ endif()
 if(MSVC14)
 	set(VC_VERSION "vc14")
 endif()
+if(MSVC15)
+	set(VC_VERSION "vc15")
+endif()
 	
 
-install(TARGETS cjson ARCHIVE DESTINATION lib/${VC_VERSION}/${PLATFORM_DIR})
+install(TARGETS cjson ARCHIVE DESTINATION lib/${VC_VERSION})
 
 file(GLOB_RECURSE JSON_HEADER_FILES "cjson/*.h" "cjson/*.inl")
 install(FILES ${JSON_HEADER_FILES} DESTINATION "include/json")

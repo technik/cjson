@@ -25,3 +25,4 @@
 ################################################################################
 add_executable(hello_world main.cpp)
 target_link_libraries(hello_world PUBLIC cjson)
+set_target_properties(hello_world PROPERTIES FOLDER "samples")

@@ -26,3 +26,5 @@
 add_executable(allocation_test test.cpp)
 target_link_libraries(allocation_test PUBLIC cjson)
 add_test(allocationTest1 allocation_test)
+
+set_target_properties(allocation_test PROPERTIES FOLDER "test")

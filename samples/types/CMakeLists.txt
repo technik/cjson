@@ -25,3 +25,4 @@
 ################################################################################
 add_executable(types main.cpp)
 target_link_libraries(types PUBLIC cjson)
+set_target_properties(types PROPERTIES FOLDER "samples")
